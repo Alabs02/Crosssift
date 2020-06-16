@@ -26,16 +26,17 @@
             <v-list dense>
 
                 <v-list-item
-                v-for="item in items"
-                :key="item.title"
+                v-for="nav in nav_items"
+                :key="nav.title"
+                router :to="nav.route"
                 link
                 >
                 <v-list-item-icon>
-                    <v-icon class="indigo--text">{{ item.icon }}</v-icon>
+                    <v-icon class="indigo--text">{{ nav.icon }}</v-icon>
                 </v-list-item-icon>
 
                 <v-list-item-content>
-                    <v-list-item-title>{{ item.title }}</v-list-item-title>
+                    <v-list-item-title>{{ nav.title }}</v-list-item-title>
                 </v-list-item-content>
                 </v-list-item>
             </v-list>
@@ -65,10 +66,10 @@
                             <v-avatar
                                 class="ml-5"
                                 elevation="10"
-                                size="90"
+                                size="110"
                                 id="avatar"
                             >
-                                <img src="../assets/peret.png" alt="peret">
+                                <img src="../assets/female.svg" alt="peret">
                             </v-avatar>
                         </v-responsive>
                     </div>
@@ -86,8 +87,7 @@
                             >
 
                                 <v-container>
-                               
-                                    <v-content >
+                                    <v-content>
                                         <v-btn
                                         class="mt-5 align-center"
                                         id="cont"
@@ -99,14 +99,16 @@
                                         <v-row>
                                             <v-col
                                             cols="12"
-                                            md="5"
+                                            md="6"
+                                            sm="12"
                                             >
                                                 <v-card-text class="foll">Follower <br> <span class="indigo--text font-weight-bold">550</span> </v-card-text>
                                             </v-col>
 
                                             <v-col
                                             cols="12"
-                                            md="5"
+                                            md="6"
+                                            sm="12"
                                             >
                                                 <v-card-text class="foll">Following <br> <span class="indigo--text font-weight-bold">130</span> </v-card-text>
                                             </v-col>
@@ -125,30 +127,25 @@
                                             <span class="grey--text text--darken-3">Recent Activities</span>
                                         </v-card-text>
 
-                                        <v-item-group multiple>
-                                            <v-container>
-                                                <v-row>
-                                                    <v-col
-                                                     v-for="n in 4"
-                                                     :key="n"
-                                                     cols="12"
-                                                     md="3"
-                                                    >
-                                                        <v-item>
-                                                            <v-img
-                                                            id="imgx"
-                                                            max-height="100"
-                                                            min-height="50"
-                                                             max-width="90"
-                                                             min-with="50"
-                                                             src="../assets/37.png"
-                                                             
-                                                            ></v-img>
-                                                        </v-item>
-                                                    </v-col>
-                                                </v-row>
-                                            </v-container>
-                                        </v-item-group>
+                                        <v-container>
+                                            <v-row justify="center">
+                                                <v-col
+                                                 v-for="n in 4"
+                                                 :key="n"
+                                                 cols="12"
+                                                 md="3"
+                                                 sm="6"
+                                                >
+                                                    <v-img
+                                                     id="imgx"
+                                                     height="100"
+                                                     width="100"
+                                                     contain
+                                                     src="../assets/37.png"
+                                                    ></v-img>
+                                                </v-col>
+                                            </v-row>
+                                        </v-container>
                                         <br>
 
                                         <v-divider></v-divider>
@@ -159,7 +156,7 @@
 
                                             <v-card-text>
                                                 <span class="pink--text">100</span>  <span class="blue-grey--text font-weight-bold">Reps</span>
-                                                <p>Peret is know for credible, authentic, Unbaised, impeccable and actual comentry and reviews on Crosssift.</p>
+                                                <p>Helen is know for credible, authentic, Unbaised, impeccable and actual comentry and reviews on Crosssift.</p>
                                             </v-card-text>
                                         </v-card>
                                     </v-content>
@@ -178,7 +175,7 @@
                             >
 
                                 <v-card-text>
-                                    <span class="title">Peret John</span><br>
+                                    <span class="title">Helen John</span><br>
                                     <span class="subtitle">Renowned <span class="yellow--text text--darken-4">Broadcaster</span>  on the plateau</span>
                                 </v-card-text>
 
@@ -220,18 +217,12 @@
                                         Lorem ipsum, dolor sit amet consectetur adipisicing elit. Omnis itaque iste perspiciatis.
                                     </v-card-text>
                                 </v-card>
-
                             </v-card>
-
                         </v-col>
                     </v-row>
-
                 </v-container>
             </v-content>
-           
-        </v-card>
-
-  
+        </v-card><br><br><br><br>
     </div>
 </template>
 
@@ -242,11 +233,12 @@
     data () {
       return {
         drawer: false,
-        items: [
-          { title: 'Navigate', icon: 'mdi-apps' },
-          { title: 'Home', icon: 'mdi-home-city' },
-          { title: 'Logout', icon: 'mdi-open-in-new' },
-          {}
+        nav_items: [
+            { title: 'Home', icon: 'mdi-home-city', route: '/' },
+            { title: 'News', icon: 'mdi-apps', route: '/news' },
+            { title: 'About Us', icon: 'mdi-account-group', route: '/about' },
+            { title: 'Contact', icon: 'mdi-phone', route: '/contact' },
+            { title: 'Logout', icon: 'mdi-open-in-new', },
         ],
         miniVariant: true,
         expandOnHover: true,
@@ -283,8 +275,11 @@
         font-size: 16.5px;
     }
 
-    #imgx {
-        border-radius: 1rem;
+    @media screen and (max-width: 1024px) {
+        #imgx {
+            width: 50px !important;
+            height: 50px !important;
+        }
     }
 
  

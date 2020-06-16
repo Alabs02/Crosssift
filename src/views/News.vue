@@ -63,13 +63,7 @@
                     solo-inverted
                 ></v-text-field>
                 
-             
-               
-
-
                 <v-spacer></v-spacer>
-
-
                 <v-btn
                  class="hidden-lg-only"
                  icon
@@ -95,18 +89,16 @@
                          :key="index"
                          link
                         >
-                            <router-link :to=" drop.link">
+                            <router-link :to="drop.link">
                                 <v-list-item-icon>
                                     <v-icon color="purple darken-3">{{ drop.icon }}</v-icon>
                                 </v-list-item-icon>
                             </router-link>
-                            <router-link :to=" drop.link">
+                            <router-link :to="drop.link">
                                 <v-list-item-content>
                                     <v-list-item-title class="indigo--text text--darken-4">{{ drop.title }}</v-list-item-title>
                                 </v-list-item-content>
                             </router-link>
-                         
-
                         </v-list-item>
                     </v-list>
                 </v-menu>
@@ -222,6 +214,8 @@
                                 :key="n"
                                 cols="12"
                                 md="4"
+                                lg="4"
+                                sm="12"
                                >
                                 <v-card
                                 elevation="10"
@@ -250,41 +244,104 @@
                                     </v-card-text>
 
                                     <v-card-actions>
-                                            <v-btn
-                                            router to="/single_post"
-                                            rounded
-                                            text
-                                            color="deep-purple accent-4"
-                                            >
-                                                <span>Read</span>
-                                            </v-btn>
+                                        <v-btn
+                                        router to="/single_post"
+                                        rounded
+                                        text
+                                        color="deep-purple accent-4"
+                                        >
+                                            <span>Read</span>
+                                        </v-btn>    
+                                        <v-spacer></v-spacer>                           
+                                        <v-btn
+                                        icon
+                                        color="grey darken-3"
+                                        >
+                                            <v-icon class="red--text v-bold font-weight-bold">mdi-close-circle</v-icon>
+                                        </v-btn>
+                                        <span>80</span>
 
                                         <v-btn
-                                        rounded
-                                         text
-                                         color="deep-purple accent-4"
+                                        icon
+                                        color="grey darken-3"
                                         >
-                                            Bookmark
+                                            <v-icon class="success--text v-bold font-weight-bold">mdi-checkbox-marked-circle</v-icon>
                                         </v-btn>
-                                    
-                                    <v-btn
-                                     icon
-                                     color="grey darken-3"
-                                    >
-                                        <v-icon>mdi-heart-outline</v-icon>
-                                    </v-btn>
-                                    <span>80</span>
-
-                                    <v-btn
-                                     icon
-                                     color="grey darken-3"
-                                    >
-                                        <v-icon>mdi-comment-outline</v-icon>
-                                    </v-btn>
                                     <span>190</span>
                                     </v-card-actions>
-                                </v-card>
+                                </v-card><br>
                                </v-col>
+                           </v-row>
+
+                           <v-row justify="center" class="mt-12">
+                                <v-col
+                                v-for="(card, i) in cards"
+                                :key="i"
+                                cols="12"
+                                md="4"
+                                >
+                                    <v-card
+                                    id="mainCard"
+                                    class="mx-auto"
+                                    height="270"
+                                    elevation="4"
+                                    >
+                                        <v-card
+                                        id="nestedCard"
+                                        class="mx-auto ml-3 mr-3 text-center"
+                                        :color="card.color"
+                                        height="160"
+                                        flat
+                                        >
+                                           <v-img
+                                            src="@/assets/post.png"
+                                           ></v-img>
+                                        </v-card>
+                                        <v-sheet class="text-center">
+                                            <v-card-text class="newText">Lorem ipsum dolor sit amet consectetur adipisicing elit. Vitae sed blanditiis </v-card-text>
+                                            <div>
+                                                <v-btn rounded color="blue-grey lighten-5" class="blue-grey--text text--darken newBtn">Read</v-btn>
+                                            </div>
+                                        </v-sheet>
+
+                                         <!-- <v-card-actions>
+                                            <v-list-item class="grow">
+                                                <v-list-item-avatar color="grey darken-3">
+                                                    <v-img
+                                                        class="elevation-6"
+                                                        src="../assets/peret.png"
+                                                    ></v-img>
+                                                </v-list-item-avatar>
+
+                                                <v-list-item-content>
+                                                    <v-list-item-title>Helen</v-list-item-title>
+                                                </v-list-item-content>
+
+                                                <v-row
+                                                 align="center"
+                                                 justify="end"
+                                                >   
+                                                   <v-spacer></v-spacer>                           
+                                                    <v-btn
+                                                    icon
+                                                    color="grey darken-3"
+                                                    >
+                                                        <v-icon class="white--text v-bold font-weight-bold">mdi-close-circle</v-icon>
+                                                    </v-btn>
+                                                    <span>80</span>
+
+                                                    <v-btn
+                                                    icon
+                                                    color="white"
+                                                    >
+                                                        <v-icon class="white--text v-bold font-weight-bold">mdi-checkbox-marked-circle</v-icon>
+                                                    </v-btn>
+                                                    <span>190</span>
+                                                </v-row>
+                                            </v-list-item>
+                                        </v-card-actions> -->
+                                    </v-card><br>
+                                </v-col>
                            </v-row>
 
                            <v-row>
@@ -293,6 +350,8 @@
                                 :key="card"
                                 cols="12"
                                 md="4"
+                                lg="4"
+                                sm="12"
                                >
                                     <v-card
                                      :id=" card.color_id"
@@ -330,15 +389,22 @@
                                                  align="center"
                                                  justify="end"
                                                 >   
-                                                    <v-btn icon>
-                                                         <v-icon class="mr-1">mdi-heart-outline</v-icon>
+                                                   <v-spacer></v-spacer>                           
+                                                    <v-btn
+                                                    icon
+                                                    color="grey darken-3"
+                                                    >
+                                                        <v-icon class="white--text v-bold font-weight-bold">mdi-close-circle</v-icon>
                                                     </v-btn>
-                                                    <span class="subheading mr-2">256</span>
-                                                    <span class="mr-1">·</span>
-                                                    <v-btn icon>
-                                                        <v-icon class="mr-2">mdi-comment-outline</v-icon>
+                                                    <span>80</span>
+
+                                                    <v-btn
+                                                    icon
+                                                    color="white"
+                                                    >
+                                                        <v-icon class="white--text v-bold font-weight-bold">mdi-checkbox-marked-circle</v-icon>
                                                     </v-btn>
-                                                    <span class="subheading mr-1">45</span>
+                                                    <span>190</span>
                                                 </v-row>
                                             </v-list-item>
                                         </v-card-actions>
@@ -352,10 +418,13 @@
                                 :key="n"
                                 cols="12"
                                 md="4"
+                                lg="4"
+                                sm="12"
                                >
                                    <v-card
                                     elevation="5"
                                     height="180"
+                                    router to="/single_post"
                                    >
                                         <v-card-title>
                                             <v-icon
@@ -371,7 +440,7 @@
                                             Lorem ipsum dolor, sit amet consectetur adipisicing elit.
                                         </v-card-text>
 
-                                        <v-card-actions>
+                                        <v-card-actions class="mb-2">
                                             <v-list-item class="grow">
                                                 <v-list-item-avatar>
                                                     <v-img
@@ -389,24 +458,20 @@
                                                  justify="end"
                                                 >
                                                     <v-btn icon >
-                                                        <v-icon color="grey darken-3" class="mr-2">mdi-heart-outline</v-icon>
+                                                        <v-icon class="red--text mr-1">mdi-close-circle</v-icon>
+                                                        <span class="subheading mr-1">100</span>
                                                     </v-btn>
-                                                    <span class="subheading mr-2">100</span>
-                                                    <span class="mr-1">·</span>
-                                                    <v-btn icon>
-                                                          <v-icon color="grey darken-3" class="mr-2">mdi-comment-outline</v-icon>
+                                                
+                                                    <v-btn icon class="ml-5">
+                                                          <v-icon class="success--text mr-1">mdi-checkbox-marked-circle</v-icon>
+                                                          <span class="subheading mr-1">30</span>
                                                     </v-btn>
-                                                  
-                                                    <span class="subheading mr-1">30</span>
                                                 </v-row>
                                             </v-list-item>
-                                        </v-card-actions>
+                                        </v-card-actions><br>
                                    </v-card>
-
                                </v-col>
                             </v-row>
-
-                        
                        </v-container>
                    </v-item-group>
                </v-container>
@@ -426,7 +491,7 @@
                     </div>
                </v-container>
            </v-content>
-        </v-card><br><br>
+        </v-card><br><br><br><br>
     </div>
 </template>
 
@@ -449,19 +514,22 @@ export default {
         value: true,
         drawer: false,
         items: [
-          { title: 'Navigate', icon: 'mdi-apps' },
-          { title: 'Home', icon: 'mdi-home-city' },
-          { title: 'Logout', icon: 'mdi-open-in-new' },
+            { title: 'Home', icon: 'mdi-home-city', route: '/' },
+            { title: 'News', icon: 'mdi-apps', route: '/news' },
+            { title: 'About Us', icon: 'mdi-account-group', route: '/about' },
+            { title: 'Contact', icon: 'mdi-phone', route: '/contact' },
+            { title: 'Logout', icon: 'mdi-open-in-new', },
         ],
         side_items: [
             {title: 'About Us', icon: 'mdi-account-group', link: '/about'},
+            {title: 'Contact Us', icon: 'mdi-phone', link: '/contact'},
             {title: 'Logout', icon: 'mdi-open-in-new', link: '/'},
         ],
         right: null,
         d_items: [
             {title: 'Home', icon: 'mdi-home-city', link: '/'},
             {title: 'Make a post', icon: 'mdi-pen', link: '/new_post'},
-            {title: 'Contact Us', icon: 'mdi-account-circle', link: '/contact'},
+            {title: 'Dashboard', icon: 'mdi-view-dashboard', link: '/dashboard'},
         ],
         cards: [
             { color_id: 'card-two-x' },
@@ -488,6 +556,18 @@ export default {
         border-radius: 1rem;
         background: linear-gradient(to bottom right, #3F51B5, #42A5F5);
     }
+    #nestedCard {
+        transform: translateY(-4rem);
+        padding: 0.5rem 0;
+        border-radius: 1.2rem;
+    }
+    .newText {
+        transform: translateY(-1.7rem);
+    }
+
+    .newBtn {
+        transform: translateY(-1.6rem);
+    }
 
     #chip-usage-example .v-chip {
     margin: 8px;
@@ -504,6 +584,10 @@ export default {
 
     .v-application a {
         color: transparent;
+    }
+
+    .v-bold {
+        font-weight: bold;
     }
 
 

@@ -1,55 +1,80 @@
 <template>
   <div>
     <app-bar></app-bar>
-
     <v-content>
       <app-carousel></app-carousel>
       <v-alert
-        border="left"
+        tile
         color="purple darken-1"
         dark
-        class="text-center"
+        class="text-center alert"
       >
-        <span class="headline">Welcome to Crosssift!!!</span>
+        <span class="overline" id="salute">Welcome to Crosssift!!!</span>
       </v-alert>
       <v-layout align-center>
         <v-flex>
-          <app-starter></app-starter>
+          <popup />
         </v-flex>
       </v-layout>
-
-      <v-container> 
-        <div class="text-center">
-          <h3 class="why grey--text text--darken-3">Why Crosssift</h3>
-          <p class="grey--text text-darken-2">A platform that helps to dissemenate credible, authentic, ubnaised and abashed news to of the fascinating world!!!</p>
-        </div>
-      </v-container>
-
-      <div id="off">
-        <v-container>
-          <v-card
-           color="indigo lighten-5"
-           class="mx-auto"
-           max-height="400"
+       <div class="text-center">
+          <v-dialog
+            v-model="dialog"
+            width="600"
           >
-            <v-card-text class="headline font-weight-bold text-center indigo--text darken-2">
-              Crosssift Offers
-            </v-card-text>
-            <v-sheet
-             class="mx-auto"
+            <template v-slot:activator="{ on }">
+             <v-snackbar
+              color="white"
+              class="black--text"
+              v-model="snackbar"
+              :multi-line="multiLine"
+              :timeout="timeout"
             >
-            <v-container>
-              <v-text>Crosssift is a platform that allows you shared the happening in vicinity. We also help to authenticate the information you post to ensure it true and to reduce the icesant spread of fake news in Nigeria. </v-text><v-text>Crosssift is a platform that allows you shared the happening in vicinity. We also help to authenticate the information you post to ensure it true and to reduce the icesant spread of fake news in Nigeria. </v-text>
-            </v-container>
-            </v-sheet>
+              {{ text }}
 
-          </v-card>
-        </v-container>
-      </div>
+              <v-btn
+               v-on="on"
+               text
+               color="indigo darken-2"
+              >
+                <span>View Policy</span>
+              </v-btn>
+              <v-btn
+                color="indigo darken-2"
+                text
+                @click="snackbar = false"
+              >
+                Close
+              </v-btn>
+            </v-snackbar>
+            </template>
 
-      <v-flex>
-        
-      </v-flex>
+            <v-card>
+              <v-card-title
+                class="headline grey lighten-2"
+                primary-title
+              >
+                Privacy Policy
+              </v-card-title>
+
+              <v-card-text>
+                Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+              </v-card-text>
+
+              <v-divider></v-divider>
+
+              <v-card-actions>
+                <v-spacer></v-spacer>
+                <v-btn
+                  color="indigo"
+                  text
+                  @click="dialog = false"
+                >
+                  I accept
+                </v-btn>
+              </v-card-actions>
+            </v-card>
+          </v-dialog>
+        </div>
     </v-content>
   </div>
 </template>
@@ -58,7 +83,8 @@
 // @ is an alias to /src
 import AppBar from '../components/AppBar';
 import Carousel from '../components/Carousel';
-import Starter from '../components/starter';
+// eslint-disable-next-line no-unused-vars
+import Popup from '../components/Popup';
 
 
 export default {
@@ -66,12 +92,16 @@ export default {
   components: {
     'app-bar': AppBar,
     'app-carousel': Carousel,
-    'app-starter': Starter,
+    'popup': Popup,
   },
 
   data: () => ({
     drawer: false,
     dialog: false,
+    multiLine: true,
+    snackbar: true,
+    text: "Please Go through our prvacy policy!!",
+    timeout: 10000000,
     step: 1,
     items: [
       { title: 'Navigate', icon: 'mdi-apps' },
@@ -98,7 +128,12 @@ export default {
   .why {
     font-size: 40px;
   }
-
+  .alert {
+    height: 45px !important;
+  }
+  #salute {
+    font-size: .8rem !important;
+  }
   #off{
     background-image: url(../assets/discussion.svg);
   }

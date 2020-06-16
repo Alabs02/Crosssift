@@ -1,14 +1,11 @@
 <template>
     <div>
         <v-app-bar
-        absolute
-        color="#fcb69f"
-        dark
-        shrink-on-scroll
-        id="color"
-        scroll-target=""
+         color="#fcb69f"
+         dark
+         id="color"
+         app
         >
-        
 
         <v-app-bar-nav-icon v-on:click="drawer = !drawer"></v-app-bar-nav-icon>
 
@@ -43,69 +40,12 @@
                 </v-btn>
            </router-link>
         </div>
-
-        <!-- <div> -->
-            <!-- <v-menu bottom left v-model="pop">
-                <template v-slot:activator="{ on }">
-                  <v-btn
-                   dark
-                   icon
-                   v-on="on"
-                  >
-                    <v-icon>mdi-dots-vertical</v-icon>
-                  </v-btn>
-                </template>
-
-                <v-list>
-                    <v-list-item
-                     v-for="pane in panes"
-                     :key="pane"
-                     link
-                     router :to="pane.route"
-                     @click="pop = !pop"
-                    >
-                        <v-list-item-icon>
-                            <v-icon color="purple darken-2">{{ pane.icon }}</v-icon>
-                        </v-list-item-icon>
-
-                        <v-list-item-content>
-                            <v-list-item-title class="indigo--text text--darken-2">{{ pane.title }}</v-list-item-title>
-                        </v-list-item-content>
-                    </v-list-item>
-                </v-list>
-            </v-menu> -->
-        <!-- </div> -->
-
-           <div class="hidden-md-and-up">
-     
-            <v-btn
-            icon
-            text
-            >
-            <v-icon>mdi-home</v-icon>
-            </v-btn>
-  
-            <v-btn
-                router to="/news"
-                icon
-                text
-                >
-                <v-icon>mdi-book-open-page-variant</v-icon>
-            </v-btn>
-           
-            <v-btn
-            icon
-            text
-            >
-            <v-icon>mdi-pen</v-icon>
-            </v-btn>
-        </div>
         </v-app-bar>
        
           <v-navigation-drawer
             v-model="drawer"
             absolute
-            
+            temporary
         >
             <v-list-item>
                 <v-list-item-content>
@@ -119,18 +59,16 @@
             <v-list dense>
 
                 <v-list-item
-                 router :to="item.route"
-                 v-for="item in items"
-                 :key="item.title"
-                 
-               
+                 v-for="(nav, i) in nav_items"
+                 :key="i"
+                 router :to="nav.route"
                 >
                 <v-list-item-icon>
-                    <v-icon class="indigo--text">{{ item.icon }}</v-icon>
+                    <v-icon class="indigo--text">{{ nav.icon }}</v-icon>
                 </v-list-item-icon>
 
                 <v-list-item-content>
-                    <v-list-item-title>{{ item.title }}</v-list-item-title>
+                    <v-list-item-title>{{ nav.title }}</v-list-item-title>
                 </v-list-item-content>
                 </v-list-item>
             </v-list>
@@ -146,11 +84,11 @@ export default {
     data: () => ({
         drawer: false,
         pop: false,
-        items: [
-            { title: 'Navigate', icon: 'mdi-apps', route: '/news' },
-            { title: 'Home', icon: 'mdi-home-city', route: '' },
-            { title: 'About Us', icon: 'mdi-open-in-new', route: '/about' },
-            { title: 'Contact Us', icon: 'mdi-chat', route: '/contact' },
+        nav_items: [
+            { title: 'News', icon: 'mdi-apps', route: '/news' },
+            { title: 'About Us', icon: 'mdi-account-group', route: '/about' },
+            { title: 'Contact', icon: 'mdi-phone', route: '/contact' },
+            { title: 'Logout', icon: 'mdi-open-in-new', route: "#!" },
         ],
         panes: [
             { title: 'About Us', icon: 'mdi-help-box', route: '/about'},

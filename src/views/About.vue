@@ -5,8 +5,6 @@
       dark
       prominent
       app
-      extended
-      flat
     >
       <v-app-bar-nav-icon></v-app-bar-nav-icon>
     </v-toolbar>
@@ -75,49 +73,51 @@
             <img src="../assets/mobile-testing.svg" alt="testing" width="100%" height="500px">
         </v-container>
       </v-flex>
-      <v-layout>
-        <v-flex>
-            <v-row>
-              <v-col 
-               cols="12" 
-               class="mx-auto"
-               md="5"
-              >
-                <v-card elevation="1" flat color="grey-lighten-2">
-                    <v-card-title class="text-center">Our Mission</v-card-title>
+      <v-container>
+        <v-layout>
+          <v-flex>
+              <v-row>
+                <v-col 
+                cols="12" 
+                class="mx-auto"
+                md="5"
+                >
+                  <v-card elevation="3" color="grey-lighten-2">
+                      <v-card-title class="text-center font-weight-bold indigo--text">Our Mission</v-card-title>
+
+                      <v-card-text>
+                      <span>Lorem ipsum dolor sit amet consectetur, adipisicing elit. Quaerat vel mollitia dicta dolorum culpa 
+                        ipsum maxime deleniti eaque quo qui, dignissimos, modi blanditiis, saepe neque id autem voluptatibus 
+                        libero magni.
+                        </span>
+                      </v-card-text>
+                  </v-card>
+                </v-col>
+
+                <v-col  
+                cols="12" 
+                class="mx-auto"
+                md="5"
+                >
+                  <v-card elevation="3" color="grey-lighten-2">
+                    <v-card-title class="font-weight-bold indigo--text">Our Story</v-card-title>
 
                     <v-card-text>
-                     <span>Lorem ipsum dolor sit amet consectetur, adipisicing elit. Quaerat vel mollitia dicta dolorum culpa 
-                       ipsum maxime deleniti eaque quo qui, dignissimos, modi blanditiis, saepe neque id autem voluptatibus 
-                       libero magni.
+                      <span>Lorem ipsum dolor, sit amet consectetur adipisicing elit. Consequatur, cupiditate tenetur? Soluta i
+                        mpedit illo eos vitae, atque saepe a totam rem necessitatibus in 
+                        omnis suscipit dolorem, tenetur numquam quo pariatur.
                       </span>
                     </v-card-text>
-                </v-card>
-              </v-col>
-
-              <v-col  
-               cols="12" 
-               class="mx-auto"
-               md="5"
-              >
-                <v-card flat elevation="1" color="grey-lighten-2">
-                  <v-card-title class="font-weight-bold">Our Story</v-card-title>
-
-                  <v-card-text>
-                    <span>Lorem ipsum dolor, sit amet consectetur adipisicing elit. Consequatur, cupiditate tenetur? Soluta i
-                      mpedit illo eos vitae, atque saepe a totam rem necessitatibus in 
-                      omnis suscipit dolorem, tenetur numquam quo pariatur.
-                    </span>
-                  </v-card-text>
-                </v-card>
-              </v-col>
-            </v-row>
-        </v-flex>
-      </v-layout>
+                  </v-card>
+                </v-col>
+              </v-row>
+          </v-flex>
+        </v-layout>
+      </v-container>
 
       <v-container>
         <v-card flat>
-          <v-card-title class="text-center">Our History</v-card-title>
+          <v-card-title class="title  font-weight-bold">Our History</v-card-title>
         </v-card>
           <v-timeline align-top :dense="$vuetify.breakpoint.smAndDown">
             <v-timeline-item
@@ -160,7 +160,7 @@
              class="mx-auto"
             >
             <v-container>
-              <v-text>Crosssift is a platform that allows you shared the happening in vicinity. We also help to authenticate the information you post to ensure it true and to reduce the icesant spread of fake news in Nigeria. </v-text><v-text>Crosssift is a platform that allows you shared the happening in vicinity. We also help to authenticate the information you post to ensure it true and to reduce the icesant spread of fake news in Nigeria. </v-text>
+              <v-card-text class="">Crosssift is a platform that allows you shared the happening in vicinity. We also help to authenticate the information you post to ensure it true and to reduce the icesant spread of fake news in Nigeria.</v-card-text>
             </v-container>
             </v-sheet>
           </v-card>
@@ -168,20 +168,152 @@
       </div>
 
       <v-container>
-        <v-card>
-          <div class="text-center">
-            <v-card-title class="indigo--text text--darken-3 align-content-center">Motto And Quote</v-card-title>
+      <v-card>
+        <v-toolbar
+            color="indigo"
+            dark
+            dense
+            flat
+          >
+            <v-toolbar-title class="title text-center">Quotes</v-toolbar-title>
+        </v-toolbar>
 
-            <v-sheet>
-              <v-card-text class="font_weight_bold">"I like the dreams of the future better than the history of the past"</v-card-text>
-              <v-card-text>"Never underestimate the power you have to take your life in a new direction."</v-card-text>
-            </v-sheet>
-          </div>
-          
-        </v-card>
+        <v-card-text>
+            "I like the dreams of the future better than the history of the past"<br>
+            "Never underestimate the power you have to take your life in a new direction"
+          </v-card-text>
+      </v-card>
       </v-container>
-      
-    </v-card><br><br>
+
+      <v-card
+        class="mx-auto mt-4"
+        max-width="950"    
+        flat
+      >
+          <v-container>
+            <v-toolbar color="indigo" dark>
+                <v-toolbar-title class="headline">Team</v-toolbar-title>
+            </v-toolbar>
+          </v-container>
+
+          <v-container>
+            <v-row justify="center">
+                <v-col
+                  cols="12"
+                  md="6"
+                  sm="12"
+                >
+                    <v-hover>
+                        <template v-slot:default="{ hover }">
+                            <v-card
+                              class="mx-auto"
+                              elevation="5"
+                              max-width="355"
+                            >
+                                <v-img height="250" src="@/assets/male.svg"></v-img>
+
+                                <v-card-text>
+                                    <h2 class="title primary--text text--darken-1">Alabura Usman Aliyu</h2>
+                                    <p class="subheader font-weight-light blue-grey--text text--darken-2"><v-icon color="blue-grey" left>{{ code }}</v-icon>Lead Developer</p>
+                                    <span class="caption grey--text text--darken-1">Lorem ipsum dolor sit amet consectetur adipisicing elit.</span>
+                                    <span class="caption grey--text text--darken-1">Lorem ipsum dolor sit amet consectetur adipisicing elit.</span>
+                                </v-card-text>
+
+                                <v-divider></v-divider>
+                                <v-card-actions class="blue"></v-card-actions>
+                                <!-- Overlay Content -->
+                                <v-fade-transition>
+                                    <v-overlay
+                                        v-if="hover"
+                                        absolute
+                                        color="#0D47A1"
+                                    >   
+                                        <v-row justify="center">
+                                            <v-btn small class="mx-1 white bor" @click="go">
+                                                <v-icon class="grey--text text--darken-3">{{ github }}</v-icon>
+                                            </v-btn>
+                                            <v-btn small class="mx-1 white bor" @click="go">
+                                                <v-icon class="blue--text">{{ twitter }}</v-icon>
+                                            </v-btn>
+                                            <v-btn small class="mx-1 white bor" @click="go">
+                                                <v-icon class="blue--text text--darken-2">{{ linkedin }}</v-icon>
+                                            </v-btn>
+                                            <v-btn small class="mx-1 white bor" @click="go">
+                                                <v-icon class="blue--text text--darken-4">{{ facebook }}</v-icon>
+                                            </v-btn>
+                                        </v-row>
+                                        <div class="text-center mt-2">
+                                            <v-btn>Portfolio <v-icon right>{{ open }}</v-icon></v-btn>
+                                        </div>
+                                    </v-overlay>
+                                </v-fade-transition>
+                            </v-card>
+                        </template>
+                    </v-hover>
+                </v-col>
+
+                <v-col
+                  cols="12"
+                  md="6"
+                  sm="12"
+                >
+                    <v-hover>
+                        <template v-slot:default="{ hover }">
+                            <v-card
+                              class="mx-auto"
+                              elevation="5"
+                              max-width="355"
+                            >
+                                <v-img height="250" src="@/assets/male.svg"></v-img>
+
+                                <v-card-text>
+                                    <h2 class="title indigo--text text--darken-2">Alams Titus Mammu'an</h2>
+                                    <p class="subheader font-weight-light blue-grey--text text--darken-2"><v-icon color="blue-grey" left>{{ idea }}</v-icon>Co-founder</p>
+                                    <span class="caption grey--text text--darken-1">Lorem ipsum dolor sit amet consectetur adipisicing elit.</span>
+                                    <span class="caption grey--text text--darken-1">Lorem ipsum dolor sit amet consectetur adipisicing elit.</span>
+                                </v-card-text>
+
+                                <v-divider></v-divider>
+                                <v-card-actions class="indigo"></v-card-actions>
+                                <!-- Overlay Content -->
+                                <v-fade-transition>
+                                    <v-overlay
+                                        v-if="hover"
+                                        absolute
+                                        color="#1A237E"
+                                    >
+                                        <v-row justify="center">
+                                            <v-btn small class="mx-1 white bor" @click="go">
+                                                <v-icon class="grey--text text--darken-3">{{ github }}</v-icon>
+                                            </v-btn>
+                                            <v-btn small class="mx-1 white bor" @click="go">
+                                                <v-icon class="blue--text">{{ twitter }}</v-icon>
+                                            </v-btn>
+                                            <v-btn small class="mx-1 white bor" @click="go">
+                                                <v-icon class="blue--text text--darken-2">{{ linkedin }}</v-icon>
+                                            </v-btn>
+                                            <v-btn small class="mx-1 white bor" @click="go">
+                                                <v-icon class="blue--text text--darken-4">{{ facebook }}</v-icon>
+                                            </v-btn>
+                                        </v-row>
+
+                                        <div class="text-center mt-2">
+                                            <v-btn>See more info <v-icon right>{{ open }}</v-icon></v-btn>
+                                        </div>
+                                    </v-overlay>
+                                </v-fade-transition>
+                            </v-card>
+                        </template>
+                    </v-hover>
+                </v-col>
+            </v-row>
+          </v-container>
+    </v-card><br>
+    <br>
+    <br>
+    </v-card><br><br><br>
+    <br>
+    <br>
   </div>
 </template>
 
@@ -189,24 +321,38 @@
 <script>
   export default {
     data: () => ({
+
+      cards: [
+        { title: 'Alabura Usman', src: 'http://bit.ly/36NVjjp'},
+        { title: "Alams Titus Mammu'an", src: 'http://bit.ly/2GLyeTO'},
+      ],
       items: [
         {
           color: 'indigo',
           icon: 'mdi-star',
         },
         {
-          color: 'pink darken-1',
+          color: 'purple lighten-1',
           icon: 'mdi-book-variant',
         },
         {
-          color: 'purple lighten-1',
+          color: 'blue-grey lighten-1',
           icon: 'mdi-airballoon',
         },
         {
-          color: 'green',
+          color: 'pink darken-1',
           icon: 'mdi-buffer',
         },
       ],
+
+      open: 'mdi-open-in-new',
+      code: 'mdi-code-tags',
+      idea: 'mdi-brain',
+      github: 'mdi-github-circle',
+      linkedin: 'mdi-linkedin',
+      twitter: 'mdi-twitter-circle',
+      facebook: 'mdi-facebook',
+
     }),
   }
 </script>

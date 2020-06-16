@@ -13,15 +13,17 @@
      flat
      class="mx-auto"
      style="margin-top: -64px;"
-     max-width="1000"
+     max-width="900"
      id="col"
     > 
+        <v-container>
         <v-row
         justify="center"
         >
             <v-col
             cols="12"
-            md="5"
+            md="6"
+            sm="12"
             >
             <v-card 
                 class="mx-auto grey lighten-3"
@@ -55,7 +57,8 @@
 
             <v-col
             cols="12"
-            md="5"
+            md="6"
+            sm="12"
             >
                 <v-card 
                 class="mx-auto grey lighten-3"
@@ -76,8 +79,9 @@
                         <div class="text-center">
                             <v-card-actions>
                                 <v-btn
-                                color="pink lighten-1"
+                                color="indigo lighten-1"
                                 dark
+                                text
                                 >
                                     <span>Contact Support</span>
                                 </v-btn>
@@ -88,24 +92,32 @@
                 </v-card>
             </v-col>
         </v-row>
+    </v-container>
 
         <v-container>
             <v-card
              class="mx-auto"
-             max-width="900"
+             max-width="800"
              
             >
                 <div class="text-center">
                     <v-text>{{ location }}</v-text>
-                    <v-sheet>
+                    <v-container>
                         <iframe 
-                         src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d7859.440401375894!2d8.88650025431327!3d9.957221481318577!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x1053727e4edf2bc3%3A0xc601a3a3204c783d!2sUniversity%20Of%20Jos!5e0!3m2!1sen!2sng!4v1580375201913!5m2!1sen!2sng" width="600" height="450" frameborder="0" style="border:0;" allowfullscreen=""
-                         ></iframe>
-                    </v-sheet>
+                         src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d7859.440401375894!2d8.88650025431327!3d9.957221481318577!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x1053727e4edf2bc3%3A0xc601a3a3204c783d!2sUniversity%20Of%20Jos!5e0!3m2!1sen!2sng!4v1580375201913!5m2!1sen!2sng" frameborder="0" style="border:0;" allowfullscreen=""
+                        ></iframe>
+                    </v-container>
                 </div>
             </v-card>
+            <v-container>
+                <div class="text-center">
+                    <v-btn dark router to="/news" ripple color="purple darken-3" >Back to new page</v-btn>
+                </div>
+            </v-container>
         </v-container>
-    </v-card>
+    </v-card><br>
+    <br>
+    <br>
     </div>
 </template>
 
@@ -124,7 +136,6 @@ export default {
     #col {
       background-color: transparent;
     }
-
     #bar-color {
         background: linear-gradient(to top right, #673AB7, #1A237E);
     }

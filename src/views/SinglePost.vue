@@ -50,7 +50,7 @@
          style="margin-top: -60px;"
         >
             <v-toolbar flat>
-                <v-toolbar-title class="indigo--text font-weight-bold">Full Report</v-toolbar-title>
+                <v-toolbar-title class="indigo--text font-weight-bold">Full Post</v-toolbar-title>
             </v-toolbar>
 
             <v-divider></v-divider>
@@ -72,7 +72,7 @@
                     </v-card-text>
                     <v-divider></v-divider>
                     <v-card-text class="subtitle purple--text text--darken-2">
-                        by Peret John
+                        by Helen John
                     </v-card-text>
                     <v-divider></v-divider>
                     <v-card-text class="title indigo--text text--darken-3">
@@ -96,11 +96,74 @@
 
                         <v-divider class="mx-4"></v-divider>
 
+                        <v-container>
+                            <div>
+                                <v-row>
+                                    <v-col
+                                     cols="12"
+                                     lg="3"
+                                     md="3"
+                                     sm="12"
+                                    >
+                                        <v-btn
+                                         rounded
+                                         dark
+                                         color="success darken-3"
+                                         v-model="like"
+                                         v-on:click="true();"
+                                        >   
+                                            <v-icon class="left">mdi-checkbox-marked-circle</v-icon>
+                                            <span class="ml-1">{{ like }}</span> <span class="ml-1">Likes</span>
+                                        </v-btn>
+                                    </v-col>
+                                    <v-col
+                                     cols="12"
+                                     lg="3"
+                                     md="3"
+                                     sm="12"
+                                    >
+                                        <v-btn
+                                         rounded
+                                         dark
+                                         color="red"
+                                         @click="false"
+                                        >
+                                            <v-icon class="left">mdi-close-circle</v-icon>
+                                            <span class="ml-1">{{ dislike }}</span><span class="ml-1">Dislike</span>
+                                        </v-btn>
+                                    </v-col>
+
+                                    <v-col
+                                     cols="12"
+                                     lg="3"
+                                     md="3"
+                                     sm="12"
+                                    >
+                                        <v-btn
+                                        rounded
+                                        @click="comment = !comment; remark"
+                                        right
+                                        dark
+                                        id="btn-com"
+                                        color="purple darken-3"
+                                        >   
+                                            <v-icon class="left">mdi-comment</v-icon>
+                                            <span class="ml-1">{{ comments }}</span><span class="ml-1">Comment</span>
+                                        </v-btn>
+                                    </v-col>
+                                </v-row>
+                            </div>
+                        </v-container>
+                        
+                        <v-divider class="mx-4"></v-divider>
+
                         <v-card-text>
                             <v-chip-group
                              column
                             >
                                 <v-chip>5:30 PM</v-chip>
+
+                                <v-chip class="ml-12"  color="green darken-1"><v-icon color="white">mdi-checkbox-marked-circle</v-icon> <v-text class="ml-2 white--text">Probability </v-text> <span class="ml-2 white--text font-weight-bold"> 90% True</span> </v-chip>
 
                                 <v-spacer></v-spacer>
 
@@ -109,8 +172,32 @@
                         </v-card-text>
                     </v-container>
                 </v-card>
+
+                <v-card class="mx-auto" v-show="comment">
+                    <div class="text-center">
+                        <v-card-text>Make your Comments!</v-card-text>
+                        <v-flex>
+                            <v-container>
+                                <v-form>
+                                    <v-textarea
+                                    filled
+                                    auto-grow
+                                    label="Coments"
+                                    shaped
+                                    ></v-textarea>
+                                </v-form>
+                            </v-container>
+                        </v-flex>
+                        <v-card-actions>
+                            <v-btn dark color="purple darken-3">
+                                <v-icon left>mdi-comment</v-icon>
+                                <span>Comment</span>
+                            </v-btn>
+                        </v-card-actions>
+                    </div>
+                </v-card>
             </v-content>
-        </v-card><br><br>
+        </v-card><br><br><br><br>
     </div>
 </template>
 
@@ -121,15 +208,31 @@
     data () {
       return {
         drawer: false,
+        comment: false,
+        like: 0,
+        dislike: 0,
+        comments: 0,
         links: [
-          { title: 'Navigate', icon: 'mdi-apps', route: '/' },
-          { title: 'Home', icon: 'mdi-home-city', route: '/' },
-          { title: 'Logout', icon: 'mdi-open-in-new', route: '/' },
-          {}
+            { title: 'Home', icon: 'mdi-home-city', route: '/' },
+            { title: 'News', icon: 'mdi-apps', route: '/news' },
+            { title: 'About Us', icon: 'mdi-account-group', route: '/about' },
+            { title: 'Contact', icon: 'mdi-phone', route: '/contact ' },
+            { title: 'Logout', icon: 'mdi-open-in-new', },
         ],
         miniVariant: true,
         expandOnHover: true,
       }
+    },
+    methods: {
+        true() {
+          this.like += 1;
+        },
+        false() {
+            this.dislike++;
+        },
+        remark() {
+            this.comment++;
+        }
     },
     computed: {
       bg () {

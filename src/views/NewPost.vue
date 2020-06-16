@@ -45,7 +45,7 @@
         <v-card
          class="mx-auto"
          max-width="1000"
-         style="margin-top: -64px;"
+         style="margin-top: -59px;"
         >
             <v-toolbar flat color="">
                 <v-toolbar-title class="deep-purple--text">Submit a post</v-toolbar-title>
@@ -57,12 +57,12 @@
                         <v-btn
                          icon
                          v-on="on"
-                         router to="/"
+                         router to="/news"
                         >
-                            <v-icon color="indigo" dark>mdi-home-city</v-icon>
+                            <v-icon color="indigo" dark>mdi-apps</v-icon>
                         </v-btn>
                     </template>
-                    <span>Home</span>
+                    <span>News</span>
                 </v-tooltip>
 
                 <v-tooltip bottom>
@@ -107,10 +107,10 @@
                         v-model="files"
                         color="deep-purple accent-4"
                         counter
-                        label="File input"
+                        shaped
+                        label="Upload Images"
                         multiple
-                        placeholder="Upload Images"
-                        prepend-icon="mdi-camera"
+                        prepend-inner-icon="mdi-camera"
                         outlined
                         :show-size="1000"
                     >
@@ -133,47 +133,23 @@
                         </span>
                         </template>
                     </v-file-input>
-                
-                    <v-menu
-                    v-model="menu2"
-                    :close-on-content-click="false"
-                    max-width="290"
-                    >
-                    <template v-slot:activator="{ on }">
-                        <v-text-field
-                        outlined
-                        shaped
-                        clearable
-                        label="Date"
-                        :placeholder="currentDate"
-                        prepend-icon="mdi-pen"
-                        readonly
-                        v-on="on"
-                        @click:clear="date = null"
-                        ></v-text-field>
-                    </template>
-                    <v-date-picker
-                        v-model="currentDate"
-                        @change="menu = false"
-                    ></v-date-picker>
-                    </v-menu>
 
                     <v-divider class="my-2"></v-divider>
 
                     <v-item-group multiple>
                         <v-subheader>Tags</v-subheader>
                         <v-item
-                        v-for="n in 4"
+                        v-for="n in 8"
                         :key="n"
-                        v-slo:activator="{active, toggle}"
+                        v-slot:default="{ active, toggle }"
                         >
-                            <v-chip
-                            active="Purple--text"
+                        <v-chip
+                            active-class="purple--text"
                             :input-value="active"
                             @click="toggle"
-                            > 
-                                Tag {{ n }}
-                            </v-chip>
+                        >
+                            Tag {{ n }}
+                        </v-chip>
                         </v-item>
                     </v-item-group>
                 </v-card-text>
@@ -189,11 +165,13 @@
                     v-on:click="submit"
                     >
                         <span>Post</span>
-                        <v-icon left>mdi-open-in-new</v-icon>
+                        <v-icon right>mdi-send</v-icon>
                     </v-btn>
                 </v-card-actions>
             </v-content>
-        </v-card>
+        </v-card><br>
+        <br>
+        <br><br>
     </div>
 </template>
 
@@ -211,16 +189,21 @@ export default {
         files: [],
         drawer: false,
         items: [
-          { title: 'Navigate', icon: 'mdi-apps' },
-          { title: 'Home', icon: 'mdi-home-city' },
-          { title: 'Logout', icon: 'mdi-open-in-new' },
-          {}
+            { title: 'Home', icon: 'mdi-home-city', route: '/' },
+            { title: 'News', icon: 'mdi-apps', route: '/news' },
+            { title: 'About Us', icon: 'mdi-account-group', route: '/about' },
+            { title: 'Contact', icon: 'mdi-phone', route: '/contact' },
+            { title: 'Logout', icon: 'mdi-open-in-new', route: '/' },
         ],
+        imgs: [
+            { view: '@/assets/logo.png' },
+            { view: '@/assets/logo.png' },
+            { view: '@/assets/logo.png' }
+        ], 
     }),
 
     methods: {
         submit() {
-            console.log(this.title, this.content, this.files);
         }
     },
 
