@@ -284,62 +284,25 @@
                                     id="mainCard"
                                     class="mx-auto"
                                     height="270"
-                                    elevation="4"
+                                    elevation="8"
                                     >
                                         <v-card
                                         id="nestedCard"
                                         class="mx-auto ml-3 mr-3 text-center"
-                                        :color="card.color"
                                         height="160"
                                         flat
                                         >
                                            <v-img
                                             src="@/assets/post.png"
+                                            width="100%"
                                            ></v-img>
                                         </v-card>
                                         <v-sheet class="text-center">
                                             <v-card-text class="newText">Lorem ipsum dolor sit amet consectetur adipisicing elit. Vitae sed blanditiis </v-card-text>
                                             <div>
-                                                <v-btn rounded color="blue-grey lighten-5" class="blue-grey--text text--darken newBtn">Read</v-btn>
+                                                <v-btn rounded router to="/single_post" outlined color="indigo" class="newBtn">Read</v-btn>
                                             </div>
                                         </v-sheet>
-
-                                         <!-- <v-card-actions>
-                                            <v-list-item class="grow">
-                                                <v-list-item-avatar color="grey darken-3">
-                                                    <v-img
-                                                        class="elevation-6"
-                                                        src="../assets/peret.png"
-                                                    ></v-img>
-                                                </v-list-item-avatar>
-
-                                                <v-list-item-content>
-                                                    <v-list-item-title>Helen</v-list-item-title>
-                                                </v-list-item-content>
-
-                                                <v-row
-                                                 align="center"
-                                                 justify="end"
-                                                >   
-                                                   <v-spacer></v-spacer>                           
-                                                    <v-btn
-                                                    icon
-                                                    color="grey darken-3"
-                                                    >
-                                                        <v-icon class="white--text v-bold font-weight-bold">mdi-close-circle</v-icon>
-                                                    </v-btn>
-                                                    <span>80</span>
-
-                                                    <v-btn
-                                                    icon
-                                                    color="white"
-                                                    >
-                                                        <v-icon class="white--text v-bold font-weight-bold">mdi-checkbox-marked-circle</v-icon>
-                                                    </v-btn>
-                                                    <span>190</span>
-                                                </v-row>
-                                            </v-list-item>
-                                        </v-card-actions> -->
                                     </v-card><br>
                                 </v-col>
                            </v-row>
@@ -560,6 +523,8 @@ export default {
         transform: translateY(-4rem);
         padding: 0.5rem 0;
         border-radius: 1.2rem;
+        background-color: transparent !important;
+        border: none !important;
     }
     .newText {
         transform: translateY(-1.7rem);
