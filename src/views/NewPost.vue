@@ -16,7 +16,7 @@
         >
             <v-list-item>
                 <v-list-item-content>
-                <v-list-item-title class="font-weight-bold headline purple--text">Crosssift</v-list-item-title>
+                <v-list-item-title class="font-weight-bold headline purple--text">Crossift</v-list-item-title>
                 </v-list-item-content>
             </v-list-item>
 
@@ -39,8 +39,6 @@
                 </v-list-item>
             </v-list>
         </v-navigation-drawer>
-
-        
 
         <v-card
          class="mx-auto"
@@ -110,7 +108,7 @@
                         shaped
                         label="Upload Images"
                         multiple
-                        prepend-inner-icon="mdi-camera"
+                        prepend-icon="mdi-camera"
                         outlined
                         :show-size="1000"
                     >
@@ -157,6 +155,14 @@
                 <v-divider></v-divider>
 
                 <v-card-actions>
+                    <v-btn
+                    dark
+                    color="indigo lighten-5 blur-grey--text text--darken-4"
+                    large
+                    v-on:click="submit"
+                    >
+                        <span class="indigo--text text--darken-4">reset</span>
+                    </v-btn>
                     <v-spacer></v-spacer>
                     <v-btn
                     dark

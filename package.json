@@ -1,17 +1,19 @@
 {
-  "name": "crosssift",
+  "name": "crossift",
   "version": "0.1.0",
   "private": true,
   "scripts": {
     "serve": "vue-cli-service serve",
     "build": "vue-cli-service build",
-    "start": "node server.js",
-    "lint": "vue-cli-service lint"
+    "lint": "vue-cli-service lint",
+    "start": "node server.js"
   },
   "dependencies": {
+    "animate.css": "^4.1.0",
     "core-js": "^3.4.4",
     "date-fns": "^2.9.0",
     "express": "^4.17.1",
+    "firebase": "^7.17.1",
     "vue": "^2.6.10",
     "vue-googlemaps": "^0.1.2",
     "vue-router": "^3.1.3",
@@ -22,13 +24,13 @@
   "devDependencies": {
     "@fortawesome/fontawesome-free": "^5.12.0",
     "@mdi/font": "^4.7.95",
-    "@vue/cli-plugin-babel": "^4.1.0",
-    "@vue/cli-plugin-eslint": "^4.1.0",
+    "@vue/cli-plugin-babel": "~4.4.6",
+    "@vue/cli-plugin-eslint": "~4.4.6",
     "@vue/cli-plugin-vuex": "~4.4.0",
-    "@vue/cli-service": "^4.1.0",
-    "babel-eslint": "^10.0.3",
-    "eslint": "^5.16.0",
-    "eslint-plugin-vue": "^5.0.0",
+    "@vue/cli-service": "~4.4.6",
+    "babel-eslint": "^10.1.0",
+    "eslint": "^6.7.2",
+    "eslint-plugin-vue": "^6.2.2",
     "sass": "^1.19.0",
     "sass-loader": "^8.0.0",
     "vue-cli-plugin-vuetify": "^2.0.3",

@@ -17,7 +17,7 @@
         >
             <v-list-item>
                 <v-list-item-content>
-                <v-list-item-title class="font-weight-bold headline purple--text">Crosssift</v-list-item-title>
+                <v-list-item-title class="font-weight-bold headline purple--text">Crossift</v-list-item-title>
                 </v-list-item-content>
             </v-list-item>
 
@@ -44,11 +44,15 @@
 
         <v-card
          class="mx-auto"
-         max-width="850"
-         style="margin-top: -60px;"
+         max-width="900"
+         style="margin-top: -63px;"
         >
             <v-toolbar flat>
                 <v-toolbar-title class="indigo--text font-weight-bold">Dashboard</v-toolbar-title>
+
+                <v-spacer></v-spacer>
+
+                <settings></settings>
             </v-toolbar>
 
             <v-divider></v-divider>
@@ -82,7 +86,6 @@
                              flat
                              elevation="1"
                              class="mx-auto"
-                             
                              color="grey lighten-3"
                             >
 
@@ -91,29 +94,37 @@
                                         <v-btn
                                         class="mt-5 align-center"
                                         id="cont"
-                                        color="pink"
+                                        color="indigo darken-4"
                                         dark
                                         >
                                             <span>Follow</span>
                                         </v-btn>
-                                        <v-row>
-                                            <v-col
-                                            cols="12"
-                                            md="6"
-                                            sm="12"
-                                            >
-                                                <v-card-text class="foll">Follower <br> <span class="indigo--text font-weight-bold">550</span> </v-card-text>
-                                            </v-col>
+                                        
+                                        <v-card class="mx-auto ma-2" elevation="0">
+                                            <v-row>
+                                                <v-col cols="12" md="6" sm="12">
+                                                    <v-chip link ripple pill class="ma-2 indigo lighten-5 grey--text text--darken-4 font-weight-bold">
+                                                        <v-avatar
+                                                            left
+                                                            size="23"
+                                                            class="indigo darken-3 py-2 white--text font-weight-medium"
+                                                        >100</v-avatar>
+                                                        FOLLOWERS
+                                                    </v-chip>
+                                                </v-col>
 
-                                            <v-col
-                                            cols="12"
-                                            md="6"
-                                            sm="12"
-                                            >
-                                                <v-card-text class="foll">Following <br> <span class="indigo--text font-weight-bold">130</span> </v-card-text>
-                                            </v-col>
-                                        </v-row>
-
+                                                <v-col cols="12" md="6" sm="12">
+                                                    <v-chip link ripple pill class="ma-2 indigo lighten-5 grey--text text--darken-4 font-weight-bold">
+                                                        FOLLOWING
+                                                        <v-avatar
+                                                            right
+                                                            size="23"
+                                                            class="indigo darken-3 py-2 white--text font-weight-medium"
+                                                        >90</v-avatar>
+                                                    </v-chip>
+                                                </v-col>
+                                            </v-row>
+                                        </v-card>
                                         <v-divider></v-divider>
 
                                         <v-card-text class="blue-grey--text">
@@ -127,25 +138,27 @@
                                             <span class="grey--text text--darken-3">Recent Activities</span>
                                         </v-card-text>
 
-                                        <v-container>
-                                            <v-row justify="center">
+                                        <v-card elevation="0" class="mx-auto blue-grey lighten-5">
+                                            <v-row class="ma-2">
                                                 <v-col
-                                                 v-for="n in 4"
-                                                 :key="n"
-                                                 cols="12"
-                                                 md="3"
-                                                 sm="6"
+                                                    v-for="n in 4"
+                                                    :key="n"
+                                                    cols="12"
+                                                    md="3"
+                                                    sm="4"
                                                 >
                                                     <v-img
-                                                     id="imgx"
-                                                     height="100"
-                                                     width="100"
-                                                     contain
-                                                     src="../assets/37.png"
+                                                        class="imgs"
+                                                        contain=""
+                                                        max-height="80"
+                                                        max-width="100%"
+                                                        min-height="40"
+                                                        min-width="40"
+                                                        src="@/assets/37.png"
                                                     ></v-img>
                                                 </v-col>
                                             </v-row>
-                                        </v-container>
+                                        </v-card>
                                         <br>
 
                                         <v-divider></v-divider>
@@ -155,8 +168,15 @@
                                             <v-card-title class="deep-purple--text">Reputation</v-card-title>
 
                                             <v-card-text>
-                                                <span class="pink--text">100</span>  <span class="blue-grey--text font-weight-bold">Reps</span>
-                                                <p>Helen is know for credible, authentic, Unbaised, impeccable and actual comentry and reviews on Crosssift.</p>
+                                                <v-chip link ripple pill class="ma-2 indigo lighten-5 grey--text text--darken-4 font-weight-bold">
+                                                    <v-avatar
+                                                        left
+                                                        size="23"
+                                                        class="purple darken-3 py-2 white--text font-weight-bold"
+                                                    >99</v-avatar>
+                                                    <span>Reps</span>
+                                                </v-chip>
+                                                <p>Helen is known for credible, authentic, Unbaised, impeccable and actual comentry and reviews on Crossift.</p>
                                             </v-card-text>
                                         </v-card>
                                     </v-content>
@@ -229,9 +249,14 @@
 
 
 <script>
+import Settings from "@/components/core/Settings.vue";
+
   export default {
+    components: {
+        'settings': Settings,
+    },
     data () {
-      return {
+        return {
         drawer: false,
         nav_items: [
             { title: 'Home', icon: 'mdi-home-city', route: '/' },
@@ -242,7 +267,7 @@
         ],
         miniVariant: true,
         expandOnHover: true,
-      }
+        }
     },
     computed: {
       bg () {
@@ -276,9 +301,16 @@
     }
 
     @media screen and (max-width: 1024px) {
-        #imgx {
-            width: 50px !important;
+        .imgs {
+            width: 100% !important;
             height: 50px !important;
+        }
+        #avatar {
+            margin-top: -50px;
+            margin-left: -10px !important;
+            height: 60% !important;
+            /* width: 50% !important; */
+
         }
     }
 

@@ -19,7 +19,7 @@
         >
             <v-list-item>
                 <v-list-item-content>
-                <v-list-item-title class="font-weight-bold headline purple--text">Crosssift</v-list-item-title>
+                <v-list-item-title class="font-weight-bold headline indigo--text">Crossift</v-list-item-title>
                 </v-list-item-content>
             </v-list-item>
 
@@ -30,6 +30,7 @@
                 <v-list-item
                 v-for="item in items"
                 :key="item.title"
+                router :to="item.to"
                 link
                 >
                 <v-list-item-icon>
@@ -37,7 +38,7 @@
                 </v-list-item-icon>
 
                 <v-list-item-content>
-                    <v-list-item-title>{{ item.title }}</v-list-item-title>
+                    <v-list-item-title class="indigo--text text--darken-4">{{ item.title }}</v-list-item-title>
                 </v-list-item-content>
                 </v-list-item>
             </v-list>
@@ -50,7 +51,7 @@
          style="margin-top: -64px;"
         >
             <v-toolbar text>
-                <v-toolbar-title class="title indigo--text">Crosssift</v-toolbar-title>
+                <v-toolbar-title class="title indigo--text">Crossift</v-toolbar-title>
 
                 
                 <v-text-field
@@ -61,16 +62,12 @@
                     label="Search"
                     prepend-inner-icon="mdi-database-search"
                     solo-inverted
+                    clearable=""
                 ></v-text-field>
                 
                 <v-spacer></v-spacer>
-                <v-btn
-                 class="hidden-lg-only"
-                 icon
-                 color="indigo"
-                >
-                    <v-icon>mdi-magnify</v-icon>
-                </v-btn>
+                
+                <search-bar />
 
                 <v-menu offset-y>
                     <template v-slot:activator="{ on }">
@@ -84,129 +81,142 @@
                     </template>
 
                     <v-list>
+
                         <v-list-item
                          v-for="(drop, index) in d_items"
                          :key="index"
                          link
+                         router :to="drop.link"
                         >
-                            <router-link :to="drop.link">
-                                <v-list-item-icon>
-                                    <v-icon color="purple darken-3">{{ drop.icon }}</v-icon>
-                                </v-list-item-icon>
-                            </router-link>
-                            <router-link :to="drop.link">
-                                <v-list-item-content>
-                                    <v-list-item-title class="indigo--text text--darken-4">{{ drop.title }}</v-list-item-title>
-                                </v-list-item-content>
-                            </router-link>
-                        </v-list-item>
-                    </v-list>
-                </v-menu>
-
-                <v-menu
-                v-model="menu"
-                :close-on-content-click="false"
-                :nudge-width="200"
-                offset-x
-                >
-                <template v-slot:activator="{ on }">
-                    <v-btn icon v-on="on">
-                        <v-badge
-                        :content="5"
-                        color="pink"
-                        icon
-                        id="badge"
-                        small
-                        overlap
-                        link
-                        >
-                            <v-icon color="indigo">mdi-bell-outline</v-icon>
-                        </v-badge>
-                    </v-btn>
-                </template>
-
-                <v-card>
-                    <v-list>
-                    <v-list-item>
-                        <v-list-item-avatar>
-                        <img src="../assets/josh.png" alt="Josh">
-                        </v-list-item-avatar>
-
-                        <v-list-item-content>
-                        <v-list-item-title>Josh</v-list-item-title>
-                        <v-list-item-subtitle>Renowned Journalist</v-list-item-subtitle>
-                        </v-list-item-content>
-
-                        <v-list-item-action>
-                        <v-btn
-                            :class="fav ? 'red--text' : ''"
-                            icon
-                            @click="fav = !fav"
-                        >
-                            <v-icon>mdi-heart</v-icon>
-                        </v-btn>
-                        </v-list-item-action>
-                    </v-list-item>
-                    </v-list>
-
-                    <v-divider></v-divider>
-
-                    <v-list>
-                    <v-list-item>
-                        <v-list-item-action>
-                        <v-switch v-model="message" color="purple"></v-switch>
-                        </v-list-item-action>
-                        <v-list-item-title>Enable messages</v-list-item-title>
-                    </v-list-item>
-                    </v-list>
-
-                    <v-card-actions>
-                    <v-spacer></v-spacer>
-
-                    <v-btn text @click="menu = false">Cancel</v-btn>
-                    <v-btn color="primary" text @click="menu = false">Save</v-btn>
-                    </v-card-actions>
-                </v-card>
-                </v-menu>
-
-                <v-menu bottom left>
-                    <template v-slot:activator="{ on }">
-                        <v-btn
-                         color="purple darken"
-                         icon
-                         v-on="on"
-                        >
-                            <v-icon>mdi-dots-vertical</v-icon>
-                        </v-btn>
-                    </template>
-
-                    <v-list>
-                        <v-list-item
-                         v-for="(item, i) in side_items"
-                         :key="i"
-                         router :to="item.link"
-                         link
-                        >
-
                             <v-list-item-icon>
-                                <v-icon color="purple darken-3">{{ item.icon }}</v-icon>
+                                <v-icon color="purple darken-3">{{ drop.icon }}</v-icon>
                             </v-list-item-icon>
-
+                        
                             <v-list-item-content>
-                                <v-list-item-title class="indigo--text text--darken-4">{{ item.title }}</v-list-item-title>
+                                <v-list-item-title class="indigo--text text--darken-4">{{ drop.title }}</v-list-item-title>
                             </v-list-item-content>
                         </v-list-item>
                     </v-list>
                 </v-menu>
 
+                <v-menu bottom left transition="scale-transition">
+                    <template v-slot:activator="{ on, attrs }">
+                        <v-btn icon v-on="on" v-bind="attrs">
+                            <v-badge
+                                :content="5"
+                                color="pink"
+                                icon
+                                id="badge"
+                                small
+                                overlap
+                                link
+                            >
+                                <v-icon color="indigo">mdi-bell-outline</v-icon>
+                            </v-badge>
+                        </v-btn>
+                    </template>
+
+                    <v-list>
+                        <v-subheader>UNREAD POSTS</v-subheader>
+                        <v-list-item
+                        v-for="(item, i) in notifications"
+                        :key="i"
+                        link
+                        >
+                        <v-list-item-avatar>
+                            <v-img
+                            contain
+                            lazy-src="@/assets/josh.png"
+                            src="@/assets/josh.png"
+                            ></v-img>
+                        </v-list-item-avatar>
+
+                        <v-list-item-content>
+                            <v-list-item-title v-text="item.title"></v-list-item-title>
+                            <v-list-item-subtitle v-text="item.subtitle"></v-list-item-subtitle>
+                        </v-list-item-content>
+
+                        <v-list-item-action>
+                            <v-btn
+                            icon
+                            ><v-icon>mdi-email</v-icon></v-btn>
+                        </v-list-item-action>
+                        </v-list-item>
+                    </v-list>
+                </v-menu>
+
+                <settings />
             </v-toolbar>
 
             <v-divider></v-divider>
 
-           <v-content style="margin-top: 50px;">
+           <v-content class="content-news">
                <v-container>
                    <v-item-group>
                        <v-container>
+                           <v-row>
+                               <v-col
+                                v-for="n in 3"
+                                :key="n"
+                                cols="12"
+                                md="4"
+                                lg="4"
+                                sm="12"
+                               >
+                                   <v-card
+                                    elevation="5"
+                                    height="190"
+                                    width="100%"
+                                    id="trendingCard"
+                                    ripple
+                                    router to="/single_post"
+                                   >
+                                        <v-card-title>
+                                            <v-icon
+                                             left
+                                             color="red"
+                                            >
+                                                mdi-trending-up
+                                            </v-icon>
+                                            <span class="title red--text">Trending</span>
+                                        </v-card-title>
+
+                                        <v-card-text class="white--black">
+                                            Lorem ipsum dolor, sit amet consectetur adipisicing elit.
+                                        </v-card-text>
+
+                                        <v-card-actions class="mb-2">
+                                            <v-list-item class="grow">
+                                                <v-list-item-avatar size="30">
+                                                    <v-img
+                                                        class="elevation-2"
+                                                        src="../assets/andrea.jpg"
+                                                    ></v-img>
+                                                </v-list-item-avatar>
+
+                                                <v-list-item-content>
+                                                    <v-list-item-title style="font-size: .9rem !important;">Andrea</v-list-item-title>
+                                                </v-list-item-content>
+
+                                                <v-row
+                                                 align="center"
+                                                 justify="end"
+                                                >
+                                                    <v-btn icon class="ml-n2">
+                                                        <v-icon class="red--text mr-1">mdi-close-circle</v-icon>
+                                                        <span class="subheading mr-1">100</span>
+                                                    </v-btn>
+                                                
+                                                    <v-btn icon class="ml-5">
+                                                          <v-icon class="success--text mr-1">mdi-checkbox-marked-circle</v-icon>
+                                                          <span class="subheading mr-1">30</span>
+                                                    </v-btn>
+                                                </v-row>
+                                            </v-list-item>
+                                        </v-card-actions><br>
+                                   </v-card>
+                               </v-col>
+                            </v-row>
 
                            <v-row>
                                <v-col
@@ -240,7 +250,7 @@
                                     ></v-img>
 
                                     <v-card-text class="grey--text text--darken-4">
-                                        Visit ten places on our planet that are undergoing the biggest changes today.
+                                        Visit ten places on our planet that are undergoing the biggest changes today...
                                     </v-card-text>
 
                                     <v-card-actions>
@@ -283,26 +293,70 @@
                                     <v-card
                                     id="mainCard"
                                     class="mx-auto"
-                                    height="270"
                                     elevation="8"
                                     >
                                         <v-card
                                         id="nestedCard"
-                                        class="mx-auto ml-3 mr-3 text-center"
+                                        class="mx-auto ml-3 mr-3 text-center bob animate infinite bounce"
                                         height="160"
+                                        elevation="12"
                                         flat
                                         >
                                            <v-img
                                             src="@/assets/post.png"
+                                            lazy-src="@/assets/post.png"
                                             width="100%"
-                                           ></v-img>
+                                            
+                                            class="white--text align-end"
+                                           >
+                                            <v-card-title id="postTitle">Top 10 Australian beaches</v-card-title>
+                                           </v-img>
                                         </v-card>
                                         <v-sheet class="text-center">
                                             <v-card-text class="newText">Lorem ipsum dolor sit amet consectetur adipisicing elit. Vitae sed blanditiis </v-card-text>
                                             <div>
-                                                <v-btn rounded router to="/single_post" outlined color="indigo" class="newBtn">Read</v-btn>
+                                                <v-btn rounded router to="/single_post" outlined color="indigo" small class="newBtn">Read</v-btn>
                                             </div>
                                         </v-sheet>
+                                        <!-- <v-divider class="mx-4"></v-divider> -->
+                                        <v-card-actions class="mt-n3">
+                                            <v-list-item class="grow">
+                                                <v-list-item-avatar color="grey darken-3">
+                                                    <v-img
+                                                        class="elevation-6"
+                                                        src="../assets/peret.png"
+                                                    ></v-img>
+                                                </v-list-item-avatar>
+
+                                                <v-list-item-content>
+                                                    <v-list-item-title>Helen</v-list-item-title>
+                                                </v-list-item-content>
+
+                                                <v-row
+                                                 align="center"
+                                                 justify="end"
+                                                >   
+                                                   <v-spacer></v-spacer>                           
+                                                    <v-btn
+                                                    icon
+                                                    dark
+                                                    color="red"
+                                                    >
+                                                        <v-icon class=" v-bold font-weight-bold">mdi-close-circle</v-icon>
+                                                    </v-btn>
+                                                    <span>80</span>
+
+                                                    <v-btn
+                                                    icon
+                                                    dark
+                                                    color="green"
+                                                    >
+                                                        <v-icon class="v-bold font-weight-bold">mdi-checkbox-marked-circle</v-icon>
+                                                    </v-btn>
+                                                    <span>190</span>
+                                                </v-row>
+                                            </v-list-item>
+                                        </v-card-actions>
                                     </v-card><br>
                                 </v-col>
                            </v-row>
@@ -374,74 +428,13 @@
                                     </v-card>
                                </v-col>
                            </v-row>
-
-                            <v-row>
-                               <v-col
-                                v-for="n in 3"
-                                :key="n"
-                                cols="12"
-                                md="4"
-                                lg="4"
-                                sm="12"
-                               >
-                                   <v-card
-                                    elevation="5"
-                                    height="180"
-                                    router to="/single_post"
-                                   >
-                                        <v-card-title>
-                                            <v-icon
-                                             left
-                                             color="red"
-                                            >
-                                                mdi-trending-up
-                                            </v-icon>
-                                            <span class="title red--text">Trending</span>
-                                        </v-card-title>
-
-                                        <v-card-text class="white--black">
-                                            Lorem ipsum dolor, sit amet consectetur adipisicing elit.
-                                        </v-card-text>
-
-                                        <v-card-actions class="mb-2">
-                                            <v-list-item class="grow">
-                                                <v-list-item-avatar>
-                                                    <v-img
-                                                        class="elevation-2"
-                                                        src="../assets/andrea.jpg"
-                                                    ></v-img>
-                                                </v-list-item-avatar>
-
-                                                <v-list-item-content>
-                                                    <v-list-item-title>Andrea</v-list-item-title>
-                                                </v-list-item-content>
-
-                                                <v-row
-                                                 align="center"
-                                                 justify="end"
-                                                >
-                                                    <v-btn icon >
-                                                        <v-icon class="red--text mr-1">mdi-close-circle</v-icon>
-                                                        <span class="subheading mr-1">100</span>
-                                                    </v-btn>
-                                                
-                                                    <v-btn icon class="ml-5">
-                                                          <v-icon class="success--text mr-1">mdi-checkbox-marked-circle</v-icon>
-                                                          <span class="subheading mr-1">30</span>
-                                                    </v-btn>
-                                                </v-row>
-                                            </v-list-item>
-                                        </v-card-actions><br>
-                                   </v-card>
-                               </v-col>
-                            </v-row>
                        </v-container>
                    </v-item-group>
                </v-container>
 
                 <v-divider class="mr-3 ml-3 "></v-divider>
                <v-container>
-                   <div class="text-center">
+                   <div class="text-center ma-2">
                         <v-pagination
                         v-model="page"
                         :length="10"
@@ -449,7 +442,7 @@
                         next-icon="mdi-menu-right"
                         prev-icon="mdi-menu-left"
                         :page="page"
-                        color="indigo darken-3"
+                        color="indigo"
                         ></v-pagination>
                     </div>
                </v-container>
@@ -460,13 +453,15 @@
 
 
 <script>
-
+import SearchBar from "@/components/partials/SearchBar.vue";
+import Settings from "@/components/core/Settings.vue";
 
 export default {
-    name: 'toolbar',
+    name: 'News',
 
     components: {
-        
+        'search-bar': SearchBar,
+        'settings': Settings,
     },
 
     data: () => ({
@@ -477,22 +472,29 @@ export default {
         value: true,
         drawer: false,
         items: [
-            { title: 'Home', icon: 'mdi-home-city', route: '/' },
-            { title: 'News', icon: 'mdi-apps', route: '/news' },
-            { title: 'About Us', icon: 'mdi-account-group', route: '/about' },
-            { title: 'Contact', icon: 'mdi-phone', route: '/contact' },
-            { title: 'Logout', icon: 'mdi-open-in-new', },
+            { title: 'Home', icon: 'mdi-home-city', to: '/' },
+            { title: 'News', icon: 'mdi-apps', to: '/news' },
+            { title: 'About Us', icon: 'mdi-account-group', to: '/about' },
+            { title: 'Contact', icon: 'mdi-phone', to: '/contact' },
+            // { title: 'Logout', icon: 'mdi-open-in-new', to: '#!'},
         ],
-        side_items: [
-            {title: 'About Us', icon: 'mdi-account-group', link: '/about'},
-            {title: 'Contact Us', icon: 'mdi-phone', link: '/contact'},
-            {title: 'Logout', icon: 'mdi-open-in-new', link: '/'},
-        ],
+
+        notifications: [
+        { title: 'Our changing Planet', subtitle: 'Aug 20, 2020' },
+        { title: 'The Plateau', subtitle: 'Aug 10, 2020' },
+        { title: 'Our changing Planet', subtitle: 'Aug 20, 2020' },
+        { title: 'The Plateau', subtitle: 'Aug 10, 2020' },
+        { title: 'Our changing Planet', subtitle: 'Aug 20, 2020' },
+      ],
+       
         right: null,
         d_items: [
             {title: 'Home', icon: 'mdi-home-city', link: '/'},
             {title: 'Make a post', icon: 'mdi-pen', link: '/new_post'},
             {title: 'Dashboard', icon: 'mdi-view-dashboard', link: '/dashboard'},
+            {title: 'About Us', icon: 'mdi-account-group', link: '/about'},
+            {title: 'Contact Us', icon: 'mdi-phone', link: '/contact'},
+            {title: 'Logout', icon: 'mdi-open-in-new', link: '/'},
         ],
         cards: [
             { color_id: 'card-two-x' },
@@ -519,15 +521,18 @@ export default {
         border-radius: 1rem;
         background: linear-gradient(to bottom right, #3F51B5, #42A5F5);
     }
-    #nestedCard {
+    
+    .newText {
+        transform: translateY(-1.7rem);
+    }
+
+    #nestedCard  {
         transform: translateY(-4rem);
-        padding: 0.5rem 0;
+        padding: 0rem 0 !important;
         border-radius: 1.2rem;
         background-color: transparent !important;
         border: none !important;
-    }
-    .newText {
-        transform: translateY(-1.7rem);
+        cursor: pointer !important;
     }
 
     .newBtn {
@@ -546,6 +551,16 @@ export default {
     #toolbar {
         background: linear-gradient(to bottom right, #1A237E, #4A148C);
     }
+    #postTitle {
+        padding: 5px;
+        background-color: rgba(0, 0, 0, 0.5);
+    }
+    #trendingCard {
+        border-radius: 1rem !important;
+    }
+    #trendingCard:hover {
+        box-shadow: rgba(0, 0, 0, 0.5);
+    }
 
     .v-application a {
         color: transparent;
@@ -553,6 +568,17 @@ export default {
 
     .v-bold {
         font-weight: bold;
+    }
+    .content-news {
+            margin-top: 15px !important;
+        }
+    @media screen and (max-width: 1024px) {
+        #nestedCard {
+            margin-top: 2.3rem !important;
+        }
+        .content-news {
+            margin-top: 3px !important;
+        }
     }
 
 

@@ -6,7 +6,7 @@
       extended
       flat
     >
-      <v-app-bar-nav-icon></v-app-bar-nav-icon>
+      <!-- <v-app-bar-nav-icon></v-app-bar-nav-icon> -->
     </v-toolbar>
 
     <v-card
@@ -83,7 +83,7 @@
                                 dark
                                 text
                                 >
-                                    <span>Contact Support</span>
+                                    <span class="indigo--text text--darken-1" style="text-transform: lowercase !important;">support@crossift.com</span>
                                 </v-btn>
                             </v-card-actions>
                         </div>
@@ -111,7 +111,7 @@
             </v-card>
             <v-container>
                 <div class="text-center">
-                    <v-btn dark router to="/news" ripple color="purple darken-3" >Back to new page</v-btn>
+                    <v-btn dark router to="/news" ripple color="purple darken-3"><v-icon left>mdi-arrow-left</v-icon>Back to news page</v-btn>
                 </div>
             </v-container>
         </v-container>

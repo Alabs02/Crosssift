@@ -9,37 +9,32 @@
 
         <v-app-bar-nav-icon v-on:click="drawer = !drawer"></v-app-bar-nav-icon>
 
-        <v-toolbar-title>Crosssift</v-toolbar-title>
+        <v-toolbar-title>Crossift</v-toolbar-title>
 
         <v-spacer></v-spacer>
 
 
-        <div class="hidden-md-and-down">
-
-            <router-link to="/">
-                <v-btn
+        <!-- <div >
+            <v-btn
+                v-for="item in topnav_items"
+                :key="item.title"
                 text
-                >
-                <span>Home</span>
-                </v-btn>
-            </router-link>
-           
-            <router-link to="/news">
-                <v-btn
-                text
-                >
-                <span>News</span>
-                </v-btn>
-            </router-link>
-           
-           <router-link to="/new_post">
-                <v-btn
-                text
-                >
-                <span>Make Post</span>
-                </v-btn>
-           </router-link>
-        </div>
+                router :to="item.to"
+            >
+                <span>{{ item.title }}</span>
+            </v-btn>
+        </div> -->
+        <v-btn
+            v-for="(item, i ) in topnav_items"
+            :key="i"
+            text
+            dark
+            router :to="item.route"
+            class="hidden-md-and-down"
+        >   
+            <v-icon class="ml-1 white--text" left>{{ item.icon }}</v-icon>
+            <span class="white--text" v-text="item.title"></span>
+        </v-btn>
         </v-app-bar>
        
           <v-navigation-drawer
@@ -49,7 +44,7 @@
         >
             <v-list-item>
                 <v-list-item-content>
-                <v-list-item-title class="font-weight-bold headline purple--text">Crosssift</v-list-item-title>
+                <v-list-item-title class="font-weight-bold headline purple--text">Crossift</v-list-item-title>
                 </v-list-item-content>
             </v-list-item>
             
@@ -93,6 +88,12 @@ export default {
         panes: [
             { title: 'About Us', icon: 'mdi-help-box', route: '/about'},
             { title: 'Contact Us', icon: 'mdi-phone', route: '/contact'},
+        ],
+
+        topnav_items: [
+            { title: "Home", icon: 'mdi-home', route: '/' },
+            { title: "News", icon: 'mdi-apps', route: '/news' },
+            { title: "Create a post", icon: 'mdi-plus', route: '/new_post' }
         ],
     }),
 }

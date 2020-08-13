@@ -11,8 +11,8 @@
        class="text-center"
        cols="12"
       >
-        {{ new Date().getFullYear() }} — <strong>Crosssift</strong> 
-        <v-btn rounded ripple color="grey lighten-3" class="ml-2 grey--text text--darken-3">Privacy Policy</v-btn>
+        &copy; {{ new Date().getFullYear() }} — <strong>Crossift</strong> 
+        <v-btn rounded elevation="0" small ripple color="grey darken-3" class="ml-2 white--text text--darken-3">Privacy Policy</v-btn>
       </v-col>
     </v-footer>
   </div>
@@ -31,5 +31,10 @@
 <style scoped>
   #footer {
     bottom: 0 !important;
+  }
+  @media screen and (max-width: 1024px) {
+    #footer {
+      margin-top: 10px !important;
+    }
   }
 </style>

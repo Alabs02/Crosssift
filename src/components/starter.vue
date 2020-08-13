@@ -6,15 +6,16 @@
                  outlined
                  color="indigo darken-2"
                  v-on="on"
+                 class="getBtn"
                 >
-                    <v-icon>mdi-speedometer</v-icon>
+                    <v-icon class="left">mdi-speedometer</v-icon>
                     <span>Get Started</span>
                 </v-btn>
             </template>
 
             <v-card class="mx-auto">
                 <v-card-title class="text-center justify-center py-6">
-                    <h1 class="font-weight-bold body-1 indigo--text">CROSSSIFT</h1>
+                    <h1 class="font-weight-bold body-1 indigo--text">CROSSIFT</h1>
                 </v-card-title>
 
                 <v-tabs
@@ -172,5 +173,9 @@ export default {
 </script>
 
 <style scoped>
-
+@media screen and (max-width: 1024px) {
+    .getBtn {
+        margin-bottom: 2rem !important;
+    }
+}
 </style>

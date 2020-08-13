@@ -1,4 +1,4 @@
-# crosssift
+# crossift
 
 ## Project setup
 ```

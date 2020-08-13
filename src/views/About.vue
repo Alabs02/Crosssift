@@ -19,7 +19,7 @@
 
         <v-spacer></v-spacer>
 
-        <v-tooltip bottom>
+        <!-- <v-tooltip bottom>
           <template v-slot:activator="{ on }">
             <v-btn
              link
@@ -63,7 +63,43 @@
             </v-btn>
           </template>
           <span>Contact Us</span>
-        </v-tooltip>
+        </v-tooltip> -->
+        <v-menu bottom left transition="scale-transition">
+          <template v-slot:activator="{ on, attr }">
+            <v-btn
+              icon
+              v-bind="attr"
+              v-on="on"
+              class="indigo lighten-5"
+            ><v-icon class="indigo--text text--darken-4">mdi-dots-vertical</v-icon></v-btn>
+          </template>
+
+          <v-list>
+            <v-list-item
+              v-for="(item, i) in leftNavItems"
+              :key="i"
+              router :to="item.to"
+              link
+            >
+              <v-list-item-avatar>
+                <v-icon
+                  color="indigo"
+                  v-text="item.icon"
+                ></v-icon>
+              </v-list-item-avatar>
+
+              <v-list-item-content>
+                <v-list-item-title class="indigo--text text--darken-3" v-text="item.title"></v-list-item-title>
+              </v-list-item-content>
+
+              <!-- <v-list-item-action>
+                <v-btn
+                  icon
+                ><v-icon>mdi-email</v-icon></v-btn>
+              </v-list-item-action> -->
+            </v-list-item>
+          </v-list>
+        </v-menu>
       </v-toolbar>
 
       <v-divider></v-divider>
@@ -160,7 +196,7 @@
              class="mx-auto"
             >
             <v-container>
-              <v-card-text class="">Crosssift is a platform that allows you shared the happening in vicinity. We also help to authenticate the information you post to ensure it true and to reduce the icesant spread of fake news in Nigeria.</v-card-text>
+              <v-card-text class="">Crossift is a platform that allows you shared the happening in vicinity. We also help to authenticate the information you post to ensure it true and to reduce the icesant spread of fake news in Nigeria.</v-card-text>
             </v-container>
             </v-sheet>
           </v-card>
@@ -321,11 +357,6 @@
 <script>
   export default {
     data: () => ({
-
-      cards: [
-        { title: 'Alabura Usman', src: 'http://bit.ly/36NVjjp'},
-        { title: "Alams Titus Mammu'an", src: 'http://bit.ly/2GLyeTO'},
-      ],
       items: [
         {
           color: 'indigo',
@@ -343,6 +374,12 @@
           color: 'pink darken-1',
           icon: 'mdi-buffer',
         },
+      ],
+
+      leftNavItems: [
+        { title: "Home", icon: 'mdi-home', to: "/" },
+        { title: "News", icon: 'mdi-apps', to: "/news" },
+        { title: "Contact", icon: 'mdi-phone', to: "/contact" },
       ],
 
       open: 'mdi-open-in-new',

@@ -9,7 +9,7 @@
         dark
         class="text-center alert"
       >
-        <span class="overline" id="salute">Welcome to Crosssift!!!</span>
+        <span class="overline" id="salute">Welcome to Crossift!</span>
       </v-alert>
       <v-layout align-center>
         <v-flex>
@@ -25,6 +25,7 @@
              <v-snackbar
               color="white"
               class="black--text"
+              elevation="5"
               v-model="snackbar"
               :multi-line="multiLine"
               :timeout="timeout"
@@ -39,7 +40,7 @@
                 <span>View Policy</span>
               </v-btn>
               <v-btn
-                color="indigo darken-2"
+                color="pink darken-2"
                 text
                 @click="snackbar = false"
               >
@@ -50,7 +51,7 @@
 
             <v-card>
               <v-card-title
-                class="headline grey lighten-2"
+                class="headline indigo lighten-5 indigo--text text--darken-3"
                 primary-title
               >
                 Privacy Policy
@@ -65,7 +66,7 @@
               <v-card-actions>
                 <v-spacer></v-spacer>
                 <v-btn
-                  color="indigo"
+                  color="indigo font-weight-medium"
                   text
                   @click="dialog = false"
                 >
@@ -81,10 +82,10 @@
 
 <script>
 // @ is an alias to /src
-import AppBar from '../components/AppBar';
-import Carousel from '../components/Carousel';
+import AppBar from '@/components/AppBar';
+import Carousel from '@/components/Carousel';
+import Popup from "@/components/partials/Popup.vue"
 // eslint-disable-next-line no-unused-vars
-import Popup from '../components/Popup';
 
 
 export default {
