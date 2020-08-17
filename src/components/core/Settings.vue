@@ -36,13 +36,13 @@
             <v-toolbar-title>Settings</v-toolbar-title>
             <v-spacer></v-spacer>
             <v-toolbar-items>
-                <v-btn
+                <!-- <v-btn
                 dark
                 text
                 @click="dialog = false"
                 >
                 Save
-                </v-btn>
+                </v-btn> -->
             </v-toolbar-items>
             <v-menu
                 bottom
@@ -59,54 +59,71 @@
                     <v-icon>mdi-dots-vertical</v-icon>
                 </v-btn>
                 </template>
-                <v-list>
-                <v-list-item
-                    v-for="(item, i) in items"
-                    :key="i"
-                    @click="() => {}"
-                >
-                    <v-list-item-title>{{ item.title }}</v-list-item-title>
-                </v-list-item>
-                </v-list>
+                <!--  -->
+                <v-card class="text-center">
+                  <v-card-text>
+                    <v-row no-gutters justify="center">
+                      <p class="body-1">johndeo@thecrossift.com</p>
+                    </v-row>
+                  </v-card-text>
+                </v-card>
             </v-menu>
             </v-toolbar>
             <v-card-text>
-              <v-container></v-container>
-              <v-divider inset></v-divider>
-              <v-subheader inset class="body-1">Auth data</v-subheader>
-              <v-card flat>
-                  <v-list>
-                   
-                  </v-list>
-              </v-card>
-            <!-- <v-btn
-                color="indigo"
-                dark
-                class="ma-2"
-                @click="dialog2 = !dialog2"
-            >
-                Open Dialog 2
-            </v-btn>
-            <v-tooltip right>
-                <template v-slot:activator="{ on, attrs }">
-                <v-btn
-                    class="ma-2"
-                    v-bind="attrs"
-                    v-on="on"
-                >Tool Tip Activator</v-btn>
-                </template>
-                Tool Tip
-            </v-tooltip> -->
-
+            <v-container></v-container>
             <v-list
                 three-line
                 subheader
             >
                 <v-list-item>
+                  <v-row>
+                    <v-col cols="12" md="6" sm="12">
+                      <v-avatar size="60">
+                        <v-img
+                          src="../../assets/female.svg"
+                          lazy-src="../../assets/female.svg"
+                        ></v-img>
+                      </v-avatar>
+                      <p class="overline mt-2">change avatar</p>
+                      <v-file-input
+                        :rules="rules"
+                        outlined
+                        color="indigo"
+                        chips
+                        accept="image/png, image/jpeg, image/bmp"
+                        placeholder="Pick an avatar"
+                        prepend-icon="mdi-camera"
+                        label="Avatar"
+                      ></v-file-input>
+                    </v-col>
+
+                    <v-col cols="12" md="6" sm="12">
+                      <v-avatar tile size="60">
+                        <v-img
+                          src="../../assets/books.png"
+                          lazy-src="../../assets/books.png"
+                          cover
+                        ></v-img>
+                      </v-avatar>
+                      <p class="overline mt-2">change cover picture</p>
+                      <v-file-input
+                        :rules="rules"
+                        outlined
+                        color="indigo"
+                        chips
+                        accept="image/png, image/jpeg, image/bmp"
+                        placeholder="change cover picture"
+                        prepend-icon="mdi-camera"
+                        label="Avatar"
+                      ></v-file-input>
+                    </v-col>
+                  </v-row>
+                </v-list-item>
+                <v-list-item>
                 <v-list-item-content>
                     <v-row>
                       <v-col cols="12" md="12" sm="12">
-                        <v-card max-width="80%" class="ml-5" flat>
+                        <v-card max-width="100%" class="ml-5" flat>
                           <v-toolbar flat>
                             <span><v-icon color="indigo">mdi-pen</v-icon></span><v-toolbar-title class="ml-4 grey--text text--darken">Update your profile </v-toolbar-title>
                           </v-toolbar>
@@ -233,7 +250,7 @@
                 </v-list-item-action>
                 <v-list-item-content>
                     <v-list-item-title>Notifications</v-list-item-title>
-                    <v-list-item-subtitle>Notify me about updates to apps or games that I downloaded</v-list-item-subtitle>
+                    <v-list-item-subtitle>Notify me about updates to apps and posts</v-list-item-subtitle>
                 </v-list-item-content>
                 </v-list-item>
                 <v-list-item>
@@ -255,11 +272,45 @@
                 </v-list-item-content>
                 </v-list-item>
             </v-list>
+            <v-container></v-container>
+              <v-divider class="mt-3 mb-5 mx-5"></v-divider>
+              <v-subheader inset class="red--text body-1">Danger Zone</v-subheader>
+              <v-container></v-container>
+              <v-card max-width="50%">
+                <v-container>
+                  <v-card-text class="title">Delete Account</v-card-text>
+                  <v-card-text>
+                    <v-alert
+                      border="left"
+                      colored-border
+                      type="error"
+                      elevation="0"
+                    >
+                      This action <span class="font-weight-bold">cannot</span> be undone. This will permanently  delete your account, and all files and data cannot be recovered.
+                    </v-alert>
+                  </v-card-text>
+                  <v-text-field
+                    label="Email"
+                    type="email"
+                    color="red"
+                    outlined
+                    placeholder="johndeo@thrcrossift.com"
+                  >
+                  </v-text-field>
+                  <v-card-actions>
+                    <v-spacer></v-spacer>
+                    <delete-account />
+                  </v-card-actions>
+                </v-container>
+              </v-card>
             </v-card-text>
 
             <div style="flex: 1 1 auto;"></div>
+            <v-card flat>
+              
+            </v-card>
         </v-card>
-        </v-dialog>
+      </v-dialog>
 
       <v-dialog
         v-model="dialog2"
@@ -348,6 +399,7 @@ import updateUsername from '@/components/Auth/update/updateUsername.vue';
 import Occupation from '@/components/Auth/update/updateOccupation.vue';
 import Password from '@/components/Auth/update/updatePassword.vue';
 import updateEmail from '@/components/Auth/update/updateEmail.vue';
+import deleteAccount from '@/components/Auth/DeleteAccount.vue'
 
   export default {
     components: {
@@ -357,6 +409,7 @@ import updateEmail from '@/components/Auth/update/updateEmail.vue';
       'occupation': Occupation,
       'update-pass': Password,
       'update-email': updateEmail,
+      'delete-account': deleteAccount,
     },
 
     data () {

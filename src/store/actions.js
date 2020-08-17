@@ -162,5 +162,17 @@ export const actions = {
             alert("An error happened")
             console.log('forgot pass: ', error)
         })
+    },
+
+    deleteAccount() {
+        // Delet user account
+        const user = fb.auth.currentUser
+
+        user.delete().then(() => {
+            alert('user Deleted')
+        }).catch(error => {
+            console.log("An error happened")
+            console.log(error)
+        })
     }
 }

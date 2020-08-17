@@ -45,7 +45,7 @@
         <v-card
          class="mx-auto"
          max-width="900"
-         style="margin-top: -63px;"
+         style="margin-top: -64px;"
         >
             <v-toolbar flat>
                 <v-toolbar-title class="indigo--text font-weight-bold">Dashboard</v-toolbar-title>

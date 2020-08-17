@@ -18,52 +18,6 @@
         <v-toolbar-title class="indigo--text text--darken-4 headline">About Us</v-toolbar-title>
 
         <v-spacer></v-spacer>
-
-        <!-- <v-tooltip bottom>
-          <template v-slot:activator="{ on }">
-            <v-btn
-             link
-             color="indigo draken-2"
-             router to="/" 
-             v-on="on"
-             icon
-             >
-              <v-icon>mdi-home</v-icon>
-            </v-btn>
-          </template>
-          <span>Home</span>
-        </v-tooltip>
-
-
-        <v-tooltip bottom>
-          <template v-slot:activator="{ on }">
-            <v-btn
-             link
-             color="indigo draken-2"
-             router to="/news" 
-             v-on="on"
-             icon
-             >
-              <v-icon>mdi-apps</v-icon>
-            </v-btn>
-          </template>
-          <span>News</span>
-        </v-tooltip>
-
-        <v-tooltip bottom>
-          <template v-slot:activator="{ on }">
-            <v-btn
-             link
-             color="indigo draken-2"
-             router to="/contact" 
-             v-on="on"
-             icon
-             >
-              <v-icon>mdi-phone</v-icon>
-            </v-btn>
-          </template>
-          <span>Contact Us</span>
-        </v-tooltip> -->
         <v-menu bottom left transition="scale-transition">
           <template v-slot:activator="{ on, attr }">
             <v-btn

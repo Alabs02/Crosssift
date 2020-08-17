@@ -145,10 +145,13 @@
                         <v-divider class="mx-4"></v-divider>
                         <v-card-title class="inset overline ml-5 mt-2 amber--text text--darken-2">Warning</v-card-title>
                         <v-container>
-                            <v-card elevation="2" class="rounded-xl">
-                                <v-card-text class="grey--text text--darken-3">
-                                    Lorem ipsum dolor sit amet consectetur, adipisicing elit.
-                                </v-card-text>
+                            <v-card elevation="1" flat class="rounded-xl">
+                                <v-alert
+                                    type="warning"
+                                    dense
+                                >
+                                    I'm a warning alert.
+                                </v-alert>
                             </v-card>
                         </v-container>
                         <v-divider></v-divider>

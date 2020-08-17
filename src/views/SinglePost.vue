@@ -38,7 +38,7 @@
       border="bottom"
       class="mx-auto"
       max-width="850"
-      style="margin-top: -60px;"
+      style="margin-top: -64px;"
     >
       <v-toolbar flat>
         <v-toolbar-title class="indigo--text font-weight-bold"

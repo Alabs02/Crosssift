@@ -43,7 +43,7 @@
         <v-card
          class="mx-auto"
          max-width="1000"
-         style="margin-top: -59px;"
+         style="margin-top: -64px;"
         >
             <v-toolbar flat color="">
                 <v-toolbar-title class="deep-purple--text">Submit a post</v-toolbar-title>
@@ -85,52 +85,30 @@
         
                      <v-text-field
                         v-model="title"
-                        color="deep-purple accent-4"
+                        color="indigo"
                         label="Title"
                         outlined
-                        shaped
                         placeholder="My new post"
                     ></v-text-field>
 
                     <v-textarea
                     v-model="content"
-                    color="deep-purple accent-4"
+                    color="indigo"
                     outlined
-                    shaped
                     label="Content"
                     placeholder="Text goes here"
                     ></v-textarea>
 
                     <v-file-input
-                        v-model="files"
-                        color="deep-purple accent-4"
-                        counter
-                        shaped
-                        label="Upload Images"
-                        multiple
-                        prepend-icon="mdi-camera"
+                        v-model="files" 
+                        chips
+                        show-size
+                        accept="image/*"
                         outlined
-                        :show-size="1000"
-                    >
-                        <template v-slot:selection="{ index, text }">
-                        <v-chip
-                            v-if="index < 2"
-                            color="deep-purple accent-4"
-                            dark
-                            label
-                            small
-                        >
-                            {{ text }}
-                        </v-chip>
-
-                        <span
-                            v-else-if="index === 2"
-                            class="overline grey--text text--darken-3 mx-2"
-                        >
-                            +{{ files.length - 2 }} File(s)
-                        </span>
-                        </template>
-                    </v-file-input>
+                        color="indigo"
+                        label="upload image"
+                        prepend-icon="mdi-camera"
+                    ></v-file-input>
 
                     <v-divider class="my-2"></v-divider>
 
@@ -145,6 +123,7 @@
                             active-class="purple--text"
                             :input-value="active"
                             @click="toggle"
+                            class="mr-2"
                         >
                             Tag {{ n }}
                         </v-chip>
