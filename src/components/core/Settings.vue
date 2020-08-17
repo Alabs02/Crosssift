@@ -71,7 +71,15 @@
             </v-menu>
             </v-toolbar>
             <v-card-text>
-            <v-btn
+              <v-container></v-container>
+              <v-divider inset></v-divider>
+              <v-subheader inset class="body-1">Auth data</v-subheader>
+              <v-card flat>
+                  <v-list>
+                   
+                  </v-list>
+              </v-card>
+            <!-- <v-btn
                 color="indigo"
                 dark
                 class="ma-2"
@@ -88,48 +96,129 @@
                 >Tool Tip Activator</v-btn>
                 </template>
                 Tool Tip
-            </v-tooltip>
+            </v-tooltip> -->
+
             <v-list
                 three-line
                 subheader
             >
-                <v-subheader>User Controls</v-subheader>
                 <v-list-item>
                 <v-list-item-content>
-                    <v-list-item-title>Bio</v-list-item-title>
                     <v-row>
-                        <v-col cols="12">
-                            <v-card-text>
-                                <strong class="grey--text">Name: </strong> <span class="body-1 ml-2 grey--text text--darken-3">John Deo</span> <span><v-btn icon class="ml-4 grey lighten-4"><v-icon color="grey--text text--darken-4">mdi-pen</v-icon></v-btn></span>
-                            </v-card-text>
+                      <v-col cols="12" md="12" sm="12">
+                        <v-card max-width="80%" class="ml-5" flat>
+                          <v-toolbar flat>
+                            <span><v-icon color="indigo">mdi-pen</v-icon></span><v-toolbar-title class="ml-4 grey--text text--darken">Update your profile </v-toolbar-title>
+                          </v-toolbar>
+                          <v-divider></v-divider>
+                          <v-container>
+                            <v-row>
+                              <v-col>
+                                <v-list >
+                                  <v-list-item>
+                                    <v-list-item-avatar>
+                                      <v-icon class="yellow darken-1" dark>mdi-email</v-icon>
+                                    </v-list-item-avatar>
 
-                            <v-card-text>
-                                <strong class="grey--text">Username: </strong> <span class="body-1 ml-2 grey--text text--darken-3">John00</span> <span><v-btn icon class="ml-4 grey lighten-4"><v-icon color="grey--text text--darken-4">mdi-pen</v-icon></v-btn></span>
-                            </v-card-text>
+                                    <v-list-item-content>
+                                      <v-list-item-title class="title">johndeo@thecrossift.com</v-list-item-title>
+                                      <v-list-item-subtitle class="overline">update email address</v-list-item-subtitle>
+                                    </v-list-item-content>
 
-                            <v-card-text>
-                                <strong class="grey--text">Gender: </strong> <span class="body-1 ml-2 grey--text text--darken-3">Male</span> <span><v-btn icon class="ml-4 grey lighten-4"><v-icon color="grey--text text--darken-4">mdi-pen</v-icon></v-btn></span>
-                            </v-card-text>
+                                    <v-list-item-action>
+                                      <update-email />
+                                    </v-list-item-action>
+                                  </v-list-item>
+                                  <!--  update username -->
+                                  <v-list-item>
+                                    <v-list-item-avatar>
+                                      <v-icon class="indigo" dark>mdi-face</v-icon>
+                                    </v-list-item-avatar>
 
-                            <v-card-text>
-                                <strong class="grey--text">Occupation(Optional): </strong> <span class="body-1 ml-2 grey--text text--darken-3">Broadcaster</span> <span><v-btn icon class="ml-4 grey lighten-4"><v-icon color="grey--text text--darken-4">mdi-pen</v-icon></v-btn></span>
-                            </v-card-text>
+                                    <v-list-item-content>
+                                      <v-list-item-title class="title">John_D</v-list-item-title>
+                                      <v-list-item-subtitle class="overline">update username</v-list-item-subtitle>
+                                    </v-list-item-content>
 
-                        </v-col>
+                                    <v-list-item-action>
+                                      <user-name />
+                                    </v-list-item-action>
+                                  </v-list-item>
+
+                                  <!--  update name -->
+                                  <v-list-item>
+                                    <v-list-item-avatar>
+                                      <v-icon class="indigo" dark>mdi-account</v-icon>
+                                    </v-list-item-avatar>
+
+                                    <v-list-item-content>
+                                      <v-list-item-title class="title">John Deo</v-list-item-title>
+                                      <v-list-item-subtitle class="overline">update name</v-list-item-subtitle>
+                                    </v-list-item-content>
+
+                                    <v-list-item-action>
+                                      <update-name />
+                                    </v-list-item-action>
+                                  </v-list-item>
+
+                                  <!--  update gender -->
+                                  <v-list-item>
+                                    <v-list-item-avatar>
+                                      <v-icon class="indigo" dark>mdi-gender-male-female</v-icon>
+                                    </v-list-item-avatar>
+
+                                    <v-list-item-content>
+                                      <v-list-item-title class="title">Null</v-list-item-title>
+                                      <v-list-item-subtitle class="overline">update gender</v-list-item-subtitle>
+                                    </v-list-item-content>
+
+                                    <v-list-item-action>
+                                      <gender />
+                                    </v-list-item-action>
+                                  </v-list-item>
+
+                                  <!--  update occupation -->
+                                  <v-list-item>
+                                    <v-list-item-avatar>
+                                      <v-icon class="indigo" dark>mdi-briefcase</v-icon>
+                                    </v-list-item-avatar>
+
+                                    <v-list-item-content>
+                                      <v-list-item-title class="title">Journalist</v-list-item-title>
+                                      <v-list-item-subtitle class="overline">update occupation</v-list-item-subtitle>
+                                    </v-list-item-content>
+
+                                    <v-list-item-action>
+                                      <occupation />
+                                    </v-list-item-action>
+                                  </v-list-item>
+
+                                  <!--  update password -->
+                                  <v-list-item>
+                                    <v-list-item-avatar>
+                                      <v-icon class="indigo" dark>mdi-lock</v-icon>
+                                    </v-list-item-avatar>
+
+                                    <v-list-item-content>
+                                      <v-list-item-title class="title">********</v-list-item-title>
+                                      <v-list-item-subtitle class="overline">update password</v-list-item-subtitle>
+                                    </v-list-item-content>
+
+                                    <v-list-item-action>
+                                      <update-pass />
+                                    </v-list-item-action>
+                                  </v-list-item>
+                                </v-list>
+                              </v-col>
+                            </v-row>
+                          </v-container>
+                        </v-card>
+                      </v-col>
                     </v-row>
                 </v-list-item-content>
                 </v-list-item>
                 <v-list-item>
-                <v-list-item-content>
-                    <v-list-item-title>Update Password</v-list-item-title>
-                    <v-list-item-subtitle>Require password for purchase or use password to restrict purchase</v-list-item-subtitle>
-                    
-                    <v-text-field
-                        disabled=""
-                        value="test123"
-                        type="password"
-                    ></v-text-field>
-                </v-list-item-content>
+               
                 </v-list-item>
             </v-list>
             <v-divider></v-divider>
@@ -253,7 +342,23 @@
 </template>
 
 <script>
+import updateName from '../Auth/update/updateName.vue';
+import updateGender from '@/components/Auth/update/updateGender.vue';
+import updateUsername from '@/components/Auth/update/updateUsername.vue';
+import Occupation from '@/components/Auth/update/updateOccupation.vue';
+import Password from '@/components/Auth/update/updatePassword.vue';
+import updateEmail from '@/components/Auth/update/updateEmail.vue';
+
   export default {
+    components: {
+      'update-name': updateName,
+      'user-name': updateUsername,
+      'gender': updateGender,
+      'occupation': Occupation,
+      'update-pass': Password,
+      'update-email': updateEmail,
+    },
+
     data () {
       return {
         dialog: false,

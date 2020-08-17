@@ -139,9 +139,20 @@
                         <v-list-item-action>
                             <v-btn
                             icon
-                            ><v-icon>mdi-email</v-icon></v-btn>
+                            ><v-icon size="30">mdi-bell</v-icon></v-btn>
                         </v-list-item-action>
                         </v-list-item>
+                        <v-divider class="mx-4"></v-divider>
+                        <v-card-title class="inset overline ml-5 mt-2 amber--text text--darken-2">Warning</v-card-title>
+                        <v-container>
+                            <v-card elevation="2" class="rounded-xl">
+                                <v-card-text class="grey--text text--darken-3">
+                                    Lorem ipsum dolor sit amet consectetur, adipisicing elit.
+                                </v-card-text>
+                            </v-card>
+                        </v-container>
+                        <v-divider></v-divider>
+                        <pre class="text-center overline mt-2 grey--text">CROSSIFT</pre>
                     </v-list>
                 </v-menu>
 
@@ -281,7 +292,7 @@
                                     </v-card-actions>
                                 </v-card><br>
                                </v-col>
-                           </v-row>
+                           </v-row><br>
 
                            <v-row justify="center" class="mt-12">
                                 <v-col
@@ -464,6 +475,12 @@ export default {
         'settings': Settings,
     },
 
+    computed: {
+        // signOut() {
+        //     return this.$store.actions.signOut;
+        // }
+    },
+
     data: () => ({
         fav: true,
         menu: false,
@@ -533,6 +550,14 @@ export default {
         background-color: transparent !important;
         border: none !important;
         cursor: pointer !important;
+    }
+
+    #nestedCard:hover {
+        animation: mover 1s infinite alternate;
+    }
+    @keyframes mover {
+        0%{ transform: translateY(-4rem); }
+        100%{ transform: translateY(-6em); }
     }
 
     .newBtn {

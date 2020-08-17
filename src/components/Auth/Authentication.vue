@@ -34,7 +34,7 @@
                                 <v-container></v-container>
                                 <v-row no-gutters justify="center" class="mb-3">
                                     <v-card-title class="headline">
-                                        <span>Welcome back</span>
+                                        <span class="grey--text text--darken-3">Welcome back</span>
                                     </v-card-title>
                                 </v-row>
                                 <v-row justify="center">
@@ -55,7 +55,7 @@
                                     <v-card-title class="grey--text text--darken-2 body-1">Or sign in with</v-card-title>
                                 </v-row>
 
-                                <v-form class="mt-n3 form-container">
+                                <v-form @submit.prevent="signIn" class="mt-n3 form-container">
                                     <v-row justify="center">
                                         <v-col>
                                             <p class="overline">Your Email</p>
@@ -69,7 +69,7 @@
                                             ></v-text-field>
 
                                             <v-row no-gutters="">
-                                                <p class="overline">Your Password</p><span><v-btn text small color="indigo" class="mt-n2" >Forgot?</v-btn></span>
+                                                <p class="overline">Your Password</p><span><forgot /></span>
                                             </v-row>
                                             <v-text-field
                                                 v-model.trim="signinForm.password"
@@ -94,7 +94,7 @@
                                                 @click.prevent="signIn"
                                             >
                                                 sign in
-                                            </v-btn><br>
+                                            </v-btn><br><br class="hidden-md-and-down">
                                         </v-col>
                                     </v-row>
                                 </v-form>
@@ -124,7 +124,7 @@
                                              <v-col>
                                                 <v-row no-gutters justify="center" class="mb-3">
                                                     <v-card-title class="title" id="start-sharing">
-                                                        <span class="grey--text text--darken-1">Start sharing the happenings around you</span>
+                                                        <span class="grey--text text--darken-3" id="signup-heading">Start sharing the happenings around you</span>
                                                     </v-card-title>
                                                 </v-row>
 
@@ -148,7 +148,7 @@
 
                                                 <v-row class="form-container">
                                                     <v-col>
-                                                        <form action="">
+                                                        <form @submit.prevent="signUp" action="">
                                                             <p class="overline">Your Name</p>
                                                             <v-text-field
                                                                 v-model.trim="signupForm.name"
@@ -257,7 +257,12 @@
 </template>
 
 <script>
+import Forgot from '@/components/Auth/Forgot.vue'
+
   export default {
+    components:{
+        'forgot': Forgot,
+    },
     data () {
       return {
         tab: null,
@@ -336,6 +341,7 @@
 #fbBtn {
     border: thin solid rgb(53, 76, 139) !important;
 }
+
 /*  Google Colors   */
 
 .google-red {
@@ -397,6 +403,10 @@
     }
     #start-sharing{
         font-size: 20px !important;
+    }
+    #signup-heading {
+        font-size: 13.5px !important;
+        font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
     }
 }
 </style>

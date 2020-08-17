@@ -5,10 +5,11 @@ export const actions = {
     signin ({ dispatch }, form) {
         const { user } = fb.auth.signInWithEmailAndPassword(form.email, form.password)
             .then(response => {
+                console.log("current user: ", user)
                 console.log(response)
 
                 // ftech user profile and set in state
-                dispatch('fetchUserProfile', user)
+                dispatch('fetchUserProfile', response)
             })
             .catch(error => {
 
@@ -32,14 +33,15 @@ export const actions = {
     // Fetch user profile
     async fetchUserProfile({ commit }, user) {
         // Fetch user profile
-        const userProfile = await fb.usersCollection.doc(user.uid).get()
+        const userProfile = await fb.usersCollection.doc(user.user.uid).get()
 
-        // set user profile in state
-        if (!userProfile.exists) {
-            alert('No such document!')
-        } else {
-            commit('setUserProfile', userProfile.data())
-        }
+        await commit('setUserProfile', userProfile.data())
+
+        // // set user profile in state
+        // if (!userProfile.exists) {
+        //     alert('No such document!')
+        // } else {
+        // }
         
 
         // change router to news page
@@ -53,21 +55,40 @@ export const actions = {
         // sign user up
         const { user } = fb.auth.createUserWithEmailAndPassword(form.email, form.password).then(response => {
             // create user profile object in userCollections
+            console.log(`new created: ${user}`)
             console.log(response)
 
             //Update username
-            // const newUser = fb.auth.currentUser
-            // newUser.updateProfile({
-            //   displayName: form.username,
-            //   photoURL: "null"
-            // }).then(response => {
-            //     console.log(response)
-            //     alert("Username added")
-            // }).catch(error => {
-            //     alert("An error happened.", error)
-            // })
+            const newUser = fb.auth.currentUser
+            newUser.updateProfile({
+              displayName: form.username,
+              photoURL: "null"
+            }).then(response => {
+                console.log(response)
+                alert("Username added")
+
+                // Add other user data
+                fb.usersCollection.doc(newUser.uid).set({
+                    name: form.name,
+                    bio: null,
+                    followers: null,
+                    following: null,
+                    gender: null,
+                    notifications: null,
+                    occupation: null,
+                    reps: 0,
+                }).then(res => {
+                    console.log(res)
+                    alert("User bio added succcessfully!")
+                    router.push('/news')
+                }).catch(error => {
+                    console.error(error)
+                })
+            }).catch(error => {
+                alert("An error happened.", error)
+            })
             // fetch user profile and set in state
-            dispatch("fetchUserProfile", user);
+            dispatch("fetchUserProfile", newUser);
         }).catch(error => {
             let errorCode = error.code
             let errorMsg = error.message
@@ -82,6 +103,64 @@ export const actions = {
             } else {
                 alert(errorMsg)
             }
+        })
+    },
+
+    signOut() {
+        fb.auth.signOut().then(() => {
+            alert("Sign-out successfully")
+            setTimeout(() => {
+              router.push("/")  
+            }, 2000);
+        }).catch(error => {
+            console.log(error)
+            alert("An error happened")
+        })
+    },
+
+
+    /**
+     *  Manage users
+     */
+
+    updateUsername({ dispatch }, form) {
+        const user = fb.auth.currentUser
+
+        // update username
+        user.updateProfile({
+            displayName: form.newUsername,
+        }).then(() => {
+            console.log("Update successful")
+            dispatch('fetchUserProfile', user)
+        }).catch(error => {
+            console.log("An error happened")
+            console.log(error)
+        })
+       
+    },
+
+    updateEmailAddr({ dispatch }, form) {
+        const user = fb.auth.currentUser
+
+        // Update user email
+        alert(form.email)
+        user.updateEmail(form.email).then(response => {
+            console.log("response: ", response)
+            alert("Update successful")
+            dispatch('fetchUserProfile', response)
+        }).catch(error => [
+            console.log('An error happened', error)
+        ])
+    },
+
+    forgotPassword(form) {
+        // Reset users password
+        fb.auth.sendPasswordResetEmail(form.email).then((response) => {
+            alert("Email sent")
+            console.log('response: ', response)
+        }).catch(error => {
+            alert("An error happened")
+            console.log('forgot pass: ', error)
         })
     }
 }

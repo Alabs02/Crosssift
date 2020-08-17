@@ -139,23 +139,17 @@
                                         </v-card-text>
 
                                         <v-card elevation="0" class="mx-auto blue-grey lighten-5">
-                                            <v-row class="ma-2">
+                                            <v-row no-gutters>
                                                 <v-col
-                                                    v-for="n in 4"
-                                                    :key="n"
                                                     cols="12"
-                                                    md="3"
-                                                    sm="4"
+                                                    md="12"
+                                                    sm="12"
+                                                    v-for="n in 6"
+                                                    :key="n"
                                                 >
-                                                    <v-img
-                                                        class="imgs"
-                                                        contain=""
-                                                        max-height="80"
-                                                        max-width="100%"
-                                                        min-height="40"
-                                                        min-width="40"
-                                                        src="@/assets/37.png"
-                                                    ></v-img>
+                                                    <v-banner single-line elevation="0">
+                                                        <span class="grey--text text--darken-2 body-2">Lorem ipsum dolor sit amert conse tuer</span>
+                                                    </v-banner>
                                                 </v-col>
                                             </v-row>
                                         </v-card>
