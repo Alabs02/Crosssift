@@ -5,10 +5,10 @@
          fixed
          app
          extended
-         text
+         flat
          id="toolbar"
         >
-            <v-app-bar-nav-icon v-on:click="drawer = !drawer"></v-app-bar-nav-icon>
+            <v-app-bar-nav-icon v-on:click="drawer = !drawer" class="hidden-lg-only"></v-app-bar-nav-icon>
 
         </v-toolbar>
 
@@ -19,7 +19,7 @@
         >
             <v-list-item>
                 <v-list-item-content>
-                <v-list-item-title class="font-weight-bold headline indigo--text">Crossift</v-list-item-title>
+                <v-list-item-title class="font-weight-bold headline indigo--text text--darken-4">Crossift</v-list-item-title>
                 </v-list-item-content>
             </v-list-item>
 
@@ -41,6 +41,19 @@
                     <v-list-item-title class="indigo--text text--darken-4">{{ item.title }}</v-list-item-title>
                 </v-list-item-content>
                 </v-list-item>
+
+                <v-list-item
+                    link
+                    @click="signOut"
+                >
+                    <v-list-item-icon>
+                        <v-icon color="indigo">mdi-logout-variant</v-icon>
+                    </v-list-item-icon>
+
+                    <v-list-item-content>
+                        <v-list-item-title class="indigo--text text--darken-4">Logout</v-list-item-title>
+                    </v-list-item-content>
+                </v-list-item>
             </v-list>
         </v-navigation-drawer>
 
@@ -51,7 +64,7 @@
          style="margin-top: -64px;"
         >
             <v-toolbar text>
-                <v-toolbar-title class="title indigo--text">Crossift</v-toolbar-title>
+                <v-toolbar-title class="title indigo--text text-captilize">Crossift</v-toolbar-title>
 
                 
                 <v-text-field
@@ -62,7 +75,7 @@
                     label="Search"
                     prepend-inner-icon="mdi-database-search"
                     solo-inverted
-                    clearable=""
+                    clearable
                 ></v-text-field>
                 
                 <v-spacer></v-spacer>
@@ -151,7 +164,7 @@
                          @click="signOut"
                         >
                             <v-list-item-icon>
-                                <v-icon color="purple darken-3">mdi-open-in-new</v-icon>
+                                <v-icon color="purple darken-3">mdi-logout-variant</v-icon>
                             </v-list-item-icon>
 
                             <v-list-item-content>

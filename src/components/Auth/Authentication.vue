@@ -362,17 +362,16 @@ import WarningAlert from '@/components/core/WarningAlert.vue'
         },
 
         signinWithFacebook() {
-            
-            // this.$store.dispatch('signinWithFacebook', this.googleProvider)
+            this.$store.dispatch('signinWithFacebook')
         },
 
-        signupWithGoogle: () => {
-            this.$store.dispatch('signupWithGoogle')
-        },
+        // signupWithGoogle: () => {
+        //     this.$store.dispatch('signupWithGoogle')
+        // },
 
-        signupWithFacebook: () => {
-            this.$store.dispatch('signupWithFacebook')
-        },
+        // signupWithFacebook: () => {
+        //     this.$store.dispatch('signupWithFacebook')
+        // },
     }
   }
 </script>

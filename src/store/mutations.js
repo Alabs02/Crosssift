@@ -1,9 +1,9 @@
 export const mutations = {
-    setUserProfile: (state, payload) => {
+    SET_USER_PROFILE: (state, payload) => {
         state.userProfile = payload
     },
 
-    setPosts: (state, payload) => {
+    SET_POST: (state, payload) => {
         state.posts = payload
     },
 

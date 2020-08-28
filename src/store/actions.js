@@ -49,7 +49,7 @@ export const actions = {
      * 
      * Handle sigin with google
      */
-    signinWithGoogle({ dispatch }) {
+    signinWithGoogle({ dispatch, commit }) {
         const googleAuth = new fb.auth_.GoogleAuthProvider()
         googleAuth.addScope('email');
         googleAuth.addScope('profile');
@@ -58,6 +58,8 @@ export const actions = {
             console.log('Response: ', response)
             // Dispatch response
             dispatch("fetchUserProfile", response);
+            commit('SET_SUCCESS_TEXT', `${response.user.email} logged in successfully`)
+            commit('SET_SNACKBAR_SUCCESS')
             let token = response.credential.accessToken 
             // The signed-in user info.
             let user = response.user
@@ -65,31 +67,68 @@ export const actions = {
             console.log("User: ", user)
         }).catch(error => {
             let errorCode = error.code
-            console.log(`Error code: ${errorCode}`)
             let errorMsg = error.message
-            console.log(`Error message: ${errorMsg}`)
-
             let email = error.email
-            // The email of the user's account used
-            console.log('Email used: ', email)
             // The firebase.auth.AuthCredential type that was used.
-            let credentail = error.credential
-            console.log("Crendentials: ", credentail)
+            let credentail = error.credentail
+            if (errorCode) {
+                commit('SET_WARNING_TEXT', `${errorCode}`)
+                commit('SET_SNACKBAR_WARNING')
+            } else if (errorMsg) {
+                commit('SET_ERROR_TEXT', `${errorMsg}`)
+                commit('SET_SNACKBAR_ERROR')
+            } else if (email) {
+                commit('SET_ERROR_TEXT', `${email}`)
+                commit('SET_SNACKBAR_ERROR')
+            } else if (credentail) {
+                commit('SET_ERROR_TEXT', `${credentail}`)
+                commit('SET_SNACKBAR_ERROR')
+            }
         })
     },
-
-    async signinWithFacebook({ dispatch }) {
-        dispatch("fetchUserProfile");
+    async signinWithFacebook({ dispatch, commit }) {
+        const facebookAuth = new fb.auth_.FacebookAuthProvider()
+        fb.auth.signInWithPopup(facebookAuth).then(response => {
+            dispatch("fetchUserProfile", response);
+            // This gives you a Facebook Access Token. You can use it to access the Facebook API.
+            let token = response.credentail.accessToken
+            // The signed-in user info.
+            let user = response.user
+            commit('SET_SUCCESS_TEXT', `${response.user.email} is logged in successfully`)
+            commit('SET_SNACKBAR_SUCCESS')
+            console.log("Token: ", token)
+            console.log("User: ", user)
+        }).catch(error => {
+            let errorCode = error.code
+            let errorMsg = error.message
+            let email = error.email
+            let credentail = error.credentail
+            if (errorCode) {
+                commit('SET_WARNING_TEXT', `${errorCode}`)
+                commit('SET_SNACKBAR_WARNING')
+            } else if (errorMsg) {
+                commit('SET_ERROR_TEXT', `${errorMsg}`)
+                commit('SET_SNACKBAR_ERROR')
+            } else if (email) {
+                commit('SET_ERROR_TEXT', `${email}`)
+                commit('SET_SNACKBAR_ERROR')
+            } else if (credentail) {
+                commit('SET_ERROR_TEXT', `${credentail}`)
+                commit('SET_SNACKBAR_ERROR')
+            }
+        })
     },
     
     // Fetch user profile
     async fetchUserProfile({ commit }, userProfile) {
 
-        await commit('setUserProfile', userProfile)
+        await commit('SET_USER_PROFILE', userProfile)
 
         // change router to news page
         if (router.currentRoute.path === '/auth') {
-            router.push('/news')
+            setTimeout(() => {
+                router.push('/news')
+            }, 3600);
         }
     },
 
@@ -174,7 +213,7 @@ export const actions = {
     signOut({ commit, state }) {
         // eslint-disable-next-line no-unused-vars
         const { user } = fb.auth.signOut().then(() => {
-            commit('setUserProfile', {})
+            commit('SET_USER_PROFILE', {})
             state.successText = 
             state.snackbarSuccess = true
             commit('SET_SUCCESS_TEXT', "Sign-out successfully")

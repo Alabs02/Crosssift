@@ -66,17 +66,14 @@ export default {
         forgotPassword: () => {
             // eslint-disable-next-line no-unused-vars
             fb.auth.sendPasswordResetEmail(this.form.email).then(response => {
-                this.$store.state.successText = "Email sent"
-                this.$store.state.snackbarSuccess = true
-                // console.log(response)
+                this.$store.commit('SET_SUCCESS_TEXT', "Email sent")
+                this.$store.commit('SET_SNACKBAR_SUCCESS')
                 setTimeout(() => {
                     this.dialog = false
                 }, 3600);
-            // eslint-disable-next-line no-unused-vars
             }).catch(error => {
-                // console.log('forgot pass: ', error)
-                this.$store.state.errorText = "An error occurred, please try again"
-                this.$store.state.snackbarError = true
+                this.$store.commit('SET_ERROR_TEXT',`${error}`)
+                this.$store.commit('SET_SNACKBAR_ERROR')
                 setTimeout(() => {
                     this.dialog = false
                 }, 3600);
