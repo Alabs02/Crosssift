@@ -16,7 +16,7 @@
                         label="Email"
                         outlined
                         color="indigo"
-                        placeholder="johndeo@thecrossift.com"
+                        :placeholder="userProfile.email"
                     ></v-text-field>
                 </v-card-text>
                 <v-card-actions>
@@ -34,6 +34,8 @@
 </template>
 
 <script>
+import { mapState } from 'vuex'
+
 export default {
     data() {
         return {
@@ -42,6 +44,10 @@ export default {
                 newEmail: ""
             },
         }
+    },
+
+    computed: {
+        ...mapState(['userProfile']),
     },
 
     methods: {

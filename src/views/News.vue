@@ -81,19 +81,81 @@
                     </template>
 
                     <v-list>
-
                         <v-list-item
-                         v-for="(drop, index) in d_items"
-                         :key="index"
                          link
-                         router :to="drop.link"
+                         router to="/"
                         >
                             <v-list-item-icon>
-                                <v-icon color="purple darken-3">{{ drop.icon }}</v-icon>
+                                <v-icon color="purple darken-3">mdi-home-city</v-icon>
                             </v-list-item-icon>
-                        
+
                             <v-list-item-content>
-                                <v-list-item-title class="indigo--text text--darken-4">{{ drop.title }}</v-list-item-title>
+                                <v-list-item-title class="indigo--text text text--darken-4">Home</v-list-item-title>
+                            </v-list-item-content>
+                        </v-list-item>
+
+                        <v-list-item
+                         link
+                         router to="/new_post"
+                        >
+                            <v-list-item-icon>
+                                <v-icon color="purple darken-3">mdi-pen</v-icon>
+                            </v-list-item-icon>
+
+                            <v-list-item-content>
+                                <v-list-item-title class="indigo--text text text--darken-4">Make a post</v-list-item-title>
+                            </v-list-item-content>
+                        </v-list-item>
+
+                        <v-list-item
+                         link
+                         router to="/dashboard"
+                        >
+                            <v-list-item-icon>
+                                <v-icon color="purple darken-3">mdi-view-dashboard</v-icon>
+                            </v-list-item-icon>
+
+                            <v-list-item-content>
+                                <v-list-item-title class="indigo--text text text--darken-4">Dashboard</v-list-item-title>
+                            </v-list-item-content>
+                        </v-list-item>
+
+                        <v-list-item
+                         link
+                         router to="/about"
+                        >
+                            <v-list-item-icon>
+                                <v-icon color="purple darken-3">mdi-account-group</v-icon>
+                            </v-list-item-icon>
+
+                            <v-list-item-content>
+                                <v-list-item-title class="indigo--text text text--darken-4">About Us</v-list-item-title>
+                            </v-list-item-content>
+                        </v-list-item>
+
+                        <v-list-item
+                         link
+                         router to="/contact"
+                        >
+                            <v-list-item-icon>
+                                <v-icon color="purple darken-3">mdi-phone</v-icon>
+                            </v-list-item-icon>
+
+                            <v-list-item-content>
+                                <v-list-item-title class="indigo--text text text--darken-4">Contact Us</v-list-item-title>
+                            </v-list-item-content>
+                        </v-list-item>
+
+                        <v-list-item
+                         link
+                         @click="signOut"
+                        >
+                            <v-list-item-icon>
+                                <v-icon color="purple darken-3">mdi-open-in-new</v-icon>
+                            </v-list-item-icon>
+
+                            <v-list-item-content>
+                                <v-list-item-title class="indigo--text text text--darken-4">Logout</v-list-item-title>
                             </v-list-item-content>
                         </v-list-item>
                     </v-list>
@@ -460,6 +522,12 @@
                         ></v-pagination>
                     </div>
                </v-container>
+               <div>
+                   <!-- Alert Handlers  -->
+                    <success-alert></success-alert>  
+                    <error-alert></error-alert>
+                    <warning-alert></warning-alert>
+               </div>
            </v-content>
         </v-card><br><br><br><br>
     </div>
@@ -469,6 +537,9 @@
 <script>
 import SearchBar from "@/components/partials/SearchBar.vue";
 import Settings from "@/components/core/Settings.vue";
+import SuccessAlert from '@/components/core/SuccessAlert.vue'
+import ErrorAlert from '@/components/core/ErrorAlert.vue'
+import WarningAlert from '@/components/core/WarningAlert.vue'
 
 export default {
     name: 'News',
@@ -476,12 +547,13 @@ export default {
     components: {
         'search-bar': SearchBar,
         'settings': Settings,
+        'success-alert': SuccessAlert,
+        'error-alert': ErrorAlert,
+        'warning-alert': WarningAlert,
     },
 
     computed: {
-        // signOut() {
-        //     return this.$store.actions.signOut;
-        // }
+        
     },
 
     data: () => ({
@@ -522,6 +594,12 @@ export default {
             { color_id: 'card-two-z' },
         ]
     }),
+
+    methods: {
+        async signOut() {
+            await this.$store.dispatch('signOut')
+        }
+    }
 }
 </script>
 

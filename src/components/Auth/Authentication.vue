@@ -38,7 +38,7 @@
                                     </v-card-title>
                                 </v-row>
                                 <v-row justify="center">
-                                    <v-btn large outlined class="mr-3" id="googleBtn">
+                                    <v-btn @click="signinWithGoogle"  large outlined class="mr-3" id="googleBtn">
                                         <span class="google-blue">G</span>
                                         <span class="google-red">O</span>
                                         <span class="google-yellow">O</span>
@@ -47,7 +47,7 @@
                                         <span class="google-red">E</span>
                                     </v-btn>
 
-                                    <v-btn dark large class="facebook-color">
+                                    <v-btn @click="signinWithFacebook" dark large class="facebook-color">
                                         <span>facebook</span>
                                     </v-btn>
                                 </v-row>
@@ -64,7 +64,7 @@
                                                 outlined
                                                 color="indigo"
                                                 type="email"
-                                                label="email"
+                                                label="Email"
                                                 placeholder="johndeo@thecrossift.com"
                                             ></v-text-field>
 
@@ -74,27 +74,32 @@
                                             <v-text-field
                                                 v-model.trim="signinForm.password"
                                                 outlined
-                                                type="password"
+                                                :type="showSigninP ? 'text' : 'password'"
                                                 color="indigo"
-                                                append-icon="mdi-eye"
+                                                :append-icon="showSigninP ? 'mdi-eye' : 'mdi-eye-off'"
+                                                @click:append="showSigninP = !showSigninP"
                                                 placeholder="******"
-                                                label="password"
+                                                label="Password"
                                             ></v-text-field>
                                         </v-col>
                                     </v-row>
                                     <v-row no-gutters>
                                         <v-col cols="12" md="12" sm="8">
                                             <v-btn
-                                                rounded
-                                                dark
+                                                :loading="loading"
+                                                :disabled="loading"
                                                 color="indigo"
                                                 block
-                                                class=""
                                                 type="submit"
+                                                dark
+                                                rounded
                                                 @click.prevent="signIn"
                                             >
                                                 sign in
-                                            </v-btn><br><br class="hidden-md-and-down">
+                                                <template v-slot:loader>
+                                                    <span class="grey--text text--darken-1">Loading...</span>
+                                                </template>
+                                            </v-btn><br><br id="break" style="display: none !important;">
                                         </v-col>
                                     </v-row>
                                 </v-form>
@@ -109,7 +114,7 @@
                   </v-sheet>
                   <!-- <div class="sized-box"></div> -->
               </div>
-          </v-sheet><br />
+          </v-sheet><br /><br class="hidden-lg-only" />
       </v-tab-item>
 
       <v-tab-item id="signup">  
@@ -129,7 +134,7 @@
                                                 </v-row>
 
                                                 <v-row justify="center">
-                                                    <v-btn large outlined class="mr-3" id="googleBtn">
+                                                    <v-btn @click="signupWithGoogle" large outlined class="mr-3" id="googleBtn">
                                                         <span class="google-blue">G</span>
                                                         <span class="google-red">O</span>
                                                         <span class="google-yellow">O</span>
@@ -138,7 +143,7 @@
                                                         <span class="google-red">E</span>
                                                     </v-btn>
 
-                                                    <v-btn dark large class="facebook-color">
+                                                    <v-btn @click="signupWithFacebook" dark large class="facebook-color">
                                                         <span>facebook</span>
                                                     </v-btn>
                                                 </v-row>
@@ -155,7 +160,7 @@
                                                                 outlined
                                                                 color="indigo"
                                                                 type="text"
-                                                                label="fullname"
+                                                                label="Fullname"
                                                                 placeholder="John Deo"
                                                             ></v-text-field>
 
@@ -163,9 +168,9 @@
                                                             <v-text-field
                                                                 v-model.trim="signupForm.username"
                                                                 outlined
-                                                                color="indigo"
                                                                 type="text"
-                                                                label="username"
+                                                                color="indigo"
+                                                                label="Username"
                                                                 placeholder="John_D"
                                                             ></v-text-field>
 
@@ -175,7 +180,7 @@
                                                                 outlined
                                                                 color="indigo"
                                                                 type="email"
-                                                                label="email"
+                                                                label="Email"
                                                                 placeholder="johndeo@thecrossift.com"
                                                             ></v-text-field>
 
@@ -184,15 +189,16 @@
                                                                 v-model.trim="signupForm.password"
                                                                 outlined
                                                                 color="indigo"
-                                                                type="password"
-                                                                label="password"
-                                                                append-icon="mdi-eye"
+                                                                :type="showSignupP ?  'text' : 'password'"
+                                                                label="Password"
+                                                                :append-icon="showSignupP ? 'mdi-eye' : 'mdi-eye-off'"
+                                                                @click:append="showSignupP = !showSignupP"
                                                                 placeholder="******"
                                                             ></v-text-field>
 
                                                             <v-row no-gutters>
                                                                 <v-col cols="12" md="12" sm="12">
-                                                                    <v-btn
+                                                                    <!-- <v-btn
                                                                         rounded
                                                                         dark
                                                                         color="indigo"
@@ -200,8 +206,23 @@
                                                                         type="submit"
                                                                         @click.prevent="signUp"
                                                                     >
+                                                                        
+                                                                    </v-btn><br> -->
+                                                                    <v-btn
+                                                                        :loading="loading2"
+                                                                        :disabled="loading2"
+                                                                        color="indigo"
+                                                                        block
+                                                                        type="submit"
+                                                                        dark
+                                                                        rounded
+                                                                        @click.prevent="loader = 'loading2'"
+                                                                    >
                                                                         start using crossift
-                                                                    </v-btn><br>
+                                                                        <template v-slot:loader>
+                                                                            <span class="grey--text text--darken-1">Loading...</span>
+                                                                        </template>
+                                                                    </v-btn><br />
                                                                 </v-col>
                                                                 <v-col>
                                                                     <v-card-text class="text-center grey--text body-1">
@@ -213,7 +234,6 @@
                                                                         </div>
                                                                     </v-card-text>
                                                                 </v-col>
-
                                                             </v-row>
                                                         </form>
                                                     </v-col>
@@ -230,7 +250,7 @@
                                 src="@/assets/mobile-testing.svg"
                                 lazy-src="@/assets/mobile-testing.svg"
                                 width="70%"
-                                class="bm"
+                                class="bm mt-4"
                               ></v-img>
 
                               <v-card
@@ -253,23 +273,51 @@
           </v-sheet>
       </v-tab-item>
     </v-tabs-items>
+    <div>
+        <success-alert></success-alert>  
+        <error-alert></error-alert>
+        <warning-alert></warning-alert>
+    </div>
   </v-card>
 </template>
 
 <script>
 import Forgot from '@/components/Auth/Forgot.vue'
+import SuccessAlert from '@/components/core/SuccessAlert.vue'
+import ErrorAlert from '@/components/core/ErrorAlert.vue'
+import WarningAlert from '@/components/core/WarningAlert.vue'
 
   export default {
     components:{
         'forgot': Forgot,
+        'success-alert': SuccessAlert,
+        'error-alert': ErrorAlert,
+        'warning-alert': WarningAlert,
     },
+
+    watch: {
+      loader () {
+        const l = this.loader
+        this[l] = !this[l]
+
+        setTimeout(() => (this[l] = false), 3000)
+
+        this.loader = null
+      },
+    },
+
     data () {
       return {
         tab: null,
+        showSigninP: false,
+        showSignupP: false,
         tabs: [
             { title: 'Sign In', uid: '#signin' },
-            { title: 'Sign Up', uid: '#signup' },
+            { title: 'Sign Up', uid: '#signup' }
         ],
+        loader: null,
+        loading: false,
+        loading2: false,
 
         //** models */
         signinForm: {
@@ -286,9 +334,13 @@ import Forgot from '@/components/Auth/Forgot.vue'
       }
     },
 
+    computed: {
+        
+        
+    },
+
     methods: {
-        signUp() {
-            console.log(this.signupForm)
+        signUp: () => {
             this.$store.dispatch('signup', {
                 name: this.signupForm.name,
                 username: this.signupForm.username,
@@ -297,13 +349,30 @@ import Forgot from '@/components/Auth/Forgot.vue'
             })
         },
 
-        signIn() {
-            console.log(this.signinForm)
+        signIn: () => {
             this.$store.dispatch('signin', {
                 email: this.signinForm.email,
                 password: this.signinForm.password
             })
-        }
+        },
+
+        signinWithGoogle() {
+            window.alert("First trigger fired!")
+            this.$store.dispatch('signinWithGoogle')
+        },
+
+        signinWithFacebook() {
+            
+            // this.$store.dispatch('signinWithFacebook', this.googleProvider)
+        },
+
+        signupWithGoogle: () => {
+            this.$store.dispatch('signupWithGoogle')
+        },
+
+        signupWithFacebook: () => {
+            this.$store.dispatch('signupWithFacebook')
+        },
     }
   }
 </script>
@@ -368,12 +437,13 @@ import Forgot from '@/components/Auth/Forgot.vue'
 }
 #crossiftImg {
     float: right !important;
-    right: 0 !important;
+    right: 5px !important;
 }
 #crossiftCard {
     float: right !important;
+    margin-bottom: 0px !important;
     right: 0 !important;
-    bottom: 10px !important;
+    bottom: 0 !important;
     border-radius: 15rem 0rem 0rem 0rem !important;
 }
 #textCard {
@@ -381,6 +451,42 @@ import Forgot from '@/components/Auth/Forgot.vue'
     /* font-family: cursive !important; */
     font-family:fantasy !important;
 }
+.custom-loader {
+    animation: loader 1s infinite;
+    display: flex;
+}
+@-moz-keyframes loader {
+    from {
+      transform: rotate(0);
+    }
+    to {
+      transform: rotate(360deg);
+    }
+  }
+  @-webkit-keyframes loader {
+    from {
+      transform: rotate(0);
+    }
+    to {
+      transform: rotate(360deg);
+    }
+  }
+  @-o-keyframes loader {
+    from {
+      transform: rotate(0);
+    }
+    to {
+      transform: rotate(360deg);
+    }
+  }
+  @keyframes loader {
+    from {
+      transform: rotate(0);
+    }
+    to {
+      transform: rotate(360deg);
+    }
+  }
 
 /*
     ----------------------------------------------------------------------

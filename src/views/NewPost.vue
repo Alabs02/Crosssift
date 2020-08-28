@@ -46,7 +46,7 @@
          style="margin-top: -64px;"
         >
             <v-toolbar flat color="">
-                <v-toolbar-title class="deep-purple--text">Submit a post</v-toolbar-title>
+                <v-toolbar-title class="deep-purple--text">Make a post</v-toolbar-title>
 
                 <v-spacer></v-spacer>
 
@@ -82,53 +82,101 @@
 
             <v-content id="post_content">
                   <v-card-text>
-        
-                     <v-text-field
-                        v-model="title"
+                    <v-form @submit.prevent ref="form" lazy-validation v-model="validation">
+                        <v-text-field
+                            v-model.trim="post.title"
+                            color="indigo"
+                            label="Title"
+                            outlined
+                            required
+                            placeholder="My new post"
+                        ></v-text-field>
+
+                        <v-textarea
+                        v-model.trim="post.content"
                         color="indigo"
-                        label="Title"
                         outlined
-                        placeholder="My new post"
-                    ></v-text-field>
+                        label="Content"
+                        required
+                        placeholder="Text goes here"
+                        ></v-textarea>
+                        <v-row no-gutters class="mb-4">
+                            <v-switch 
+                                inset
+                                hide-details
+                                v-model="imgEnable"
+                                class="ml-5"
+                                color="indigo"
+                            ></v-switch><span class="mt-5 ml-2">Toogle the switch to upload an image</span>
+                        </v-row>
+                        
+                        <v-file-input
+                            v-model.trim="post.img" 
+                            :rules="imgRules"
+                            chips
+                            show-size
+                            accept="image/png, image/jpeg, image/bmp"
+                            outlined
+                            color="indigo"
+                            label="upload image (Optional)"
+                            prepend-icon="mdi-camera"
+                            :disabled="!imgEnable"
+                        ></v-file-input>
 
-                    <v-textarea
-                    v-model="content"
-                    color="indigo"
-                    outlined
-                    label="Content"
-                    placeholder="Text goes here"
-                    ></v-textarea>
 
-                    <v-file-input
-                        v-model="files" 
-                        chips
-                        show-size
-                        accept="image/*"
-                        outlined
-                        color="indigo"
-                        label="upload image"
-                        prepend-icon="mdi-camera"
-                    ></v-file-input>
+                        <v-row no-gutters class="mb-4">
+                            <v-switch 
+                                inset
+                                hide-details
+                                v-model="vidEnable"
+                                class="ml-5"
+                                color="indigo"
+                            ></v-switch><span class="mt-5 ml-2">Toogle the switch to upload an video clip</span>
+                        </v-row>
+                        
+                        <v-file-input
+                            v-model.trim="post.multimedia" 
+                            chips
+                            show-size
+                            accept="image/png, image/jpeg, image/bmp"
+                            outlined
+                            color="indigo"
+                            label="upload video clip (Optional)"
+                            prepend-icon="mdi-play-box"
+                            :disabled="!vidEnable"
+                        ></v-file-input>
 
-                    <v-divider class="my-2"></v-divider>
+                        <v-divider class="my-2"></v-divider>
 
-                    <v-item-group multiple>
-                        <v-subheader>Tags</v-subheader>
-                        <v-item
-                        v-for="n in 8"
-                        :key="n"
-                        v-slot:default="{ active, toggle }"
+                        <v-item-group multiple>
+                            <v-subheader>Tags</v-subheader>
+                            <v-item
+                            v-for="n in 3"
+                            :key="n"
+                            v-slot:default="{ active, toggle }"
+                            >
+                            <v-chip
+                                active-class="purple--text"
+                                :input-value="active"
+                                @click="toggle"
+                                class="mr-2"
+                            >
+                                rickrock embezlement funds {{ n }}
+                            </v-chip>
+                            </v-item>
+                        </v-item-group>
+
+                        <v-subheader class="mt-2">Select how you want your to be displayed.</v-subheader>
+                        <v-chip-group
+                            v-model.trim="post.template"
+                            column
+                            multiple
                         >
-                        <v-chip
-                            active-class="purple--text"
-                            :input-value="active"
-                            @click="toggle"
-                            class="mr-2"
-                        >
-                            Tag {{ n }}
-                        </v-chip>
-                        </v-item>
-                    </v-item-group>
+                            <v-chip :disabled="post.img === null" filter outlined>First View</v-chip>
+                            <v-chip :disabled="post.img === null" filter outlined>Second View</v-chip>
+                            <v-chip filter outlined>Third View</v-chip>
+                        </v-chip-group>
+                    </v-form>
                 </v-card-text>
 
                 <v-divider></v-divider>
@@ -138,16 +186,17 @@
                     dark
                     color="indigo lighten-5 blur-grey--text text--darken-4"
                     large
-                    v-on:click="submit"
+                    v-on:click="resetForm"
                     >
                         <span class="indigo--text text--darken-4">reset</span>
                     </v-btn>
                     <v-spacer></v-spacer>
                     <v-btn
-                    dark
-                    color="indigo"
-                    large
-                    v-on:click="submit"
+                        dark
+                        color="indigo"
+                        large
+                        :disabled="post.title === '' && post.content === ''"
+                        @click="createPost"
                     >
                         <span>Post</span>
                         <v-icon right>mdi-send</v-icon>
@@ -169,9 +218,9 @@ export default {
     data: () => ({
         currentDate: new Date().toISOString().substr(0, 10),
         menu: false,
-        title: '',
-        content: '',
-        files: [],
+        imgEnable: false,
+        vidEnable: false,
+        enablePost: false,
         drawer: false,
         items: [
             { title: 'Home', icon: 'mdi-home-city', route: '/' },
@@ -185,11 +234,29 @@ export default {
             { view: '@/assets/logo.png' },
             { view: '@/assets/logo.png' }
         ], 
+
+        // Rules
+        imgRules: [
+            value => !value || value.size < 2000000 || 'Image size should be less than 2 MB!',
+        ],
+
+        // Firebase create post
+        post: {
+            title: "",
+            content: "",
+            img: null,
+            multimedia: null,
+            tags: null,
+            template: [2]
+        }
     }),
 
-    methods: {
-        submit() {
-        }
+    created() {
+        //
+    },
+    
+    watch: {
+        
     },
 
     computed: {
@@ -197,6 +264,27 @@ export default {
             return this.date ? format(this.date, 'dddd, MMMM Do YYYY') : ''
         },
     },
+
+    methods: {
+        resetForm () {
+            this.$refs.form.reset()
+        },
+
+        createPost() {
+            this.$store.dispatch('createPost', {
+                title: this.post.title,
+                content: this.post.content,
+                img: this.post.img,
+                multimedia: this.post.multimedia,
+                tags: this.post.tags,
+                template: this.post.template
+            })
+            this.post.content = ''
+        },
+
+    },
+
+    
 }
 </script>
 

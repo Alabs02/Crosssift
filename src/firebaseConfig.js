@@ -22,6 +22,7 @@ firebase.initializeApp(firebaseConfig)
 // => Utils
 const db = firebase.firestore()
 const auth = firebase.auth()
+const auth_ = firebase.auth
 
 // => Collection references
 const usersCollection = db.collection('users')
@@ -34,6 +35,7 @@ const dislikesCollection = db.collection('dislikes')
 export {
     db,
     auth,
+    auth_,
     usersCollection,
     postsCollection,
     commentsCollection,

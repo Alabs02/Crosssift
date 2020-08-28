@@ -3,7 +3,7 @@
         <v-dialog v-model="dialog" persistent="" max-width="400">
             <template v-slot:activator="{ on }">
                 <v-spacer></v-spacer>
-                <v-btn dark color="red" v-on="on">
+                <v-btn dark rounded color="red" v-on="on">
                     <v-icon left>mdi-delete</v-icon>
                     Delete account
                 </v-btn>
@@ -20,39 +20,63 @@
                 <v-row no-gutters justify="">
                     <v-container>
                         <h6 class="headline text-center">Are you absolutely sure?</h6>
-                        <v-card-text class="red--text text-center text--lighten-2">johndeo@thecrossift.com</v-card-text>
+                        <v-card-text class="red--text text-center text--lighten-2">{{ userProfile.email }}</v-card-text>
                     </v-container>
                 </v-row>
                 <v-card-actions>
                     <v-spacer></v-spacer>
                     <v-btn small text color="grey" class="white--text" @click="dialog=false">
-                        <span>cancel</span>
+                        <span class="grey--text text--darken-3">cancel</span>
                     </v-btn>
                     <v-btn small @click="deleteAccount" dark color="red" class="white--text">
                         <span class="text-none" style="text-transform: capitalise !miportant">I understand the consequences</span>
                     </v-btn>
                 </v-card-actions>
+                 <div>
+                    <success-alert></success-alert>  
+                    <error-alert></error-alert>
+                    <warning-alert></warning-alert>
+                </div>
             </v-card>
         </v-dialog>
     </v-row>
 </template>
 
 <script>
+import { mapState } from 'vuex'
+import SuccessAlert from '@/components/core/SuccessAlert.vue'
+import ErrorAlert from '@/components/core/ErrorAlert.vue'
+import WarningAlert from '@/components/core/WarningAlert.vue'
+
 export default {
+    components: {
+        'success-alert': SuccessAlert,
+        'error-alert': ErrorAlert,
+        'warning-alert': WarningAlert,
+    },
     data() {
         return {
             dialog: false,
+            showDelBtn: true,
             updateEmailForm: {
                 newEmail: ""
             },
         }
     },
 
+    computed: {
+        ...mapState(['userProfile']),
+    },
+
+    created() {
+        this.showBtn()
+    },
+
     methods: {
         deleteAccount() {
             alert("Function fired")
             this.$store.dispatch('deleteAccount')
-        }
+        },
     }
 }
 </script>

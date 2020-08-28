@@ -10,7 +10,7 @@
         icon
         @click="dialog = true"
       >
-        <v-icon>mdi-settings</v-icon>
+        <v-icon>mdi-settings-outline</v-icon>
       </v-btn>
 
         <v-dialog
@@ -63,7 +63,7 @@
                 <v-card class="text-center">
                   <v-card-text>
                     <v-row no-gutters justify="center">
-                      <p class="body-1">johndeo@thecrossift.com</p>
+                      <p class="body-1">{{ userProfile.email }}</p>
                     </v-row>
                   </v-card-text>
                 </v-card>
@@ -138,7 +138,7 @@
                                     </v-list-item-avatar>
 
                                     <v-list-item-content>
-                                      <v-list-item-title class="title">johndeo@thecrossift.com</v-list-item-title>
+                                      <v-list-item-title class="title">{{ userProfile.email }}</v-list-item-title>
                                       <v-list-item-subtitle class="overline">update email address</v-list-item-subtitle>
                                     </v-list-item-content>
 
@@ -153,7 +153,7 @@
                                     </v-list-item-avatar>
 
                                     <v-list-item-content>
-                                      <v-list-item-title class="title">John_D</v-list-item-title>
+                                      <v-list-item-title class="title">{{ userProfile.displayName }}</v-list-item-title>
                                       <v-list-item-subtitle class="overline">update username</v-list-item-subtitle>
                                     </v-list-item-content>
 
@@ -294,7 +294,7 @@
                     type="email"
                     color="red"
                     outlined
-                    placeholder="johndeo@thrcrossift.com"
+                    :placeholder="userProfile.email"
                   >
                   </v-text-field>
                   <v-card-actions>
@@ -312,87 +312,12 @@
         </v-card>
       </v-dialog>
 
-      <v-dialog
-        v-model="dialog2"
-        max-width="500px"
-      >
-        <v-card>
-          <v-card-title>
-            Dialog 2
-          </v-card-title>
-          <v-card-text>
-            <v-btn
-              color="primary"
-              dark
-              @click="dialog3 = !dialog3"
-            >
-              Open Dialog 3
-            </v-btn>
-            <v-select
-              :items="select"
-              label="A Select List"
-              item-value="text"
-            ></v-select>
-          </v-card-text>
-          <v-card-actions>
-            <v-btn
-              color="primary"
-              text
-              @click="dialog2 = false"
-            >
-              Close
-            </v-btn>
-          </v-card-actions>
-        </v-card>
-      </v-dialog>
-      <v-dialog
-        v-model="dialog3"
-        max-width="500px"
-      >
-        <v-card>
-          <v-card-title>
-            <span>Dialog 3</span>
-            <v-spacer></v-spacer>
-            <v-menu
-              bottom
-              left
-            >
-              <template v-slot:activator="{ on, attrs }">
-                <v-btn
-                  icon
-                  v-bind="attrs"
-                  v-on="on"
-                >
-                  <v-icon>mdi-dots-vertical</v-icon>
-                </v-btn>
-              </template>
-              <v-list>
-                <v-list-item
-                  v-for="(item, i) in items"
-                  :key="i"
-                  @click="() => {}"
-                >
-                  <v-list-item-title>{{ item.title }}</v-list-item-title>
-                </v-list-item>
-              </v-list>
-            </v-menu>
-          </v-card-title>
-          <v-card-actions>
-            <v-btn
-              color="primary"
-              text
-              @click="dialog3 = false"
-            >
-              Close
-            </v-btn>
-          </v-card-actions>
-        </v-card>
-      </v-dialog>
     </v-row>
   </div>
 </template>
 
 <script>
+import { mapState } from 'vuex'
 import updateName from '../Auth/update/updateName.vue';
 import updateGender from '@/components/Auth/update/updateGender.vue';
 import updateUsername from '@/components/Auth/update/updateUsername.vue';
@@ -443,7 +368,27 @@ import deleteAccount from '@/components/Auth/DeleteAccount.vue'
           { text: 'State 6' },
           { text: 'State 7' },
         ],
+
+        profile: {
+          email: ""
+        }
       }
     },
+
+    computed: {
+      ...mapState(['userProfile']),
+    },
+
+    created() {
+      this.getProfile();
+      // console.log("Test obj: ", this.$store.state.userProfile)
+    },
+
+    methods: {
+      showBtn() {
+         
+      },
+    }
+
   }
 </script>

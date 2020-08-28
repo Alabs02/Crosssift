@@ -8,17 +8,22 @@ import { auth } from './firebaseConfig'
 Vue.config.productionTip = false
 
 let app
-auth.onAuthStateChanged(() => {
+// eslint-disable-next-line no-unused-vars
+auth.onAuthStateChanged(user => {
   if (!app) {
     app = new Vue({
       router,
       vuetify,
       store,
+      created() {
+     
+      },
+
       render: h => h(App)
     }).$mount('#app')
         // User is signed in.
-    } else {
-        // User is signed out.
-    }
+  } 
+
+  if (user) store.dispatch('fetchUserProfile', user)
 });
 
