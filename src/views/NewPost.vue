@@ -6,7 +6,7 @@
          extended
          flat
         >
-            <v-app-bar-nav-icon v-on:click="drawer = !drawer"></v-app-bar-nav-icon>
+            <v-app-bar-nav-icon @click="drawer = !drawer" class="hidden-lg-only"></v-app-bar-nav-icon>
         </v-toolbar>
 
         <v-navigation-drawer
@@ -82,7 +82,7 @@
 
             <v-content id="post_content">
                   <v-card-text>
-                    <v-form @submit.prevent ref="form" lazy-validation v-model="validation">
+                    <v-form @submit.prevent ref="form">
                         <v-text-field
                             v-model.trim="post.title"
                             color="indigo"
@@ -93,12 +93,15 @@
                         ></v-text-field>
 
                         <v-textarea
-                        v-model.trim="post.content"
-                        color="indigo"
-                        outlined
-                        label="Content"
-                        required
-                        placeholder="Text goes here"
+                            v-model.trim="post.content"
+                            type="text"
+                            auto-grow
+                            auto-focus
+                            color="indigo"
+                            outlined
+                            label="Content"
+                            required
+                            placeholder="Text goes here"
                         ></v-textarea>
                         <v-row no-gutters class="mb-4">
                             <v-switch 
@@ -111,11 +114,11 @@
                         </v-row>
                         
                         <v-file-input
-                            v-model.trim="post.img" 
-                            :rules="imgRules"
+                            @change="onFileSelected"
                             chips
+                            type="file"
                             show-size
-                            accept="image/png, image/jpeg, image/bmp"
+                            accept="image/png, image/jpeg, image/jpg, image/bmp"
                             outlined
                             color="indigo"
                             label="upload image (Optional)"
@@ -137,8 +140,9 @@
                         <v-file-input
                             v-model.trim="post.multimedia" 
                             chips
+                            type="file"
                             show-size
-                            accept="image/png, image/jpeg, image/bmp"
+                            accept="image/png, image/jpeg, image/jpg, image/bmp"
                             outlined
                             color="indigo"
                             label="upload video clip (Optional)"
@@ -150,32 +154,22 @@
 
                         <v-item-group multiple>
                             <v-subheader>Tags</v-subheader>
-                            <v-item
-                            v-for="n in 3"
-                            :key="n"
-                            v-slot:default="{ active, toggle }"
+                            <v-chip-group
+                                multiple
+                                max="3"
+                                light
+                                next-icon="mdi-chevron-right"
+                                prev-icon="mdi-chevron-left"
+                                show-arrows
+                                active-class="primary--text"
+                                v-model="post.tags"
                             >
-                            <v-chip
-                                active-class="purple--text"
-                                :input-value="active"
-                                @click="toggle"
-                                class="mr-2"
-                            >
-                                rickrock embezlement funds {{ n }}
-                            </v-chip>
-                            </v-item>
-                        </v-item-group>
+                                <v-chip v-for="tag in tags" :key="tag">
+                                    {{ tag }}
+                                </v-chip>
+                            </v-chip-group>
 
-                        <v-subheader class="mt-2">Select how you want your to be displayed.</v-subheader>
-                        <v-chip-group
-                            v-model.trim="post.template"
-                            column
-                            multiple
-                        >
-                            <v-chip :disabled="post.img === null" filter outlined>First View</v-chip>
-                            <v-chip :disabled="post.img === null" filter outlined>Second View</v-chip>
-                            <v-chip filter outlined>Third View</v-chip>
-                        </v-chip-group>
+                        </v-item-group>
                     </v-form>
                 </v-card-text>
 
@@ -196,12 +190,45 @@
                         color="indigo"
                         large
                         :disabled="post.title === '' && post.content === ''"
-                        @click="createPost"
+                        @click.prevent="createPost"
                     >
+                        <v-icon left>mdi-telegram</v-icon>
                         <span>Post</span>
-                        <v-icon right>mdi-send</v-icon>
                     </v-btn>
                 </v-card-actions>
+                <v-snackbar
+                    v-model="postSuccess"
+                    elevation="5"
+                    top
+                    multi-line
+                >
+                    <v-icon class="white--text">mdi-cloud-check</v-icon> <span class="ml-2 green--text text--darken-1 body-1 font-weight-medium">Posted successfully, thank you</span> <v-icon class="ml-2 red--text" size="15">mdi-heart-multiple</v-icon>
+
+                    <v-btn
+                        color="white"
+                        text
+                        @click="closeGreenSnackbar"
+                    >Close</v-btn>
+                </v-snackbar>
+
+                <!--    Error Snackbar  -->
+                <v-snackbar
+                    v-model="postError"
+                    elevation="5"
+                    top
+                    multi-line
+                >
+                    <v-icon class="white--text">mdi-cloud-alert</v-icon> <span class="ml-4 red--text  body-1 font-weight-medium">An error occurred, please try again</span>
+
+                    <v-btn
+                        color="white"
+                        text
+                        @click="closeRedSnackbar"
+                    >Close</v-btn>
+                </v-snackbar>
+                <v-overlay :value="postLoader">
+                    <v-progress-circular indeterminate size="64"></v-progress-circular>
+                </v-overlay>
             </v-content>
         </v-card><br>
         <br>
@@ -211,7 +238,8 @@
 
 
 <script>
-import format from 'date-fns/format';
+import format from 'date-fns/format'
+import { mapState } from 'vuex'
 
 
 export default {
@@ -234,10 +262,22 @@ export default {
             { view: '@/assets/logo.png' },
             { view: '@/assets/logo.png' }
         ], 
+        previewTemplate: [ 1, 2, 3],
+        tags: [
+            'Politics',
+            'Crisis',
+            'Vacation',
+            'Food',
+            'Work',
+            'Art',
+            'Tech',
+            'Creative Writing',
+            'Others'
+        ],
 
         // Rules
         imgRules: [
-            value => !value || value.size < 2000000 || 'Image size should be less than 2 MB!',
+            value => !value || value.size < 20048 || 'Image size should be less than 2 MB!',
         ],
 
         // Firebase create post
@@ -246,8 +286,8 @@ export default {
             content: "",
             img: null,
             multimedia: null,
-            tags: null,
-            template: [2]
+            tags: [],
+            template: []
         }
     }),
 
@@ -263,6 +303,7 @@ export default {
         dataFormat () {
             return this.date ? format(this.date, 'dddd, MMMM Do YYYY') : ''
         },
+        ...mapState(['postLoader', 'postSuccess', 'postError'])
     },
 
     methods: {
@@ -270,8 +311,12 @@ export default {
             this.$refs.form.reset()
         },
 
-        createPost() {
-            this.$store.dispatch('createPost', {
+        onFileSelected(e) {
+            this.post.img = e
+        },
+
+        createPost () {
+            this.$store.dispatch('createNewPost', {
                 title: this.post.title,
                 content: this.post.content,
                 img: this.post.img,
@@ -279,12 +324,27 @@ export default {
                 tags: this.post.tags,
                 template: this.post.template
             })
-            this.post.content = ''
+            this.resetForm()
         },
 
+        closeGreenSnackbar() {
+            this.$store.commit('SET_POSTSUCCESS_SNACKBAR')
+        },
+
+        closeRedSnackbar() {
+            this.$store.commit('SET_POSTERROR_SNACKBAR')
+        },
     },
 
-    
+    pre(){
+        alert(this.previewTemplate)
+    },
+    pre1(){
+        alert(this.previewTemplate)
+    },
+    pre2() {
+        alert(this.previewTemplate)
+    },
 }
 </script>
 

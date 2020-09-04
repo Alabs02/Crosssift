@@ -23,7 +23,7 @@
                     <v-btn text color="grey" class="white--text" @click="dialog=false">
                         <span>cancel</span>
                     </v-btn>
-                    <v-btn color="indigo" class="white--text">
+                    <v-btn @click="updatePassword" color="indigo" class="white--text">
                         <span>update</span>
                     </v-btn>
                 </v-card-actions>
@@ -37,7 +37,20 @@ export default {
     data() {
         return {
             dialog: false,
+
+            updateForm: {
+                password: ""
+            }
         }
+    },
+
+    methods: {
+            // updatePassword() {
+            //     // alert(this.updateForm.password)
+            //     // this.$store.dispatch('updateUserPassword', {
+            //     //     password: this.updateForm.password
+            //     // })
+            // },
     }
 }
 </script>

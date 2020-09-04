@@ -17,6 +17,7 @@
                         outlined
                         color="indigo"
                         :placeholder="userProfile.email"
+                        @keydown.enter="updateEmailAddr"
                     ></v-text-field>
                 </v-card-text>
                 <v-card-actions>

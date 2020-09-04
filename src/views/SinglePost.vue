@@ -201,6 +201,7 @@
 </template>
 
 <script>
+import moment from 'moment'
 export default {
   data() {
     return {
@@ -220,6 +221,20 @@ export default {
       expandOnHover: true,
     };
   },
+  
+  filters: {
+    formatDate(val) {
+      if (!val) { return '-' }
+      
+      let date = val.toDate()
+      return moment(date).fromNow()
+    },
+    trimLength(val) {
+      if (val.length < 200) { return val }
+      return `${val.substring(0, 200)}...`
+    }
+  },
+
   methods: {
     true() {
       this.like += 1;

@@ -78,6 +78,7 @@
                                                 color="indigo"
                                                 :append-icon="showSigninP ? 'mdi-eye' : 'mdi-eye-off'"
                                                 @click:append="showSigninP = !showSigninP"
+                                                @keydown.enter="signIn"
                                                 placeholder="******"
                                                 label="Password"
                                             ></v-text-field>
@@ -87,7 +88,6 @@
                                         <v-col cols="12" md="12" sm="8">
                                             <v-btn
                                                 :loading="loading"
-                                                :disabled="loading"
                                                 color="indigo"
                                                 block
                                                 type="submit"
@@ -134,7 +134,7 @@
                                                 </v-row>
 
                                                 <v-row justify="center">
-                                                    <v-btn @click="signupWithGoogle" large outlined class="mr-3" id="googleBtn">
+                                                    <v-btn @click="signinWithGoogle" large outlined class="mr-3" id="googleBtn">
                                                         <span class="google-blue">G</span>
                                                         <span class="google-red">O</span>
                                                         <span class="google-yellow">O</span>
@@ -143,7 +143,7 @@
                                                         <span class="google-red">E</span>
                                                     </v-btn>
 
-                                                    <v-btn @click="signupWithFacebook" dark large class="facebook-color">
+                                                    <v-btn @click="signinWithFacebook" dark large class="facebook-color">
                                                         <span>facebook</span>
                                                     </v-btn>
                                                 </v-row>
@@ -193,39 +193,26 @@
                                                                 label="Password"
                                                                 :append-icon="showSignupP ? 'mdi-eye' : 'mdi-eye-off'"
                                                                 @click:append="showSignupP = !showSignupP"
+                                                                @keydown.enter="signUp"
                                                                 placeholder="******"
                                                             ></v-text-field>
 
                                                             <v-row no-gutters>
                                                                 <v-col cols="12" md="12" sm="12">
-                                                                    <!-- <v-btn
-                                                                        rounded
-                                                                        dark
-                                                                        color="indigo"
-                                                                        block
-                                                                        type="submit"
-                                                                        @click.prevent="signUp"
-                                                                    >
-                                                                        
-                                                                    </v-btn><br> -->
                                                                     <v-btn
                                                                         :loading="loading2"
-                                                                        :disabled="loading2"
                                                                         color="indigo"
                                                                         block
                                                                         type="submit"
                                                                         dark
                                                                         rounded
-                                                                        @click.prevent="loader = 'loading2'"
+                                                                        @click.prevent="signUp"
                                                                     >
                                                                         start using crossift
-                                                                        <template v-slot:loader>
-                                                                            <span class="grey--text text--darken-1">Loading...</span>
-                                                                        </template>
                                                                     </v-btn><br />
                                                                 </v-col>
                                                                 <v-col>
-                                                                    <v-card-text class="text-center grey--text body-1">
+                                                                    <v-card-text class="text-center grey--text text--darken-2 body-1">
                                                                         <span>By continuing you agree to Crossift's <span class="font-weight-bold">Privacy policy</span> and <span class="font-weight-bold">terms of use</span>.</span>
                                                                     </v-card-text>
                                                                     <v-card-text class="text-center">
@@ -340,7 +327,8 @@ import WarningAlert from '@/components/core/WarningAlert.vue'
     },
 
     methods: {
-        signUp: () => {
+        signUp() {
+            this.loading2 = true
             this.$store.dispatch('signup', {
                 name: this.signupForm.name,
                 username: this.signupForm.username,
@@ -349,7 +337,8 @@ import WarningAlert from '@/components/core/WarningAlert.vue'
             })
         },
 
-        signIn: () => {
+        signIn() {
+            this.loading = true
             this.$store.dispatch('signin', {
                 email: this.signinForm.email,
                 password: this.signinForm.password
@@ -357,21 +346,12 @@ import WarningAlert from '@/components/core/WarningAlert.vue'
         },
 
         signinWithGoogle() {
-            window.alert("First trigger fired!")
             this.$store.dispatch('signinWithGoogle')
         },
 
         signinWithFacebook() {
             this.$store.dispatch('signinWithFacebook')
         },
-
-        // signupWithGoogle: () => {
-        //     this.$store.dispatch('signupWithGoogle')
-        // },
-
-        // signupWithFacebook: () => {
-        //     this.$store.dispatch('signupWithFacebook')
-        // },
     }
   }
 </script>

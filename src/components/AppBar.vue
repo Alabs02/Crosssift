@@ -1,10 +1,9 @@
 <template>
     <div>
         <v-app-bar
-         color="#fcb69f"
+         app
          dark
          id="color"
-         app
         >
 
         <v-app-bar-nav-icon v-on:click="drawer = !drawer"></v-app-bar-nav-icon>

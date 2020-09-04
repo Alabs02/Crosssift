@@ -15,8 +15,22 @@ auth.onAuthStateChanged(user => {
       router,
       vuetify,
       store,
-      created() {
-     
+      async created() {
+        await this.listeningToPosts();
+        await this.randomColors();
+        await this.getUserData()
+      },
+      methods: {
+        listeningToPosts() {
+          this.$store.dispatch('displayPosts')
+        },
+        randomColors() {
+          this.$store.dispatch("randomColors")
+          this.$store.dispatch("randomAvatarColors")
+        },
+        getUserData() {
+          this.$store.dispatch('fetchUserData')
+        },
       },
 
       render: h => h(App)

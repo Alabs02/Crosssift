@@ -3,15 +3,17 @@
     <v-row
       justify="center"
     >
-      <v-btn
-        color="indigo"
-        class="ml-3"
-        dark
-        icon
-        @click="dialog = true"
-      >
-        <v-icon>mdi-settings-outline</v-icon>
-      </v-btn>
+      
+          <v-btn
+            color="indigo"
+            class="ml-3"
+            dark
+            icon
+            @click="dialog = true"
+          >
+            <v-icon>mdi-settings-outline</v-icon>
+          </v-btn>
+      
 
         <v-dialog
         v-model="dialog"
@@ -21,11 +23,11 @@
         scrollable
         >
         <v-card tile>
-            <v-toolbar
+          <v-toolbar
             flat
             dark
             color="indigo darken-2"
-            >
+          >
             <v-btn
                 icon
                 dark
@@ -36,13 +38,6 @@
             <v-toolbar-title>Settings</v-toolbar-title>
             <v-spacer></v-spacer>
             <v-toolbar-items>
-                <!-- <v-btn
-                dark
-                text
-                @click="dialog = false"
-                >
-                Save
-                </v-btn> -->
             </v-toolbar-items>
             <v-menu
                 bottom
@@ -59,7 +54,7 @@
                     <v-icon>mdi-dots-vertical</v-icon>
                 </v-btn>
                 </template>
-                <!--  -->
+                
                 <v-card class="text-center">
                   <v-card-text>
                     <v-row no-gutters justify="center">
@@ -68,54 +63,73 @@
                   </v-card-text>
                 </v-card>
             </v-menu>
-            </v-toolbar>
+          </v-toolbar>
             <v-card-text>
             <v-container></v-container>
+            <!-- <p>UserData: {{ userData }}</p> -->
             <v-list
                 three-line
                 subheader
             >
                 <v-list-item>
-                  <v-row>
-                    <v-col cols="12" md="6" sm="12">
-                      <v-avatar size="60">
+                  <v-row justify="center">
+                    <v-col cols="12" color="grey lighten-4" md="6" sm="12">
+                      <v-avatar class="ml-12" v-if="!userProfile.photoURL" size="65">
                         <v-img
                           src="../../assets/female.svg"
                           lazy-src="../../assets/female.svg"
                         ></v-img>
                       </v-avatar>
-                      <p class="overline mt-2">change avatar</p>
-                      <v-file-input
-                        :rules="rules"
-                        outlined
-                        color="indigo"
-                        chips
-                        accept="image/png, image/jpeg, image/bmp"
-                        placeholder="Pick an avatar"
-                        prepend-icon="mdi-camera"
-                        label="Avatar"
-                      ></v-file-input>
+
+                      <v-avatar class="ml-12" v-else size="65" color="brown darken-1">
+                        <h1 class="white--text text-uppercase font-weight-medium" style="font-size: 2rem !important">{{ userProfile.displayName.slice(0, 1) }}</h1>
+                      </v-avatar>
+
+                      <p class="overline mt-2 ml-12">change avatar</p>
+                      <v-row justify-sm="center">
+                        <v-col cols="12" md="8" sm="12">
+                          <v-file-input
+                            @change="onAvatarSelected"
+                            show-size
+                            outlined
+                            color="indigo"
+                            chips
+                            accept="image/png, image/jpeg, image/jpg, image/svg, image/bmp"
+                            placeholder="Pick an avatar"
+                            prepend-icon="mdi-camera"
+                            label="Avatar"
+                          ></v-file-input>
+                        </v-col>
+                        <v-btn @click="updateUserAvatar" class="mt-5"><v-icon left>mdi-file-cloud</v-icon> upload</v-btn>
+                      </v-row>
+                      
                     </v-col>
 
                     <v-col cols="12" md="6" sm="12">
-                      <v-avatar tile size="60">
+                      <v-avatar class="ml-12" tile size="65">
                         <v-img
                           src="../../assets/books.png"
                           lazy-src="../../assets/books.png"
                           cover
                         ></v-img>
                       </v-avatar>
-                      <p class="overline mt-2">change cover picture</p>
-                      <v-file-input
-                        :rules="rules"
-                        outlined
-                        color="indigo"
-                        chips
-                        accept="image/png, image/jpeg, image/bmp"
-                        placeholder="change cover picture"
-                        prepend-icon="mdi-camera"
-                        label="Avatar"
-                      ></v-file-input>
+                      <p class="overline mt-2 ml-12">change cover picture</p>
+                      <v-row>
+                        <v-col cols="12" md="8" sm="12">
+                          <v-file-input
+                            @change="onImageSelected"
+                            outlined
+                            show-size
+                            color="indigo"
+                            chips
+                            accept="image/png, image/jpeg, image/jpg, image/svg, image/bmp"
+                            placeholder="change cover picture"
+                            prepend-icon="mdi-camera"
+                            label="Cover Picture"
+                          ></v-file-input>
+                        </v-col>
+                        <v-btn @click="updateUserCoverImg" class="mt-5"><v-icon left>mdi-file-cloud-outline</v-icon> upload</v-btn>
+                      </v-row>
                     </v-col>
                   </v-row>
                 </v-list-item>
@@ -146,7 +160,8 @@
                                       <update-email />
                                     </v-list-item-action>
                                   </v-list-item>
-                                  <!--  update username -->
+
+                                   <!-- update username -->
                                   <v-list-item>
                                     <v-list-item-avatar>
                                       <v-icon class="indigo" dark>mdi-face</v-icon>
@@ -162,14 +177,14 @@
                                     </v-list-item-action>
                                   </v-list-item>
 
-                                  <!--  update name -->
+                                   <!-- update name -->
                                   <v-list-item>
                                     <v-list-item-avatar>
                                       <v-icon class="indigo" dark>mdi-account</v-icon>
                                     </v-list-item-avatar>
 
                                     <v-list-item-content>
-                                      <v-list-item-title class="title">John Deo</v-list-item-title>
+                                      <v-list-item-title class="title text-capitalize">{{ userData.name }}</v-list-item-title>
                                       <v-list-item-subtitle class="overline">update name</v-list-item-subtitle>
                                     </v-list-item-content>
 
@@ -178,14 +193,14 @@
                                     </v-list-item-action>
                                   </v-list-item>
 
-                                  <!--  update gender -->
+                                   <!-- update gender -->
                                   <v-list-item>
                                     <v-list-item-avatar>
                                       <v-icon class="indigo" dark>mdi-gender-male-female</v-icon>
                                     </v-list-item-avatar>
 
                                     <v-list-item-content>
-                                      <v-list-item-title class="title">Null</v-list-item-title>
+                                      <v-list-item-title class="title text-capitalize">{{ userData.gender }}</v-list-item-title>
                                       <v-list-item-subtitle class="overline">update gender</v-list-item-subtitle>
                                     </v-list-item-content>
 
@@ -194,14 +209,14 @@
                                     </v-list-item-action>
                                   </v-list-item>
 
-                                  <!--  update occupation -->
+                                   <!-- update occupation -->
                                   <v-list-item>
                                     <v-list-item-avatar>
                                       <v-icon class="indigo" dark>mdi-briefcase</v-icon>
                                     </v-list-item-avatar>
 
                                     <v-list-item-content>
-                                      <v-list-item-title class="title">Journalist</v-list-item-title>
+                                      <v-list-item-title class="title text-capitalize">{{ userData.occupation }}</v-list-item-title>
                                       <v-list-item-subtitle class="overline">update occupation</v-list-item-subtitle>
                                     </v-list-item-content>
 
@@ -210,7 +225,7 @@
                                     </v-list-item-action>
                                   </v-list-item>
 
-                                  <!--  update password -->
+                                   <!-- update password -->
                                   <v-list-item>
                                     <v-list-item-avatar>
                                       <v-icon class="indigo" dark>mdi-lock</v-icon>
@@ -276,7 +291,7 @@
               <v-divider class="mt-3 mb-5 mx-5"></v-divider>
               <v-subheader inset class="red--text body-1">Danger Zone</v-subheader>
               <v-container></v-container>
-              <v-card max-width="50%">
+              <v-card min-width="50%">
                 <v-container>
                   <v-card-text class="title">Delete Account</v-card-text>
                   <v-card-text>
@@ -371,24 +386,56 @@ import deleteAccount from '@/components/Auth/DeleteAccount.vue'
 
         profile: {
           email: ""
+        },
+
+        img: {
+          avatar: null,
+        },
+        image: {
+          coverImg: null
         }
+
       }
     },
 
     computed: {
-      ...mapState(['userProfile']),
+      ...mapState(['userProfile', 'userData']),
+      // userName() {
+      //   return this.userData.name
+      // },
+      // userGender() {
+      //   return this.userData.gender
+      // },
+      // userOccupation() {
+      //   return this.userData.occupation
+      // }
     },
 
     created() {
-      this.getProfile();
-      // console.log("Test obj: ", this.$store.state.userProfile)
+      //
     },
 
     methods: {
-      showBtn() {
-         
+      onAvatarSelected(e) {
+        this.img.avatar = e
       },
-    }
 
+      onImageSelected(e) {
+        this.image.coverImg = e
+      },
+
+      updateUserAvatar() {
+        this.$store.dispatch('updateUserAvatar', {
+          avatar: this.img.avatar
+        })
+      },
+
+      updateUserCoverImg() {
+        this.$store.dispatch('updateUserCoverImg', {
+          coverImg: this.image.coverImg
+        })
+      },
+    
+    }
   }
 </script>

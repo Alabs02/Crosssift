@@ -72,8 +72,9 @@
                     id="search"
                     flat
                     hide-details
-                    label="Search"
+                    label="Search news"
                     prepend-inner-icon="mdi-database-search"
+                    color="indigo"
                     solo-inverted
                     clearable
                 ></v-text-field>
@@ -178,7 +179,7 @@
                     <template v-slot:activator="{ on, attrs }">
                         <v-btn icon v-on="on" v-bind="attrs">
                             <v-badge
-                                :content="5"
+                                :content="0"
                                 color="pink"
                                 icon
                                 id="badge"
@@ -241,12 +242,11 @@
 
            <v-content class="content-news">
                <v-container>
-                   <v-item-group>
+                    <div v-if="postsWithImg.length">
                        <v-container>
-                           <v-row>
+                           <!-- Trending    -->
+                           <!-- <v-row>
                                <v-col
-                                v-for="n in 3"
-                                :key="n"
                                 cols="12"
                                 md="4"
                                 lg="4"
@@ -305,41 +305,50 @@
                                         </v-card-actions><br>
                                    </v-card>
                                </v-col>
-                            </v-row>
+                            </v-row> -->
 
-                           <v-row>
+                            <!-- Card One   -->
+                           <v-row class="mt-n3">
                                <v-col
-                                v-for="n in 3"
-                                :key="n"
+                                v-for="post in postsWithImg"
+                                :key="post.id"
                                 cols="12"
                                 md="4"
                                 lg="4"
                                 sm="12"
                                >
                                 <v-card
-                                elevation="10"
+                                 elevation="10"
                                  class="mx-auto"
+                                 min-height="400"
                                 >
                                     <v-list-item>
-                                        <v-list-item-avatar color="grey darken-3">
+                                        <v-list-item-avatar v-if="!userProfile.photoURL" color="grey darken-3">
                                             <v-img
                                                 class="elevation-6"
-                                                src="../assets/josh.png"
+                                                :src="userProfile.photoURL"
+                                                :lazy-src="userProfile.photoURL"
                                             ></v-img>
                                         </v-list-item-avatar>
+
+                                        <v-list-item-avatar v-else :color="avatarColor">
+                                            <h1 class="white--text text-uppercase font-weight-medium" style="font-size: 1rem !important">{{ userProfile.displayName.slice(0, 1) }}</h1>
+                                        </v-list-item-avatar>
+
                                         <v-list-item-content>
-                                            <v-list-item-title class="headline indigo--text text--darken-3">Our Changing Planet</v-list-item-title>
-                                            <v-list-item-subtitle>by Simon Josh</v-list-item-subtitle>
+                                            <v-list-item-title class="title indigo--text text--darken-3">{{ post.title }}</v-list-item-title>
+                                            <v-list-item-subtitle>by {{ post.author }}</v-list-item-subtitle>
                                         </v-list-item-content>
                                     </v-list-item>
 
                                     <v-img
-                                     src="../assets/mountain.webp"
+                                     :src="post.img"
+                                     :lazy-src="post.img"
                                      height="180"
                                     ></v-img>
 
                                     <v-card-text class="grey--text text--darken-4">
-                                        Visit ten places on our planet that are undergoing the biggest changes today...
+                                        {{ post.content.slice(0, 50) }}...
                                     </v-card-text>
 
                                     <v-card-actions>
@@ -358,7 +367,7 @@
                                         >
                                             <v-icon class="red--text v-bold font-weight-bold">mdi-close-circle</v-icon>
                                         </v-btn>
-                                        <span>80</span>
+                                        <span>{{ post.dislikes }}</span>
 
                                         <v-btn
                                         icon
@@ -366,129 +375,60 @@
                                         >
                                             <v-icon class="success--text v-bold font-weight-bold">mdi-checkbox-marked-circle</v-icon>
                                         </v-btn>
-                                    <span>190</span>
+                                    <span>{{ post.likes }}</span>
                                     </v-card-actions>
                                 </v-card><br>
                                </v-col>
                            </v-row><br>
 
-                           <v-row justify="center" class="mt-12">
-                                <v-col
-                                v-for="(card, i) in cards"
-                                :key="i"
-                                cols="12"
-                                md="4"
-                                >
-                                    <v-card
-                                    id="mainCard"
-                                    class="mx-auto"
-                                    elevation="8"
-                                    >
-                                        <v-card
-                                        id="nestedCard"
-                                        class="mx-auto ml-3 mr-3 text-center bob animate infinite bounce"
-                                        height="160"
-                                        elevation="12"
-                                        flat
-                                        >
-                                           <v-img
-                                            src="@/assets/post.png"
-                                            lazy-src="@/assets/post.png"
-                                            width="100%"
-                                            
-                                            class="white--text align-end"
-                                           >
-                                            <v-card-title id="postTitle">Top 10 Australian beaches</v-card-title>
-                                           </v-img>
-                                        </v-card>
-                                        <v-sheet class="text-center">
-                                            <v-card-text class="newText">Lorem ipsum dolor sit amet consectetur adipisicing elit. Vitae sed blanditiis </v-card-text>
-                                            <div>
-                                                <v-btn rounded router to="/single_post" outlined color="indigo" small class="newBtn">Read</v-btn>
-                                            </div>
-                                        </v-sheet>
-                                        <!-- <v-divider class="mx-4"></v-divider> -->
-                                        <v-card-actions class="mt-n3">
-                                            <v-list-item class="grow">
-                                                <v-list-item-avatar color="grey darken-3">
-                                                    <v-img
-                                                        class="elevation-6"
-                                                        src="../assets/peret.png"
-                                                    ></v-img>
-                                                </v-list-item-avatar>
-
-                                                <v-list-item-content>
-                                                    <v-list-item-title>Helen</v-list-item-title>
-                                                </v-list-item-content>
-
-                                                <v-row
-                                                 align="center"
-                                                 justify="end"
-                                                >   
-                                                   <v-spacer></v-spacer>                           
-                                                    <v-btn
-                                                    icon
-                                                    dark
-                                                    color="red"
-                                                    >
-                                                        <v-icon class=" v-bold font-weight-bold">mdi-close-circle</v-icon>
-                                                    </v-btn>
-                                                    <span>80</span>
-
-                                                    <v-btn
-                                                    icon
-                                                    dark
-                                                    color="green"
-                                                    >
-                                                        <v-icon class="v-bold font-weight-bold">mdi-checkbox-marked-circle</v-icon>
-                                                    </v-btn>
-                                                    <span>190</span>
-                                                </v-row>
-                                            </v-list-item>
-                                        </v-card-actions>
-                                    </v-card><br>
-                                </v-col>
-                           </v-row>
-
+                            <!-- Card Third -->
                            <v-row>
                                <v-col
-                                v-for="card in cards"
-                                :key="card"
+                                v-for="post in postsWithoutImg"
+                                :key="post.id"
                                 cols="12"
                                 md="4"
                                 lg="4"
                                 sm="12"
                                >
                                     <v-card
-                                     :id=" card.color_id"
+                                     :id="color"
+                                     class="text-center"
+                                     min-height="250"
                                      dark
                                     >
-                                        <v-card-title>
-                                            <span  class="heading">Road Construction in Rogo</span>
-                                        </v-card-title>
+                                        <div class="text-center">
+                                            <v-card-text>
+                                                <span class="title">{{ post.title }}</span>
+                                            </v-card-text>
+                                        </div>
 
-                                        <v-card-text class="white--text">
-                                            Lorem ipsum, dolor sit amet consectetur adipisicing elit. Laborum aliquam sapiente,
-                                            baiores vel te eius consequuntur asperiores.
-                                            <div id="btn-read">
+                                        <v-card-text class="white--text mt-n2">
+                                            {{ post.content.slice(0, 150) }}...
+                                            <div>
                                                 <router-link to="/single_post">
-                                                    <v-btn small outlined rounded class="">Read more</v-btn>
+                                                    <v-btn small outlined rounded class="mt-3">Read more</v-btn>
                                                 </router-link>
  
                                             </div>
                                         </v-card-text>
 
-                                        <v-card-actions>
+                                        <v-card-actions id="third_card_actions">
                                             <v-list-item class="grow">
-                                                <v-list-item-avatar color="grey darken-3">
+                                                <v-list-item-avatar v-if="!userProfile.photoURL" color="grey darken-3">
                                                     <v-img
                                                         class="elevation-6"
-                                                        src="../assets/peret.png"
+                                                        :src="userProfile.photoURL"
+                                                        :lazy-src="userProfile.photoURL"
                                                     ></v-img>
                                                 </v-list-item-avatar>
 
+                                                <v-list-item-avatar v-else :color="avatarColor">
+                                                    <h1 class="white--text text-uppercase font-weight-medium" style="font-size: 1rem !important">{{ userProfile.displayName.slice(0, 1) }}</h1>
+                                                </v-list-item-avatar>
+
                                                 <v-list-item-content>
-                                                    <v-list-item-title>Helen</v-list-item-title>
+                                                    <v-list-item-title>{{ post.author }}</v-list-item-title>
                                                 </v-list-item-content>
 
                                                 <v-row
@@ -502,7 +442,7 @@
                                                     >
                                                         <v-icon class="white--text v-bold font-weight-bold">mdi-close-circle</v-icon>
                                                     </v-btn>
-                                                    <span>80</span>
+                                                    <span>{{ post.dislikes }}</span>
 
                                                     <v-btn
                                                     icon
@@ -510,7 +450,7 @@
                                                     >
                                                         <v-icon class="white--text v-bold font-weight-bold">mdi-checkbox-marked-circle</v-icon>
                                                     </v-btn>
-                                                    <span>190</span>
+                                                    <span>{{ post.likes }}</span>
                                                 </v-row>
                                             </v-list-item>
                                         </v-card-actions>
@@ -518,7 +458,29 @@
                                </v-col>
                            </v-row>
                        </v-container>
-                   </v-item-group>
+                    </div>
+                    <div v-else>
+                       <v-row justify="center" class="grey lighten-5">
+                           <v-col cols="12">
+                               <div class="text-center mt-8">
+                                   <v-avatar size="190" tile>
+                                        <v-img
+                                            src="../assets/problem.svg"
+                                        ></v-img>
+                                    </v-avatar>
+
+                                    <v-card-text class="text-capitalize text-center headline font-weight-medium" style="text-align: center !important;">no data available</v-card-text>
+                                    <v-card-text>
+                                        <span class="font-weight-light body-1">There are currently no post available.</span>
+                                    </v-card-text>
+
+                                    <v-card-text>
+                                        <v-btn @click="reloadCurrentRoute" ripple large dark color="indigo"><v-icon left>mdi-database-refresh</v-icon>refresh</v-btn>
+                                    </v-card-text>
+                               </div>
+                           </v-col>
+                       </v-row>
+                    </div>
                </v-container>
 
                 <v-divider class="mr-3 ml-3 "></v-divider>
@@ -548,8 +510,9 @@
 
 
 <script>
-import SearchBar from "@/components/partials/SearchBar.vue";
-import Settings from "@/components/core/Settings.vue";
+import { mapState } from 'vuex'
+import SearchBar from "@/components/partials/SearchBar.vue"
+import Settings from "@/components/core/Settings.vue"
 import SuccessAlert from '@/components/core/SuccessAlert.vue'
 import ErrorAlert from '@/components/core/ErrorAlert.vue'
 import WarningAlert from '@/components/core/WarningAlert.vue'
@@ -566,7 +529,7 @@ export default {
     },
 
     computed: {
-        
+        ...mapState(['userProfile', 'postsWithImg', 'postsWithoutImg', 'userData', 'color', 'avatarColor'])
     },
 
     data: () => ({
@@ -576,6 +539,21 @@ export default {
         hints: true,
         value: true,
         drawer: false,
+        page: null,
+        colors: [
+             "red",
+            "blue",
+            "green",
+            "indigo",
+            "purple",
+            "teal",
+            "orange",
+            "brown",
+            "deep-orange",
+            "blue-grey",
+            "cyan"
+        ],
+        currentColor: "",
         items: [
             { title: 'Home', icon: 'mdi-home-city', to: '/' },
             { title: 'News', icon: 'mdi-apps', to: '/news' },
@@ -601,17 +579,23 @@ export default {
             {title: 'Contact Us', icon: 'mdi-phone', link: '/contact'},
             {title: 'Logout', icon: 'mdi-open-in-new', link: '/'},
         ],
-        cards: [
-            { color_id: 'card-two-x' },
-            { color_id: 'card-two-y' },
-            { color_id: 'card-two-z' },
-        ]
     }),
+
+    async created() {
+    },
 
     methods: {
         async signOut() {
             await this.$store.dispatch('signOut')
-        }
+        },
+        async reloadCurrentRoute() {
+            await this.$router.go(this.$router.currentRoute)
+        },
+        // randomColors() {
+        //     this.currentColor = 
+        //     this.colors[Math.floor(Math.random() * this.colors.length)];
+        //     alert(this.colors)
+        // },
     }
 }
 </script>
@@ -635,6 +619,10 @@ export default {
     
     .newText {
         transform: translateY(-1.7rem);
+    }
+    #third_card_actions {
+        bottom: 0 !important; 
+        margin-bottom: 0 !important;
     }
 
     #nestedCard  {
@@ -660,11 +648,6 @@ export default {
 
     #chip-usage-example .v-chip {
     margin: 8px;
-    }
-
-    #btn-read {
-        margin-top: 8px;
-        margin-left: 90px;
     }
 
     #toolbar {
@@ -693,11 +676,23 @@ export default {
         }
     @media screen and (max-width: 1024px) {
         #nestedCard {
-            margin-top: 2.3rem !important;
+            transform: translateY(-11rem) !important;
+            margin-top: 3rem !important;
+            width: 90% !important;
+            height: 180px !important;
+            margin: auto 5% !important;
         }
         .content-news {
             margin-top: 3px !important;
         }
+
+        #mainCard {
+            margin-bottom: 13rem !important;
+        }
+        @keyframes mover {
+        0%{ transform: translateY(-4rem); }
+        100%{ transform: translateY(-6em); }
+    }
     }
 
 

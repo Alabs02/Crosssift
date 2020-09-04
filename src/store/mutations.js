@@ -3,8 +3,22 @@ export const mutations = {
         state.userProfile = payload
     },
 
-    SET_POST: (state, payload) => {
-        state.posts = payload
+    SET_USER_DATA: (state, payload) => {
+        state.userData = payload
+    },
+
+    SET_POSTS_WITH_IMG: (state, payload) => {
+        state.postsWithImg = payload
+    },
+
+    SET_POST_WITHOUT_IMG: (state, payload) => {
+        state.postsWithoutImg = payload
+    },
+    SET_COLOR: (state, payload) => {
+        state.color = payload
+    },
+    SET_AVATAR_COLOR: (state, payload) => {
+        state.avatarColor = payload
     },
 
     // => Handle Error Alerts
@@ -35,4 +49,11 @@ export const mutations = {
     SET_SNACKBAR_ERROR: (state) => {
         state.snackbarError = true
     },
+
+    SET_POSTSUCCESS_SNACKBAR: (state) => {
+        state.postSuccess = false
+    },
+    SET_POSTERROR_SNACKBAR: (state) => {
+        state.postError = false
+    }
 }

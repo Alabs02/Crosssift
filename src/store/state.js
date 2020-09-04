@@ -1,22 +1,34 @@
 export const state = {
-    userEmail: "",
-    userData: {},
-    userProfile: null,
-    post: [],
+  userEmail: "",
+  userData: null,
+  userProfile: null,
+  postsWithImg: [],
+  postsWithoutImg: [],
+  color: "",
+  avatarColor: "",
 
-    /**
-     *  Alert Handling
-     */
-    snackbarSuccess: false,
-    snackbarError: false,
-    snackbarWarning: false,
-    successText: "",
-    errorText: "",
-    warningText: "",
+  /**
+  *  Alert Handling
+  */
+  snackbarSuccess: false,
+  snackbarError: false,
+  snackbarWarning: false,
+  successText: "",
+  errorText: "",
+  warningText: "",
 
-    /**
-     *  Dialog Handlers
-     */
-    forgotPassDiag: false,
+  postSuccess: false,
+  postError: false,
 
-}
+  /**
+  *  Render Hanflers
+  */
+showAvatar: false,
+showIcon: false,
+
+  /**
+  * Loaders
+  */
+
+  postLoader: false,
+};

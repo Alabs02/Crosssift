@@ -6,7 +6,7 @@
          extended
          color="indigo"
         >
-            <v-app-bar-nav-icon v-on:click="drawer = !drawer"></v-app-bar-nav-icon>
+            <v-app-bar-nav-icon v-on:click="drawer = !drawer" class="hidden-lg-only"></v-app-bar-nav-icon>
      
         </v-toolbar>
 
@@ -68,12 +68,23 @@
                             >
                             </v-img>
                             <v-avatar
+                                v-if="!userProfile.photoURL"
                                 class="ml-5"
                                 elevation="10"
                                 size="110"
                                 id="avatar"
                             >
-                                <img src="../assets/female.svg" alt="peret">
+                                <img src="../assets/female.svg" alt="avatar">
+                            </v-avatar>
+                            <v-avatar
+                                v-else
+                                class="ml-5"
+                                elevation="10"
+                                size="120"
+                                id="avatar"
+                                color="blue"
+                            >
+                                <h1 class="white--text text-uppercase font-weight-medium" style="font-size: 3rem !important">{{ userProfile.displayName.slice(0, 1) }}</h1>
                             </v-avatar>
                         </v-responsive>
                     </div>
@@ -189,7 +200,7 @@
                             >
 
                                 <v-card-text>
-                                    <span class="title">Helen John</span><br>
+                                    <span class="title">{{ userProfile.displayName}}</span><br>
                                     <span class="subtitle">Renowned <span class="yellow--text text--darken-4">Broadcaster</span>  on the plateau</span>
                                 </v-card-text>
 
@@ -244,6 +255,8 @@
 
 <script>
 import Settings from "@/components/core/Settings.vue";
+import moment from 'moment'
+import { mapState } from 'vuex'
 
   export default {
     components: {
@@ -264,10 +277,24 @@ import Settings from "@/components/core/Settings.vue";
         }
     },
     computed: {
+        ...mapState(['userData', 'userProfile', 'posts']),
       bg () {
         return this.background ? 'https://cdn.vuetifyjs.com/images/backgrounds/bg-2.jpg' : undefined
       },
     },
+
+    filters: {
+        formatDate(val) {
+            if (!val) { return '-' }
+            
+            let date = val.toDate()
+            return moment(date).fromNow()
+        },
+        trimLength(val) {
+            if (val.length < 200) { return val }
+            return `${val.substring(0, 200)}...`
+        }
+    }
   }
 </script>
 
@@ -300,10 +327,11 @@ import Settings from "@/components/core/Settings.vue";
             height: 50px !important;
         }
         #avatar {
-            margin-top: -50px;
-            margin-left: -10px !important;
-            height: 60% !important;
-            /* width: 50% !important; */
+            margin-top: -40px;
+            margin-bottom: 10px !important;
+            margin-left: 12px !important;
+            height: 70px !important; 
+            width: 70px !important;
 
         }
     }
