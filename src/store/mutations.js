@@ -10,7 +10,12 @@ export const mutations = {
     SET_POSTS_WITH_IMG: (state, payload) => {
         state.postsWithImg = payload
     },
-
+    SET_FULLPOST: (state, payload) => {
+        state.fullpost = payload
+    },
+    SET_POST_COMMENTS: (state, payload) => {
+        state.postComments = payload
+    },
     SET_POST_WITHOUT_IMG: (state, payload) => {
         state.postsWithoutImg = payload
     },

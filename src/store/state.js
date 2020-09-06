@@ -1,7 +1,9 @@
 export const state = {
   userEmail: "",
-  userData: null,
-  userProfile: null,
+  userData: {},
+  fullpost: {},
+  postComments: [],
+  userProfile: {},
   postsWithImg: [],
   postsWithoutImg: [],
   color: "",

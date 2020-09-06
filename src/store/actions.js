@@ -507,11 +507,31 @@ export const actions = {
                 postsArray.push(post)
                 const filteredPostsWithoutImgs = postsArray.filter(postArray => postArray.img == undefined)
                 const filteredPostsWithImgs = postsArray.filter(postArray => postArray.img != undefined)
-                console.log("Result without images : ", filteredPostsWithoutImgs)
-                console.log("Result with images : ", filteredPostsWithImgs)
+                
                 commit('SET_POSTS_WITH_IMG', filteredPostsWithImgs)
                 commit('SET_POST_WITHOUT_IMG', filteredPostsWithoutImgs)
             })
+        })
+    },
+
+    // eslint-disable-next-line no-unused-vars
+    async likePost({ commit }, post) {
+        const userId = fb.auth.currentUser.uid
+        const docId = `${userId}_${post.id}`
+
+        // Check if user has liked post
+        const doc = await fb.likesCollection.doc(docId).get()
+        if (doc.exists) { return }
+
+        // Create likes 
+        await fb.likesCollection.doc(docId).set({
+            postId: post.id,
+            userId: userId
+        })
+
+        // update post likes count
+        fb.postsCollection.doc(post.id).update({
+            likes: post.likesCount + 1
         })
     },
 

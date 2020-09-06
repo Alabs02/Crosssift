@@ -353,10 +353,10 @@
 
                                     <v-card-actions>
                                         <v-btn
-                                        router to="/single_post"
-                                        rounded
-                                        text
-                                        color="deep-purple accent-4"
+                                            @click="viewPost(post)"
+                                            rounded
+                                            text
+                                            color="deep-purple accent-4"
                                         >
                                             <span>Read</span>
                                         </v-btn>    
@@ -394,22 +394,19 @@
                                     <v-card
                                      :id="color"
                                      class="text-center"
-                                     min-height="250"
+                                     min-height="300"
                                      dark
                                     >
                                         <div class="text-center">
                                             <v-card-text>
-                                                <span class="title">{{ post.title }}</span>
+                                                <v-list-item-title class="title text-truncate">{{ post.title }}</v-list-item-title>
                                             </v-card-text>
                                         </div>
 
                                         <v-card-text class="white--text mt-n2">
                                             {{ post.content.slice(0, 150) }}...
                                             <div>
-                                                <router-link to="/single_post">
-                                                    <v-btn small outlined rounded class="mt-3">Read more</v-btn>
-                                                </router-link>
- 
+                                                <v-btn @click="viewPost(post)" small outlined rounded class="mt-3">Read more</v-btn>
                                             </div>
                                         </v-card-text>
 
@@ -511,11 +508,13 @@
 
 <script>
 import { mapState } from 'vuex'
+import { commentsCollection } from '@/firebaseConfig.js'
 import SearchBar from "@/components/partials/SearchBar.vue"
 import Settings from "@/components/core/Settings.vue"
 import SuccessAlert from '@/components/core/SuccessAlert.vue'
 import ErrorAlert from '@/components/core/ErrorAlert.vue'
 import WarningAlert from '@/components/core/WarningAlert.vue'
+import router from '../router/index'
 
 export default {
     name: 'News',
@@ -528,11 +527,21 @@ export default {
         'warning-alert': WarningAlert,
     },
 
+    filters: {
+        trimLength(val) {
+            if (val.length < 150) { return val }
+            return `${val.substring(0, 150)}...`
+        }
+    },
+
     computed: {
         ...mapState(['userProfile', 'postsWithImg', 'postsWithoutImg', 'userData', 'color', 'avatarColor'])
     },
 
     data: () => ({
+        // Firebase
+        fullpost: null,
+        postComments: [],
         fav: true,
         menu: false,
         message: false,
@@ -541,7 +550,7 @@ export default {
         drawer: false,
         page: null,
         colors: [
-             "red",
+            "red",
             "blue",
             "green",
             "indigo",
@@ -585,17 +594,33 @@ export default {
     },
 
     methods: {
+        async viewPost(post) {
+            console.log(post.id)
+            const snapshot = await commentsCollection.where('postId', '==', post.id.toString()).get()
+            if (snapshot.empty) {
+                alert('No matching documents.');
+                return
+            }
+            snapshot.forEach(doc => {
+                console.log(doc.id, '=>', doc.data())
+                const comment = doc.data()
+                comment.id = doc.id
+                this.postComments.push(comment)
+            })
+
+            this.fullpost = post
+            this.$store.commit('SET_FULLPOST', post)
+            this.$store.commit('SET_POST_COMMENTS', this.postComments)
+            setTimeout(() => {
+                router.push('/single_post')
+            }, 500);
+        },
         async signOut() {
             await this.$store.dispatch('signOut')
         },
         async reloadCurrentRoute() {
             await this.$router.go(this.$router.currentRoute)
         },
-        // randomColors() {
-        //     this.currentColor = 
-        //     this.colors[Math.floor(Math.random() * this.colors.length)];
-        //     alert(this.colors)
-        // },
     }
 }
 </script>
