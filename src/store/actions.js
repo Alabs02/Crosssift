@@ -123,12 +123,17 @@ export const actions = {
             }, 3600);
         }
     },
-
+    
     async fetchUserData({ commit }) {
-        const snapshot = await fb.usersCollection.get()
-        snapshot.forEach(doc => {
+        const user = fb.auth.currentUser
+        const userRef = fb.usersCollection.doc(user.uid)
+        const doc = await userRef.get()
+        if (!doc.exists) {
+            alert("No such document")
+        } else {
+            // console.log(doc.data())
             commit('SET_USER_DATA', doc.data())
-        })
+        }
     },
 
     /**
@@ -532,6 +537,25 @@ export const actions = {
         // update post likes count
         fb.postsCollection.doc(post.id).update({
             likes: post.likesCount + 1
+        })
+    },
+
+    async dislikePost(post) {
+        alert("function fired")
+        const userId = fb.auth.currentUser.uid
+        const docId = `${userId}_${post.id}`
+
+        // Check if user has disliked a post
+        alert("Check fired")
+        await fb.dislikesCollection.doc(docId).set({
+            postId: post.id,
+            userId: userId
+        })
+
+        // Update post dislikes counter
+        alert("Update fired")
+        fb.postsCollection.doc(post.id).update({
+            dislikes: post.dislikesCount + 1
         })
     },
 

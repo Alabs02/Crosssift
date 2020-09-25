@@ -1,0 +1,44 @@
+[debug] [2020-09-06T11:52:48.336Z] ----------------------------------------------------------------------
+[debug] [2020-09-06T11:52:48.359Z] Command:       C:\Program Files\nodejs\node.exe C:\Users\Alabs\AppData\Local\Yarn\Data\global\node_modules\firebase-tools\lib\bin\firebase.js deploy --only hosting
+[debug] [2020-09-06T11:52:48.359Z] CLI Version:   8.6.0
+[debug] [2020-09-06T11:52:48.360Z] Platform:      win32
+[debug] [2020-09-06T11:52:48.360Z] Node Version:  v12.18.1
+[debug] [2020-09-06T11:52:48.406Z] Time:          Sun Sep 06 2020 12:52:48 GMT+0100 (West Africa Standard Time)
+[debug] [2020-09-06T11:52:48.406Z] ----------------------------------------------------------------------
+[debug] [2020-09-06T11:52:48.406Z] 
+[debug] [2020-09-06T11:52:48.467Z] > command requires scopes: ["email","openid","https://www.googleapis.com/auth/cloudplatformprojects.readonly","https://www.googleapis.com/auth/firebase","https://www.googleapis.com/auth/cloud-platform"]
+[debug] [2020-09-06T11:52:48.469Z] > authorizing via signed-in user
+[debug] [2020-09-06T11:52:48.470Z] [iam] checking project crosssift-bb9c6 for permissions ["firebase.projects.get","firebasehosting.sites.update"]
+[debug] [2020-09-06T11:52:48.475Z] > refreshing access token with scopes: ["email","https://www.googleapis.com/auth/cloud-platform","https://www.googleapis.com/auth/cloudplatformprojects.readonly","https://www.googleapis.com/auth/firebase","openid"]
+[debug] [2020-09-06T11:52:48.475Z] >>> HTTP REQUEST POST https://www.googleapis.com/oauth2/v3/token  
+ <request body omitted>
+[debug] [2020-09-06T11:52:59.892Z] [iam] error while checking permissions, command may fail: FirebaseError: Authentication Error: Your credentials are no longer valid. Please run firebase login --reauth
+
+For CI servers and headless environments, generate a new token with firebase login:ci
+[debug] [2020-09-06T11:52:59.894Z] > refreshing access token with scopes: ["email","https://www.googleapis.com/auth/cloud-platform","https://www.googleapis.com/auth/cloudplatformprojects.readonly","https://www.googleapis.com/auth/firebase","openid"]
+[debug] [2020-09-06T11:52:59.895Z] >>> HTTP REQUEST POST https://www.googleapis.com/oauth2/v3/token  
+ <request body omitted>
+[debug] [2020-09-06T11:53:11.278Z] Authentication Error: Your credentials are no longer valid. Please run firebase login --reauth
+
+For CI servers and headless environments, generate a new token with firebase login:ci
+[debug] [2020-09-06T11:53:11.314Z] FirebaseError: Authentication Error: Your credentials are no longer valid. Please run firebase login --reauth
+
+For CI servers and headless environments, generate a new token with firebase login:ci
+    at Object.<anonymous> (C:\Users\Alabs\AppData\Local\Yarn\Data\global\node_modules\firebase-tools\lib\auth.js:23:32)
+    at Module._compile (internal/modules/cjs/loader.js:1138:30)
+    at Object.Module._extensions..js (internal/modules/cjs/loader.js:1158:10)
+    at Module.load (internal/modules/cjs/loader.js:986:32)
+    at Function.Module._load (internal/modules/cjs/loader.js:879:14)
+    at Module.require (internal/modules/cjs/loader.js:1026:19)
+    at require (internal/modules/cjs/helpers.js:72:18)
+    at Object.<anonymous> (C:\Users\Alabs\AppData\Local\Yarn\Data\global\node_modules\firebase-tools\lib\commands\login.js:20:14)
+    at Module._compile (internal/modules/cjs/loader.js:1138:30)
+    at Object.Module._extensions..js (internal/modules/cjs/loader.js:1158:10)
+    at Module.load (internal/modules/cjs/loader.js:986:32)
+    at Function.Module._load (internal/modules/cjs/loader.js:879:14)
+    at Module.require (internal/modules/cjs/loader.js:1026:19)
+    at require (internal/modules/cjs/helpers.js:72:18)
+    at loadCommand (C:\Users\Alabs\AppData\Local\Yarn\Data\global\node_modules\firebase-tools\lib\commands\index.js:5:19)
+    at module.exports (C:\Users\Alabs\AppData\Local\Yarn\Data\global\node_modules\firebase-tools\lib\commands\index.js:89:20)
+[error] 
+[error] Error: Failed to get Firebase project crosssift-bb9c6. Please make sure the project exists and your account has permission to access it.

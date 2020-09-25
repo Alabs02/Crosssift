@@ -88,7 +88,7 @@
                 <div>
                   <v-row justify="center">
                     <v-col :cols="oc1">
-                      <v-chip @click="likePost(post.id, post.likes)" pill ripple link dark color="success darken-3">
+                      <v-chip fetchUserDatafetchUserData pill ripple link dark color="success darken-3">
                         <v-avatar left>
                           <v-icon>mdi-checkbox-marked-circle</v-icon>
                         </v-avatar>

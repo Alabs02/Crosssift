@@ -1,6 +1,9 @@
 <template>
     <v-card min-height="95" elevation="12">
-        <p>Name: {{ userName }}</p>
+        <!-- <p>Name: {{ userName }}</p> -->
+        <!-- <button id="btn" class="btn-primary"></button>
+        <button id="btn" class="btn-primary"></button>
+        <button id="btn" class="btn-primary"></button> -->
         <v-container>
             <v-form @submit.prevent ref="form">
                 <v-row no-gutters>
@@ -55,13 +58,10 @@ export default {
 
     methods: {
         resetForm() {
-            alert("resetting form...")
             this.$refs.form.reset()
         },
         async addComment(post) {
             // create comment
-            alert("Function fired")
-            alert(this.userName)
             if (this.form.comment != "") {
                 this.loader = true
                 commentsCollection.add({
@@ -79,7 +79,6 @@ export default {
                 })
 
                 // update comment count on post
-                alert('Update event fired')
                 await postsCollection.doc(post.id).update({
                     comments: parseInt(post.comments, 10) + 1
                 })

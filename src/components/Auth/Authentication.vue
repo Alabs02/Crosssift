@@ -97,7 +97,7 @@
                                             >
                                                 sign in
                                                 <template v-slot:loader>
-                                                    <span class="grey--text text--darken-1">Loading...</span>
+                                                    <span class="white--text text--darken-1">Loading...</span>
                                                 </template>
                                             </v-btn><br><br id="break" style="display: none !important;">
                                         </v-col>

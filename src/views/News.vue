@@ -306,7 +306,7 @@
                                    </v-card>
                                </v-col>
                             </v-row> -->
-
+                       
                             <!-- Card One   -->
                            <v-row class="mt-n3">
                                <v-col
@@ -362,6 +362,7 @@
                                         </v-btn>    
                                         <v-spacer></v-spacer>                           
                                         <v-btn
+                                        @click="dislikePost(post.id, post.dislikes)"
                                         icon
                                         color="grey darken-3"
                                         >
@@ -370,6 +371,7 @@
                                         <span>{{ post.dislikes }}</span>
 
                                         <v-btn
+                                        @click="likePost(post.id, post.likes)"
                                         icon
                                         color="grey darken-3"
                                         >
@@ -434,6 +436,7 @@
                                                 >   
                                                    <v-spacer></v-spacer>                           
                                                     <v-btn
+                                                    @click="dislikePost(post.id, post.dislikes)"
                                                     icon
                                                     color="grey darken-3"
                                                     >
@@ -442,6 +445,7 @@
                                                     <span>{{ post.dislikes }}</span>
 
                                                     <v-btn
+                                                    @click="likePost(post.id, post.likes)"
                                                     icon
                                                     color="white"
                                                     >
@@ -614,6 +618,18 @@ export default {
             setTimeout(() => {
                 router.push('/single_post')
             }, 500);
+        },
+        likePost(id, likesCount) {
+            this.$store.dispatch('likePost', {
+                id, 
+                likesCount
+            })
+        },
+        dislikePost(id, dislikesCount) {
+            this.$store.dispatch('dislikePost', {
+                id,
+                dislikesCount
+            })
         },
         async signOut() {
             await this.$store.dispatch('signOut')
